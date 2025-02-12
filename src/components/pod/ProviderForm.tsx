@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import type { PodIntegrationConfig, PodProvider, Environment, Store } from '../../lib/types/pod';
+import type { PodIntegrationConfig, PodProvider, Store } from '../../lib/types/pod';
 import { ConnectionStatus } from './ConnectionStatus';
 import { TEST_MODE } from '../../lib/test-mode';
 
@@ -25,9 +25,6 @@ const MOCK_STORES: Record<PodProvider, Store[]> = {
   ],
   gelato: [
     { id: 'store-6', name: 'My Gelato Store', provider: 'gelato' }
-  ],
-  prodigi: [
-    { id: 'store-7', name: 'My Prodigi Store', provider: 'prodigi' }
   ]
 };
 

@@ -16,7 +16,7 @@
 
 -- Create custom types
 CREATE TYPE product_status AS ENUM ('draft', 'active', 'archived');
-CREATE TYPE supplier_type AS ENUM ('printify', 'printful', 'gooten', 'gelato', 'prodigi');
+CREATE TYPE supplier_type AS ENUM ('printify', 'printful', 'gooten', 'gelato');
 
 -- Designs table
 CREATE TABLE IF NOT EXISTS designs (

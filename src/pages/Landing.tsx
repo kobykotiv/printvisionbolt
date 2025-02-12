@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DEMO_TOKEN } from '../lib/test-mode';
 import {
   Palette, 
   Layers,
@@ -10,7 +9,6 @@ import {
   Users,
   CheckCircle,
   ArrowRight,
-  RefreshCw,
   Loader
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
@@ -190,7 +188,7 @@ export function Landing() {
             </div>
             <div className="flex items-center space-x-4">
               <button
-                onClick={() => window.location.href = `/demo-login?token=${DEMO_TOKEN}`}
+                onClick={handleDemoLogin}
                 disabled={loading}
                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-600 bg-indigo-50 hover:bg-indigo-100"
               >
@@ -218,6 +216,19 @@ export function Landing() {
             <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
               Manage your designs, products, and print-on-demand operations across multiple platforms from a single dashboard.
             </p>
+            {/* Screenshot */}
+            <div className="mt-8 mb-8">
+              <div className="relative mx-auto max-w-5xl">
+                <div className="relative rounded-lg shadow-xl overflow-hidden">
+                  <img
+                    src="/screenshot.png"
+                    alt="PrintVision.Cloud Dashboard"
+                    className="w-full h-auto object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
+                </div>
+              </div>
+            </div>
             <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
               <div className="rounded-md shadow">
                 <button

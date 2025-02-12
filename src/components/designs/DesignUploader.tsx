@@ -1,133 +1,228 @@
 import React from 'react';
-import { useDropzone } from 'react-dropzone';
-import { Upload, X } from 'lucide-react';
-import { cn } from '../../lib/utils';
-import type { Design } from '../../lib/types/design';
-import { TEST_MODE } from '../../lib/test-mode';
+import { Upload, X, AlertTriangle } from 'lucide-react';
+import type { TemplateDesign } from '../../lib/types/template';
+import { Modal } from '../ui/Modal';
 
-interface DesignUploaderProps {
-  onUpload: (designs: Design[]) => void;
-  multiple?: boolean;
-  className?: string;
+export interface DesignUploaderProps {
+  onUploadComplete: (designs: Partial<TemplateDesign>[]) => Promise<void>;
+  allowedTypes: string[];
+  maxFileSize: number;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-export function DesignUploader({ onUpload, multiple = true, className }: DesignUploaderProps) {
-  const [uploading, setUploading] = React.useState(false);
-  const [preview, setPreview] = React.useState<string[]>([]);
+interface UploadItem {
+  id: string;
+  file: File;
+  progress: number;
+  status: 'pending' | 'uploading' | 'success' | 'error';
+  error?: string;
+}
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: {
-      'image/*': ['.png', '.jpg', '.jpeg', '.gif']
-    },
-    multiple,
-    maxSize: 10 * 1024 * 1024, // 10MB
-    onDrop: async (acceptedFiles) => {
-      setUploading(true);
-      try {
-        if (TEST_MODE) {
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          const mockDesigns: Design[] = acceptedFiles.map((file, index) => ({
-            id: `design-${Date.now()}-${index}`,
-            title: file.name,
-            description: '',
-            fileUrl: URL.createObjectURL(file),
-            thumbnailUrl: URL.createObjectURL(file),
-            tags: [],
-            status: 'draft',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            metadata: {
-              width: 1200,
-              height: 1200,
-              dpi: 300,
-              format: file.type.split('/')[1],
-              fileSize: file.size
-            }
-          }));
-          onUpload(mockDesigns);
-          setPreview(mockDesigns.map(d => d.thumbnailUrl!));
-          return;
-        }
+export function DesignUploader({
+  onUploadComplete,
+  allowedTypes,
+  maxFileSize,
+  isOpen,
+  onClose
+}: DesignUploaderProps) {
+  const [uploads, setUploads] = React.useState<UploadItem[]>([]);
+  const [isUploading, setIsUploading] = React.useState(false);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
-        // In a real app, upload files to your storage
-        const designs: Design[] = [];
-        for (const file of acceptedFiles) {
-          const formData = new FormData();
-          formData.append('file', file);
-          
-          const response = await fetch('/api/designs/upload', {
-            method: 'POST',
-            body: formData
-          });
-          
-          const design = await response.json();
-          designs.push(design);
-        }
-        
-        onUpload(designs);
-        setPreview(designs.map(d => d.thumbnailUrl!));
-      } catch (error) {
-        console.error('Error uploading designs:', error);
-      } finally {
-        setUploading(false);
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || []);
+    const validFiles = files.filter(file => {
+      if (!allowedTypes.includes(file.type)) {
+        console.error(`Invalid file type: ${file.type}`);
+        return false;
       }
-    }
-  });
+      if (file.size > maxFileSize) {
+        console.error(`File too large: ${file.name}`);
+        return false;
+      }
+      return true;
+    });
 
-  const removePreview = (index: number) => {
-    setPreview(prev => prev.filter((_, i) => i !== index));
+    const newUploads: UploadItem[] = validFiles.map(file => ({
+      id: Math.random().toString(36).substr(2, 9),
+      file,
+      progress: 0,
+      status: 'pending'
+    }));
+
+    setUploads(prev => [...prev, ...newUploads]);
+  };
+
+  const processUpload = async (item: UploadItem): Promise<Partial<TemplateDesign>> => {
+    try {
+      // Simulate upload progress
+      for (let progress = 0; progress <= 100; progress += 10) {
+        await new Promise(resolve => setTimeout(resolve, 200));
+        setUploads(prev =>
+          prev.map(upload =>
+            upload.id === item.id
+              ? { ...upload, progress, status: 'uploading' }
+              : upload
+          )
+        );
+      }
+
+      // In a real implementation, you would upload to your storage service here
+      const design: Partial<TemplateDesign> = {
+        name: item.file.name,
+        thumbnailUrl: URL.createObjectURL(item.file)
+      };
+
+      setUploads(prev =>
+        prev.map(upload =>
+          upload.id === item.id
+            ? { ...upload, progress: 100, status: 'success' }
+            : upload
+        )
+      );
+
+      return design;
+    } catch (error) {
+      setUploads(prev =>
+        prev.map(upload =>
+          upload.id === item.id
+            ? {
+                ...upload,
+                status: 'error',
+                error: error instanceof Error ? error.message : 'Upload failed'
+              }
+            : upload
+        )
+      );
+      throw error;
+    }
+  };
+
+  const handleUpload = async () => {
+    if (isUploading || uploads.length === 0) return;
+
+    setIsUploading(true);
+    const results: Partial<TemplateDesign>[] = [];
+    const pendingUploads = uploads.filter(u => u.status === 'pending');
+
+    try {
+      // Process uploads in parallel, but limit concurrency
+      const concurrencyLimit = 3;
+      for (let i = 0; i < pendingUploads.length; i += concurrencyLimit) {
+        const batch = pendingUploads.slice(i, i + concurrencyLimit);
+        const uploadPromises = batch.map(processUpload);
+        const batchResults = await Promise.allSettled(uploadPromises);
+        
+        batchResults.forEach(result => {
+          if (result.status === 'fulfilled') {
+            results.push(result.value);
+          }
+        });
+      }
+
+      await onUploadComplete(results);
+      onClose();
+    } catch (error) {
+      console.error('Upload failed:', error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleRemoveUpload = (id: string) => {
+    setUploads(prev => prev.filter(upload => upload.id !== id));
   };
 
   return (
-    <div className={className}>
-      <div
-        {...getRootProps()}
-        className={cn(
-          "border-2 border-dashed rounded-lg p-8 text-center transition-colors",
-          isDragActive ? "border-indigo-500 bg-indigo-50" : "border-gray-300",
-          uploading && "opacity-50 cursor-not-allowed"
-        )}
-      >
-        <input {...getInputProps()} disabled={uploading} />
-        {uploading ? (
-          <div>
-            <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-indigo-600 border-t-transparent" />
-            <p className="mt-2 text-sm text-gray-600">Uploading designs...</p>
-          </div>
-        ) : (
-          <>
-            <Upload className="mx-auto h-12 w-12 text-gray-400" />
-            <p className="mt-2 text-sm text-gray-600">
-              {isDragActive
-                ? "Drop the files here..."
-                : "Drag and drop design files here, or click to select files"}
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Upload Designs"
+    >
+      <div className="space-y-6">
+        <div className="border-2 border-dashed rounded-lg p-6">
+          <input
+            ref={fileInputRef}
+            type="file"
+            multiple
+            accept={allowedTypes.join(',')}
+            onChange={handleFileSelect}
+            className="hidden"
+          />
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            className="w-full flex flex-col items-center justify-center space-y-2"
+          >
+            <Upload className="h-8 w-8 text-gray-400" />
+            <p className="text-sm text-gray-600">
+              Click to select files or drag and drop
             </p>
-            <p className="mt-1 text-xs text-gray-500">
-              PNG, JPG up to 10MB
+            <p className="text-xs text-gray-500">
+              Maximum file size: {Math.round(maxFileSize / (1024 * 1024))}MB
             </p>
-          </>
-        )}
-      </div>
+          </button>
+        </div>
 
-      {preview.length > 0 && (
-        <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {preview.map((url, index) => (
-            <div key={index} className="relative group">
-              <img
-                src={url}
-                alt={`Preview ${index + 1}`}
-                className="h-24 w-24 object-cover rounded-lg"
-              />
+        {uploads.length > 0 && (
+          <div className="space-y-4">
+            <div className="divide-y">
+              {uploads.map(upload => (
+                <div
+                  key={upload.id}
+                  className="py-3 flex items-center justify-between"
+                >
+                  <div className="flex-1 mr-4">
+                    <p className="text-sm font-medium text-gray-900">
+                      {upload.file.name}
+                    </p>
+                    <div className="mt-1 relative">
+                      <div className="h-2 bg-gray-200 rounded-full">
+                        <div
+                          className={`h-2 rounded-full ${
+                            upload.status === 'error'
+                              ? 'bg-red-500'
+                              : 'bg-indigo-500'
+                          }`}
+                          style={{ width: `${upload.progress}%` }}
+                        />
+                      </div>
+                    </div>
+                    {upload.error && (
+                      <p className="mt-1 text-xs text-red-500 flex items-center">
+                        <AlertTriangle className="h-3 w-3 mr-1" />
+                        {upload.error}
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    onClick={() => handleRemoveUpload(upload.id)}
+                    className="text-gray-400 hover:text-gray-500"
+                  >
+                    <X className="h-5 w-5" />
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex justify-end space-x-3">
               <button
-                onClick={() => removePreview(index)}
-                className="absolute -top-2 -right-2 p-1 bg-white rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                onClick={onClose}
+                className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
               >
-                <X className="h-4 w-4 text-gray-500" />
+                Cancel
+              </button>
+              <button
+                onClick={handleUpload}
+                disabled={isUploading || uploads.length === 0}
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isUploading ? 'Uploading...' : 'Upload'}
               </button>
             </div>
-          ))}
-        </div>
-      )}
-    </div>
+          </div>
+        )}
+      </div>
+    </Modal>
   );
 }
