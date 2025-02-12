@@ -1,171 +1,341 @@
 import { supabase } from '../supabase';
-import type { Blueprint } from '../types/template';
+import type { Blueprint, BlueprintVariant, BlueprintPlaceholder } from '../types/template';
+import type { PodProvider } from '../types/pod';
+import {
+  SupplierBlueprint,
+  PrintifyBlueprint,
+  PrintfulBlueprint,
+  GootenBlueprint,
+  GelatoBlueprint,
+  SUPPLIER_ENDPOINTS
+} from '../types/supplier';
 
-export interface BlueprintSearchFilters {
-  search?: string;
-  providers?: string[];
-  categories?: string[];
-  tags?: string[];
-  placeholderCount?: {
-    min?: number;
-    max?: number;
-  };
-  priceRange?: {
-    min?: number;
-    max?: number;
-  };
-  favorites?: boolean;
-  recentlyUsed?: boolean;
-}
-
-interface BlueprintWithMeta extends Blueprint {
-  isFavorite?: boolean;
-  lastUsed?: string;
+interface BlueprintSearchParams {
+  query?: string;
+  provider?: PodProvider;
   category?: string;
-  tags?: string[];
+  page?: number;
+  limit?: number;
 }
 
-// Get user's favorite blueprints
-export async function getFavoriteBlueprints(): Promise<string[]> {
-  const { data, error } = await supabase
-    .from('user_blueprint_preferences')
-    .select('blueprint_id')
-    .eq('type', 'favorite');
-
-  if (error) throw new Error('Failed to fetch favorite blueprints');
-  return data.map(item => item.blueprint_id);
+interface BlueprintSearchResults {
+  blueprints: Blueprint[];
+  total: number;
+  page: number;
+  hasMore: boolean;
 }
 
-// Get recently used blueprints
-export async function getRecentBlueprints(): Promise<{ id: string, lastUsed: string }[]> {
-  const { data, error } = await supabase
-    .from('user_blueprint_preferences')
-    .select('blueprint_id, last_used')
-    .eq('type', 'recent')
-    .order('last_used', { ascending: false })
-    .limit(10);
+// Normalize supplier blueprints to our internal format
+function normalizeBlueprint(supplier: SupplierBlueprint): Blueprint {
+  const { provider, data } = supplier;
+  
+  switch (provider) {
+    case 'printify': {
+      const blueprint = data as PrintifyBlueprint;
+      return {
+        id: blueprint.id,
+        title: blueprint.title,
+        description: blueprint.description,
+        providerId: blueprint.id,
+        provider,
+        variants: blueprint.variants.map(v => ({
+          id: v.id,
+          title: v.title,
+          sku: v.sku,
+          options: v.options,
+          pricing: {
+            baseCost: v.cost,
+            retailPrice: v.price
+          }
+        })),
+        placeholders: blueprint.print_areas?.map(area => ({
+          id: area.id,
+          name: area.title,
+          width: area.width,
+          height: area.height,
+          x: 0,
+          y: 0,
+          rotation: 0,
+          required: true,
+          constraints: {
+            minDpi: area.constraints?.min_dpi || 150,
+            maxDpi: area.constraints?.max_dpi || 300,
+            allowedFormats: area.constraints?.formats || ['PNG', 'JPG']
+          }
+        })) || [],
+        pricing: {
+          baseCost: blueprint.variants[0]?.cost || 0,
+          retailPrice: blueprint.variants[0]?.price || 0
+        }
+      };
+    }
 
-  if (error) throw new Error('Failed to fetch recent blueprints');
-  return data.map(item => ({
-    id: item.blueprint_id,
-    lastUsed: item.last_used
-  }));
+    case 'printful': {
+      const blueprint = data as PrintfulBlueprint;
+      return {
+        id: blueprint.id,
+        title: blueprint.name,
+        description: blueprint.description,
+        providerId: blueprint.id,
+        provider,
+        variants: blueprint.variants.map(v => ({
+          id: v.id,
+          title: v.name,
+          sku: v.sku,
+          options: v.options,
+          pricing: {
+            baseCost: v.cost,
+            retailPrice: v.retail_price
+          }
+        })),
+        placeholders: blueprint.print_details?.placement_areas?.map(area => ({
+          id: area.id,
+          name: area.name,
+          width: area.width,
+          height: area.height,
+          x: area.x || 0,
+          y: area.y || 0,
+          rotation: area.rotation || 0,
+          required: true,
+          constraints: {
+            minDpi: 150,
+            maxDpi: 300,
+            allowedFormats: ['PNG', 'JPG']
+          }
+        })) || [],
+        pricing: {
+          baseCost: blueprint.variants[0]?.cost || 0,
+          retailPrice: blueprint.variants[0]?.retail_price || 0
+        }
+      };
+    }
+
+    case 'gooten': {
+      const blueprint = data as GootenBlueprint;
+      return {
+        id: blueprint.id,
+        title: blueprint.name,
+        description: blueprint.description,
+        providerId: blueprint.id,
+        provider,
+        variants: blueprint.variants.map(v => ({
+          id: v.id,
+          title: v.name,
+          sku: v.sku,
+          options: v.options,
+          pricing: {
+            baseCost: v.price * 0.7, // Estimated cost
+            retailPrice: v.price
+          }
+        })),
+        placeholders: blueprint.printAreas.map(area => ({
+          id: area.id,
+          name: area.name,
+          width: area.width,
+          height: area.height,
+          x: area.x,
+          y: area.y,
+          rotation: area.rotation,
+          required: true,
+          constraints: {
+            minDpi: 150,
+            maxDpi: 300,
+            allowedFormats: ['PNG', 'JPG']
+          }
+        })),
+        pricing: {
+          baseCost: blueprint.variants[0]?.price * 0.7 || 0,
+          retailPrice: blueprint.variants[0]?.price || 0
+        }
+      };
+    }
+
+    case 'gelato': {
+      const blueprint = data as GelatoBlueprint;
+      return {
+        id: blueprint.id,
+        title: blueprint.name,
+        description: blueprint.description,
+        providerId: blueprint.id,
+        provider,
+        variants: blueprint.variants.map(v => ({
+          id: v.id,
+          title: v.name,
+          sku: v.sku,
+          options: v.attributes,
+          pricing: {
+            baseCost: v.basePrice,
+            retailPrice: v.basePrice * 2 // Default markup
+          }
+        })),
+        placeholders: blueprint.printAreas.map(area => ({
+          id: area.id,
+          name: area.name,
+          width: area.width,
+          height: area.height,
+          x: area.position.x,
+          y: area.position.y,
+          rotation: area.position.rotation,
+          required: true,
+          constraints: {
+            minDpi: 300,
+            maxDpi: 300,
+            allowedFormats: ['PNG']
+          }
+        })),
+        pricing: {
+          baseCost: blueprint.variants[0]?.basePrice || 0,
+          retailPrice: (blueprint.variants[0]?.basePrice || 0) * 2
+        }
+      };
+    }
+  }
 }
 
-// Toggle blueprint favorite status
-export async function toggleBlueprintFavorite(blueprintId: string, isFavorite: boolean): Promise<void> {
-  const { error } = isFavorite
-    ? await supabase
-        .from('user_blueprint_preferences')
-        .insert({
-          blueprint_id: blueprintId,
-          type: 'favorite'
-        })
-    : await supabase
-        .from('user_blueprint_preferences')
-        .delete()
-        .eq('blueprint_id', blueprintId)
-        .eq('type', 'favorite');
+export class BlueprintService {
+  private async fetchWithAuth(url: string, provider: PodProvider): Promise<unknown> {
+    const { data: credentials } = await supabase
+      .from('provider_credentials')
+      .select('api_key')
+      .eq('provider', provider)
+      .single();
 
-  if (error) throw new Error('Failed to update blueprint favorite status');
-}
+    if (!credentials?.api_key) {
+      throw new Error(`No API key found for provider: ${provider}`);
+    }
 
-// Update blueprint last used timestamp
-export async function updateBlueprintLastUsed(blueprintId: string): Promise<void> {
-  const { error } = await supabase
-    .from('user_blueprint_preferences')
-    .upsert({
-      blueprint_id: blueprintId,
-      type: 'recent',
-      last_used: new Date().toISOString()
+    const headers: Record<string, string> = {
+      'Content-Type': 'application/json'
+    };
+
+    switch (provider) {
+      case 'printify':
+        headers.Authorization = `Bearer ${credentials.api_key}`;
+        break;
+      case 'printful':
+        headers.Authorization = `Bearer ${credentials.api_key}`;
+        break;
+      case 'gooten':
+        headers['X-API-Key'] = credentials.api_key;
+        break;
+      case 'gelato':
+        headers['X-API-KEY'] = credentials.api_key;
+        break;
+    }
+
+    const response = await fetch(url, { headers });
+    if (!response.ok) {
+      throw new Error(`API request failed: ${response.statusText}`);
+    }
+    return response.json();
+  }
+
+  async searchBlueprints(params: BlueprintSearchParams): Promise<BlueprintSearchResults> {
+    const blueprints: Blueprint[] = [];
+
+    if (!params.provider || params.provider === 'printify') {
+      const data = await this.fetchWithAuth(
+        SUPPLIER_ENDPOINTS.printify.blueprints,
+        'printify'
+      ) as { data: PrintifyBlueprint[] };
+      
+      blueprints.push(...data.data.map(bp => normalizeBlueprint({
+        provider: 'printify',
+        data: bp
+      })));
+    }
+
+    if (!params.provider || params.provider === 'printful') {
+      const data = await this.fetchWithAuth(
+        SUPPLIER_ENDPOINTS.printful.blueprints,
+        'printful'
+      ) as { result: PrintfulBlueprint[] };
+      
+      blueprints.push(...data.result.map(bp => normalizeBlueprint({
+        provider: 'printful',
+        data: bp
+      })));
+    }
+
+    // Filter results
+    let filtered = blueprints;
+
+    if (params.query) {
+      const query = params.query.toLowerCase();
+      filtered = filtered.filter(bp =>
+        bp.title.toLowerCase().includes(query) ||
+        bp.description?.toLowerCase().includes(query)
+      );
+    }
+
+    if (params.category) {
+      filtered = filtered.filter(bp => 
+        bp.title.toLowerCase().includes(params.category!.toLowerCase())
+      );
+    }
+
+    // Handle pagination
+    const page = params.page || 1;
+    const limit = params.limit || 20;
+    const start = (page - 1) * limit;
+    const end = start + limit;
+    const results = filtered.slice(start, end);
+
+    return {
+      blueprints: results,
+      total: filtered.length,
+      page,
+      hasMore: end < filtered.length
+    };
+  }
+
+  async getBlueprint(id: string, provider: PodProvider): Promise<Blueprint> {
+    const endpoint = SUPPLIER_ENDPOINTS[provider].blueprint(id);
+    const response = await this.fetchWithAuth(endpoint, provider);
+
+    return normalizeBlueprint({
+      provider,
+      data: provider === 'printful' ? response.result : response
     });
+  }
 
-  if (error) throw new Error('Failed to update blueprint last used timestamp');
+  async updateBlueprintPlaceholders(
+    blueprintId: string,
+    placeholders: BlueprintPlaceholder[]
+  ): Promise<void> {
+    const { error } = await supabase
+      .from('blueprint_placeholders')
+      .upsert(
+        placeholders.map(p => ({
+          blueprint_id: blueprintId,
+          placeholder_id: p.id,
+          x: p.x,
+          y: p.y,
+          rotation: p.rotation,
+          scale: 1, // Default scale factor
+        }))
+      );
+
+    if (error) throw error;
+  }
+
+  async updateBlueprintVariants(
+    blueprintId: string,
+    variants: BlueprintVariant[]
+  ): Promise<void> {
+    const { error } = await supabase
+      .from('blueprint_variants')
+      .upsert(
+        variants.map(v => ({
+          blueprint_id: blueprintId,
+          variant_id: v.id,
+          options: v.options,
+          pricing: v.pricing
+        }))
+      );
+
+    if (error) throw error;
+  }
 }
 
-// Search blueprints with filters
-export async function searchBlueprints(filters: BlueprintSearchFilters): Promise<BlueprintWithMeta[]> {
-  let query = supabase.from('blueprints').select('*');
-
-  // Apply search filter
-  if (filters.search) {
-    query = query.or(`title.ilike.%${filters.search}%,description.ilike.%${filters.search}%`);
-  }
-
-  // Apply provider filter
-  if (filters.providers?.length) {
-    query = query.in('provider_id', filters.providers);
-  }
-
-  // Apply category filter
-  if (filters.categories?.length) {
-    query = query.in('category', filters.categories);
-  }
-
-  // Apply tags filter
-  if (filters.tags?.length) {
-    query = query.contains('tags', filters.tags);
-  }
-
-  // Apply price range filter
-  if (filters.priceRange) {
-    if (filters.priceRange.min !== undefined) {
-      query = query.gte('pricing->baseCost', filters.priceRange.min);
-    }
-    if (filters.priceRange.max !== undefined) {
-      query = query.lte('pricing->baseCost', filters.priceRange.max);
-    }
-  }
-
-  const { data: blueprints, error } = await query;
-  if (error || !blueprints) throw new Error('Failed to search blueprints');
-
-  // Fetch favorites
-  const favorites = filters.favorites 
-    ? await getFavoriteBlueprints() 
-    : [];
-
-  // Fetch recent
-  const recent = filters.recentlyUsed
-    ? await getRecentBlueprints()
-    : [];
-
-  // Merge metadata
-  const results = blueprints.map(blueprint => ({
-    ...blueprint,
-    isFavorite: favorites.includes(blueprint.id),
-    lastUsed: recent.find(r => r.id === blueprint.id)?.lastUsed
-  }));
-
-  // Filter by favorites/recent if requested
-  if (filters.favorites) {
-    return results.filter(b => b.isFavorite);
-  }
-  if (filters.recentlyUsed) {
-    return results.filter(b => b.lastUsed).sort((a, b) => 
-      new Date(b.lastUsed!).getTime() - new Date(a.lastUsed!).getTime()
-    );
-  }
-
-  return results;
-}
-
-// Get available categories
-export async function getBlueprintCategories(): Promise<string[]> {
-  const { data, error } = await supabase
-    .from('blueprints')
-    .select('category');
-
-  if (error) throw new Error('Failed to fetch blueprint categories');
-  return Array.from(new Set(data.map(b => b.category).filter(Boolean)));
-}
-
-// Get all available tags
-export async function getBlueprintTags(): Promise<string[]> {
-  const { data, error } = await supabase
-    .from('blueprints')
-    .select('tags');
-
-  if (error) throw new Error('Failed to fetch blueprint tags');
-  return Array.from(new Set(data.flatMap(b => b.tags || [])));
-}
+export const blueprintService = new BlueprintService();

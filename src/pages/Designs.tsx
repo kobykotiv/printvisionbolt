@@ -1,20 +1,89 @@
 import React from 'react';
-import { Upload, Plus, FileSpreadsheet, RefreshCw, CheckCircle2, XCircle } from 'lucide-react';
+import { Upload, Plus, FileSpreadsheet, RefreshCw, CheckCircle2, XCircle, Edit } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import { NewDesignModal } from '../components/ui/NewDesignModal';
 import { useShop } from '../contexts/ShopContext';
 import Papa from 'papaparse';
 import { supabase } from '../lib/supabase';
 import { TEST_MODE } from '../lib/test-mode';
+import { EditDesignModal } from '../components/designs/EditDesignModal';
+import type { Design } from '../lib/types/design';
+import type { Template } from '../lib/types/template';
+
+interface TemplateResponse {
+  template: Template;
+}
 
 export function Designs() {
   const { currentShop } = useShop();
   const [showNewModal, setShowNewModal] = React.useState(false);
+  const [showEditModal, setShowEditModal] = React.useState(false);
+  const [selectedDesign, setSelectedDesign] = React.useState<Design | null>(null);
   const [uploading, setUploading] = React.useState(false);
   const [syncStatus, setSyncStatus] = React.useState<Record<string, 'pending' | 'success' | 'error'>>({});
   const [bulkMode, setBulkMode] = React.useState<'files' | 'csv'>('files');
   const [bulkPrefix, setBulkPrefix] = React.useState('Design');
   const [bulkStartNumber, setBulkStartNumber] = React.useState(1);
+  const [connectedTemplates, setConnectedTemplates] = React.useState<Template[]>([]);
+
+  const handleEditClick = async (design: Design) => {
+    setSelectedDesign(design);
+    try {
+      if (TEST_MODE) {
+        setConnectedTemplates([
+          {
+            id: 'template-1',
+            title: 'Test Template 1',
+            tags: ['test'],
+            description: 'Test template 1',
+            blueprints: [],
+            designs: [],
+            status: 'active',
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            syncState: { status: 'idle' }
+          }
+        ]);
+      } else {
+        const { data, error } = await supabase
+          .from('template_designs')
+          .select('template:templates(*)')
+          .eq('design_id', design.id) as { data: TemplateResponse[] | null; error: Error | null };
+
+        if (error) throw error;
+        setConnectedTemplates((data || []).map(td => td.template));
+      }
+      setShowEditModal(true);
+    } catch (error) {
+      console.error('Error fetching connected templates:', error);
+    }
+  };
+
+  const handleSaveDesign = async (updatedDesign: Design) => {
+    try {
+      if (TEST_MODE) {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        return;
+      }
+
+      const { error } = await supabase
+        .from('designs')
+        .update({
+          name: updatedDesign.name,
+          description: updatedDesign.description,
+          category: updatedDesign.category,
+          tags: updatedDesign.tags,
+          status: updatedDesign.status,
+          updated_at: new Date().toISOString(),
+        })
+        .eq('id', updatedDesign.id);
+
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error updating design:', error instanceof Error ? error.message : 'Unknown error');
+      throw error;
+    }
+  };
 
   const handleFileUpload = async (acceptedFiles: File[]) => {
     try {
@@ -26,18 +95,28 @@ export function Designs() {
 
         const csvFile = acceptedFiles[0];
         const text = await csvFile.text();
-        const { data } = Papa.parse(text, { header: true });
+        const { data } = Papa.parse<{ title: string; description: string; tags: string }>(text, { header: true });
         
         for (const row of data) {
-          const { title, description, tags } = row;
-          // Create design record with CSV data
           const { error: dbError } = await supabase.from('designs').insert({
-            title: title || 'Untitled Design',
-            description: description || null,
-            tags: tags ? tags.split(',').map((t: string) => t.trim()) : [],
+            name: row.title || 'Untitled Design',
+            description: row.description || null,
+            tags: row.tags ? row.tags.split(',').map((t: string) => t.trim()) : [],
             shop_id: currentShop?.id,
-            file_url: '', // You'll need to handle file uploads separately
-          });
+            category: 'Uncategorized',
+            metadata: {
+              width: 0,
+              height: 0,
+              format: 'unknown',
+              fileSize: 0,
+              dpi: 72,
+              colorSpace: 'RGB',
+              hasTransparency: false
+            },
+            status: 'draft',
+            thumbnailUrl: ''
+          } as Partial<Design>);
+
           if (dbError) throw dbError;
         }
       } else {
@@ -61,17 +140,28 @@ export function Designs() {
           if (uploadError) throw uploadError;
 
           const { error: dbError } = await supabase.from('designs').insert({
-            title: bulkMode === 'files' ? file.name : `${bulkPrefix} ${counter++}`,
-            file_url: filePath,
+            name: bulkMode === 'files' ? file.name : `${bulkPrefix} ${counter++}`,
+            thumbnailUrl: filePath,
             shop_id: currentShop?.id,
+            category: 'Uncategorized',
             tags: [],
-          });
+            metadata: {
+              width: 0,
+              height: 0,
+              format: fileExt?.toUpperCase() || 'unknown',
+              fileSize: file.size,
+              dpi: 72,
+              colorSpace: 'RGB',
+              hasTransparency: false
+            },
+            status: 'draft'
+          } as Partial<Design>);
 
           if (dbError) throw dbError;
         }
       }
     } catch (error) {
-      console.error('Error uploading files:', error);
+      console.error('Error uploading files:', error instanceof Error ? error.message : 'Unknown error');
     } finally {
       setUploading(false);
     }
@@ -82,7 +172,7 @@ export function Designs() {
       'image/*': ['.png', '.jpg', '.jpeg', '.gif', '.svg'],
       'text/csv': ['.csv']
     },
-    maxSize: 50 * 1024 * 1024, // 50MB
+    maxSize: 50 * 1024 * 1024,
     onDrop: (acceptedFiles) => {
       setUploading(true);
       handleFileUpload(acceptedFiles).catch(console.error);
@@ -98,54 +188,57 @@ export function Designs() {
         return;
       }
 
-      // Log sync attempt
       const { error: logError } = await supabase.from('sync_logs').insert({
         shop_id: currentShop?.id,
         design_id: designId,
         supplier,
         status: 'pending'
-      });
+      }) as { error: Error | null };
+
       if (logError) throw logError;
 
-      // Simulate API call to supplier
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // Update sync status
       const { error: updateError } = await supabase.from('sync_logs').update({
         status: 'success'
-      }).eq('design_id', designId).eq('status', 'pending');
+      }).eq('design_id', designId).eq('status', 'pending') as { error: Error | null };
       
       if (updateError) throw updateError;
       setSyncStatus(prev => ({ ...prev, [designId]: 'success' }));
     } catch (error) {
-      console.error('Sync error:', error);
+      console.error('Sync error:', error instanceof Error ? error.message : 'Unknown error');
       setSyncStatus(prev => ({ ...prev, [designId]: 'error' }));
       
-      // Log error
       await supabase.from('sync_logs').update({
         status: 'error',
-        error_message: error.message
+        error_message: error instanceof Error ? error.message : 'Unknown error'
       }).eq('design_id', designId).eq('status', 'pending');
     }
   };
 
-  const designs = [
+  // Use TEST_MODE mock data or actual data
+  const designs: Design[] = TEST_MODE ? [
     {
-      id: 1,
-      title: 'Summer Vibes',
-      thumbnail: 'https://images.unsplash.com/photo-1513346940221-6f673d962e97?auto=format&fit=crop&q=80&w=400',
+      id: 'design-1',
+      name: 'Summer Vibes',
+      description: 'Summer collection design',
+      thumbnailUrl: 'https://images.unsplash.com/photo-1513346940221-6f673d962e97?auto=format&fit=crop&q=80&w=400',
+      category: 'Summer',
       tags: ['summer', 'beach', 'vacation'],
-      createdAt: '2024-02-20',
-    },
-    {
-      id: 2,
-      title: 'Mountain Adventure',
-      thumbnail: 'https://images.unsplash.com/photo-1519681393784-d120267933ba?auto=format&fit=crop&q=80&w=400',
-      tags: ['nature', 'mountain', 'adventure'],
-      createdAt: '2024-02-19',
-    },
-    // Add more designs...
-  ];
+      metadata: {
+        width: 1920,
+        height: 1080,
+        format: 'PNG',
+        fileSize: 1024 * 1024,
+        dpi: 300,
+        colorSpace: 'RGB',
+        hasTransparency: true
+      },
+      status: 'active',
+      createdAt: '2024-02-20T00:00:00Z',
+      updatedAt: '2024-02-20T00:00:00Z'
+    }
+  ] : [];
 
   return (
     <div>
@@ -167,18 +260,17 @@ export function Designs() {
                 Switch to Files
               </>
             )}
-        </button>
-        <button
-          onClick={() => setShowNewModal(true)}
-          className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-        >
+          </button>
+          <button
+            onClick={() => setShowNewModal(true)}
+            className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+          >
             <Plus className="h-5 w-5 mr-2" />
             New Design
           </button>
         </div>
       </div>
 
-      {/* Bulk Upload Settings */}
       {bulkMode === 'files' && (
         <div className="mb-4 flex gap-4">
           <div>
@@ -202,7 +294,6 @@ export function Designs() {
         </div>
       )}
 
-      {/* Upload Zone */}
       <div
         {...getRootProps()}
         className={`mb-8 border-2 border-dashed rounded-lg p-12 text-center ${
@@ -236,24 +327,33 @@ export function Designs() {
         )}
       </div>
 
-      {/* Designs Grid */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {designs.map((design) => (
           <div
             key={design.id}
             className="relative group bg-white rounded-lg shadow overflow-hidden"
           >
+            {/* Edit Button */}
+            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
+              <button
+                onClick={() => handleEditClick(design)}
+                className="p-2 bg-white rounded-full shadow-lg hover:bg-gray-50"
+                title="Edit Design"
+              >
+                <Edit className="h-4 w-4 text-gray-600" />
+              </button>
+            </div>
+
             <div className="aspect-w-4 aspect-h-3">
               <img
-                src={design.thumbnail}
-                alt={design.title}
+                src={design.thumbnailUrl}
+                alt={design.name}
                 className="w-full h-48 object-cover"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity" />
             </div>
             <div className="p-4">
               <div className="flex justify-between items-start">
-                <h3 className="text-lg font-medium text-gray-900">{design.title}</h3>
+                <h3 className="text-lg font-medium text-gray-900">{design.name}</h3>
                 <div className="flex gap-2">
                   <button
                     onClick={() => syncWithSupplier(design.id.toString(), 'printify')}
@@ -298,6 +398,16 @@ export function Designs() {
           await handleFileUpload(files);
         }}
       />
+
+      {selectedDesign && (
+        <EditDesignModal
+          isOpen={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          design={selectedDesign}
+          onSave={handleSaveDesign}
+          connectedTemplates={connectedTemplates}
+        />
+      )}
     </div>
   );
 }
