@@ -1,6 +1,7 @@
 import React from 'react';
 import { BarChart, Users, ShoppingBag, TrendingUp, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useShop } from '../contexts/ShopContext';
+import { FreeUsageWidget } from '../components/ui/FreeUsageWidget';
 
 export function Dashboard() {
   const { currentShop } = useShop();
@@ -99,6 +100,15 @@ export function Dashboard() {
             </div>
           );
         })}
+      </div>
+
+      {/* Free Tier Usage */}
+      <div className="mt-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2">
+            <FreeUsageWidget />
+          </div>
+        </div>
       </div>
 
       {/* API Health Status */}

@@ -1,21 +1,27 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Plus, Trash2, Save } from 'lucide-react';
-import type { Template, Blueprint } from '../../lib/types/template';
-import { TEST_MODE } from '../../lib/test-mode';
+import { Plus, Trash2, Save, Upload } from 'lucide-react';
+import type { Template, TemplateDesign, Blueprint } from '../../lib/types/template';
+import { BlueprintSelectorModal } from './BlueprintSelectorModal';
+import { DesignUploader } from '../designs/DesignUploader';
 
 interface TemplateFormProps {
   template?: Template;
   onSave: (template: Template) => Promise<void>;
+  isLoading?: boolean;
 }
 
-export function TemplateForm({ template, onSave }: TemplateFormProps) {
+export function TemplateForm({ template, onSave, isLoading }: TemplateFormProps) {
+  const [showBlueprintModal, setShowBlueprintModal] = React.useState(false);
+  const [showDesignUploader, setShowDesignUploader] = React.useState(false);
+  
   const { register, handleSubmit, watch, setValue, formState: { errors, isDirty } } = useForm<Template>({
     defaultValues: template || {
       id: '',
       title: '',
       description: '',
       blueprints: [],
+      designs: [],
       tags: [],
       status: 'draft',
       createdAt: new Date().toISOString(),
@@ -23,76 +29,39 @@ export function TemplateForm({ template, onSave }: TemplateFormProps) {
     }
   });
 
-  const [loadingBlueprints, setLoadingBlueprints] = React.useState(false);
-  const [availableBlueprints, setAvailableBlueprints] = React.useState<Blueprint[]>([]);
   const selectedBlueprints = watch('blueprints');
+  const selectedDesigns = watch('designs');
 
-  React.useEffect(() => {
-    loadBlueprints();
-  }, []);
-
-  const loadBlueprints = async () => {
-    setLoadingBlueprints(true);
-    try {
-      if (TEST_MODE) {
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        setAvailableBlueprints([
-          {
-            id: 'bp-1',
-            title: 'Classic T-Shirt',
-            provider: 'printify',
-            providerId: 'pfy-1',
-            variants: [
-              { id: 'v1', title: 'White / S', sku: 'TS-W-S', options: { color: 'White', size: 'S' } },
-              { id: 'v2', title: 'White / M', sku: 'TS-W-M', options: { color: 'White', size: 'M' } }
-            ],
-            placeholders: [
-              {
-                id: 'ph-1',
-                name: 'Front Print',
-                width: 12,
-                height: 16,
-                x: 0,
-                y: 0,
-                rotation: 0,
-                required: true,
-                constraints: {
-                  minDpi: 150,
-                  maxDpi: 300,
-                  allowedFormats: ['png', 'jpg']
-                }
-              }
-            ],
-            pricing: {
-              baseCost: 15,
-              retailPrice: 29.99
-            }
-          }
-        ]);
-        return;
-      }
-
-      // In a real app, fetch blueprints from your API
-      const response = await fetch('/api/blueprints');
-      const data = await response.json();
-      setAvailableBlueprints(data);
-    } catch (error) {
-      console.error('Error loading blueprints:', error);
-    } finally {
-      setLoadingBlueprints(false);
-    }
+  const handleBlueprintSelect = (blueprints: Blueprint[]) => {
+    // Add only new blueprints that aren't already selected
+    const existingIds = new Set(selectedBlueprints.map(b => b.id));
+    const newBlueprints = blueprints.filter(b => !existingIds.has(b.id));
+    
+    setValue('blueprints', [...selectedBlueprints, ...newBlueprints], {
+      shouldDirty: true
+    });
+    setShowBlueprintModal(false);
   };
 
-  const addBlueprint = (blueprint: Blueprint) => {
-    const currentBlueprints = watch('blueprints');
-    setValue('blueprints', [...currentBlueprints, blueprint], { shouldDirty: true });
-  };
-
-  const removeBlueprint = (blueprintId: string) => {
-    const currentBlueprints = watch('blueprints');
+  const handleBlueprintRemove = (blueprintId: string) => {
     setValue(
       'blueprints',
-      currentBlueprints.filter(bp => bp.id !== blueprintId),
+      selectedBlueprints.filter(b => b.id !== blueprintId),
+      { shouldDirty: true }
+    );
+  };
+
+  const handleDesignUpload = async (designs: Partial<TemplateDesign>[]) => {
+    setValue('designs', [...selectedDesigns, ...designs], {
+      shouldDirty: true
+    });
+    setShowDesignUploader(false);
+  };
+
+  const handleDesignRemove = (designId: string) => {
+    setValue(
+      'designs',
+      selectedDesigns.filter(d => d.id !== designId),
       { shouldDirty: true }
     );
   };
@@ -152,6 +121,44 @@ export function TemplateForm({ template, onSave }: TemplateFormProps) {
         </div>
 
         <div>
+          <h3 className="text-lg font-medium text-gray-900">Designs</h3>
+          <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            {selectedDesigns.map((design) => (
+              <div
+                key={design.id}
+                className="relative group aspect-w-1 aspect-h-1 rounded-lg bg-gray-100 overflow-hidden"
+              >
+                {design.thumbnailUrl && (
+                  <img
+                    src={design.thumbnailUrl}
+                    alt={design.name}
+                    className="object-cover"
+                  />
+                )}
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-50 transition-opacity">
+                  <button
+                    type="button"
+                    onClick={() => handleDesignRemove(design.id)}
+                    className="absolute top-2 right-2 p-1 bg-white rounded-full shadow-sm opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <Trash2 className="h-4 w-4 text-red-600" />
+                  </button>
+                </div>
+              </div>
+            ))}
+            
+            <button
+              type="button"
+              onClick={() => setShowDesignUploader(true)}
+              className="flex flex-col items-center justify-center aspect-w-1 aspect-h-1 rounded-lg border-2 border-dashed border-gray-300 hover:border-gray-400"
+            >
+              <Upload className="h-8 w-8 text-gray-400" />
+              <span className="mt-2 text-sm text-gray-500">Add Designs</span>
+            </button>
+          </div>
+        </div>
+
+        <div>
           <h3 className="text-lg font-medium text-gray-900">Blueprints</h3>
           <div className="mt-4 space-y-4">
             {selectedBlueprints.map((blueprint) => (
@@ -167,7 +174,7 @@ export function TemplateForm({ template, onSave }: TemplateFormProps) {
                 </div>
                 <button
                   type="button"
-                  onClick={() => removeBlueprint(blueprint.id)}
+                  onClick={() => handleBlueprintRemove(blueprint.id)}
                   className="text-red-600 hover:text-red-700"
                 >
                   <Trash2 className="h-5 w-5" />
@@ -175,20 +182,14 @@ export function TemplateForm({ template, onSave }: TemplateFormProps) {
               </div>
             ))}
 
-            <div className="relative">
-              <button
-                type="button"
-                onClick={() => addBlueprint(availableBlueprints[0])}
-                disabled={loadingBlueprints}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
-              >
-                <Plus className="h-5 w-5 mr-2" />
-                Add Blueprint
-              </button>
-              {loadingBlueprints && (
-                <p className="mt-2 text-sm text-gray-500">Loading blueprints...</p>
-              )}
-            </div>
+            <button
+              type="button"
+              onClick={() => setShowBlueprintModal(true)}
+              className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+            >
+              <Plus className="h-5 w-5 mr-2" />
+              Add Blueprint
+            </button>
           </div>
         </div>
       </div>
@@ -196,13 +197,28 @@ export function TemplateForm({ template, onSave }: TemplateFormProps) {
       <div className="flex justify-end">
         <button
           type="submit"
-          disabled={!isDirty}
+          disabled={!isDirty || isLoading}
           className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           <Save className="h-4 w-4 mr-2" />
           Save Template
         </button>
       </div>
+
+      <BlueprintSelectorModal
+        isOpen={showBlueprintModal}
+        onClose={() => setShowBlueprintModal(false)}
+        onSelect={handleBlueprintSelect}
+        selectedBlueprints={selectedBlueprints}
+      />
+
+      <DesignUploader
+        isOpen={showDesignUploader}
+        onClose={() => setShowDesignUploader(false)}
+        onUploadComplete={handleDesignUpload}
+        allowedTypes={['image/jpeg', 'image/png']}
+        maxFileSize={5 * 1024 * 1024} // 5MB
+      />
     </form>
   );
 }

@@ -1,4 +1,3 @@
-import { NextResponse } from 'next/server';
 import type { Blueprint } from '../../../../lib/types/template';
 import type { PodProvider } from '../../../../lib/types/pod';
 
@@ -126,32 +125,42 @@ async function searchBlueprints(params: SearchParams): Promise<Blueprint[]> {
   return results;
 }
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
+export async function handler(req: Request): Promise<Response> {
+  const url = new URL(req.url);
   const params: SearchParams = {
-    provider: searchParams.get('provider') as PodProvider,
-    query: searchParams.get('query') || undefined,
-    page: parseInt(searchParams.get('page') || '1', 10),
-    limit: parseInt(searchParams.get('limit') || '20', 10)
+    provider: url.searchParams.get('provider') as PodProvider,
+    query: url.searchParams.get('query') || undefined,
+    page: parseInt(url.searchParams.get('page') || '1', 10),
+    limit: parseInt(url.searchParams.get('limit') || '20', 10)
   };
 
   try {
     const blueprints = await searchBlueprints(params);
     
-    return NextResponse.json({
+    return new Response(JSON.stringify({
       results: blueprints,
       pagination: {
         page: params.page,
         limit: params.limit,
         total: mockBlueprints.length // In a real app, get total from API
       }
+    }), {
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
   } catch (error) {
     console.error('Blueprint search error:', error);
     
-    return NextResponse.json(
-      { error: 'Failed to search blueprints' },
-      { status: 500 }
-    );
+    return new Response(JSON.stringify({
+      error: 'Failed to search blueprints'
+    }), {
+      status: 500,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
   }
 }
+
+export const GET = handler;
