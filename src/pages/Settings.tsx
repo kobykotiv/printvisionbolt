@@ -1,34 +1,32 @@
 import React from 'react';
-import { Save, RefreshCw } from 'lucide-react';
+import { RefreshCw } from 'lucide-react';
 import { ProviderForm } from '../components/pod/ProviderForm';
 import type { PodIntegrationConfig, PodProvider } from '../lib/types/pod';
 import { useShop } from '../contexts/ShopContext';
+import { useSettings } from '../contexts/SettingsContext';
 import { supabase } from '../lib/supabase';
 import { TEST_MODE } from '../lib/test-mode';
 
-const PROVIDERS: PodProvider[] = ['printify', 'printful', 'gooten', 'gelato', 'prodigi'];
+const PROVIDERS: PodProvider[] = ['printify', 'printful', 'gooten', 'gelato'];
 
 export function Settings() {
   const { currentShop } = useShop();
+  const { darkMode } = useSettings();
   const [configs, setConfigs] = React.useState<Record<PodProvider, PodIntegrationConfig | undefined>>({
     printify: undefined,
     printful: undefined,
     gooten: undefined,
-    gelato: undefined,
-    prodigi: undefined
+    gelato: undefined
   });
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    if (currentShop) {
-      loadConfigurations();
-    }
+    if (currentShop) loadConfigurations();
   }, [currentShop]);
 
   const loadConfigurations = async () => {
     try {
       if (TEST_MODE) {
-        // Simulate loading configurations
         await new Promise(resolve => setTimeout(resolve, 1000));
         setConfigs({
           printify: {
@@ -53,8 +51,7 @@ export function Settings() {
           },
           printful: undefined,
           gooten: undefined,
-          gelato: undefined,
-          prodigi: undefined
+          gelato: undefined
         });
         setLoading(false);
         return;
@@ -103,10 +100,7 @@ export function Settings() {
     try {
       if (TEST_MODE) {
         await new Promise(resolve => setTimeout(resolve, 1000));
-        setConfigs(prev => ({
-          ...prev,
-          [provider]: config
-        }));
+        setConfigs(prev => ({ ...prev, [provider]: config }));
         return;
       }
 
@@ -124,58 +118,44 @@ export function Settings() {
         });
 
       if (error) throw error;
-
-      setConfigs(prev => ({
-        ...prev,
-        [provider]: config
-      }));
+      setConfigs(prev => ({ ...prev, [provider]: config }));
     } catch (error) {
       console.error('Error saving configuration:', error);
-    }
-  };
-
-  const testConnection = async (provider: PodProvider) => {
-    try {
-      if (TEST_MODE) {
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        return;
-      }
-
-      // Implement actual connection testing logic here
-      await new Promise(resolve => setTimeout(resolve, 2000));
-    } catch (error) {
-      console.error('Error testing connection:', error);
     }
   };
 
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
-        <RefreshCw className="h-8 w-8 text-gray-400 animate-spin" />
+        <RefreshCw className={`h-8 w-8 ${darkMode ? 'text-gray-400' : 'text-gray-500'} animate-spin`} />
       </div>
     );
   }
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
+    <div className={`${darkMode ? 'text-gray-100' : 'text-gray-900'} p-6`}>
+      <div className="mb-8">
+        <h1 className={`text-2xl font-bold ${darkMode ? 'text-white' : 'text-gray-900'}`}>
+          Settings
+        </h1>
       </div>
 
-      <div className="space-y-8">
+      <div className="space-y-6">
         {PROVIDERS.map(provider => (
-          <div key={provider} className="bg-white shadow rounded-lg overflow-hidden">
-            <div className="px-4 py-5 sm:p-6">
-              <h3 className="text-lg font-medium text-gray-900 capitalize mb-6">
-                {provider} Integration
-              </h3>
-              <ProviderForm
-                provider={provider}
-                config={configs[provider]}
-                onSave={(config) => handleSave(provider, config)}
-                onTest={() => testConnection(provider)}
-              />
-            </div>
+          <div
+            key={provider}
+            className={`${darkMode ? 'bg-gray-800 border-gray-700' : 'bg-white'} 
+            rounded-lg shadow-sm border p-6 transition-colors duration-200`}
+          >
+            <h3 className={`text-lg font-medium mb-4 ${darkMode ? 'text-gray-100' : 'text-gray-900'}`}>
+              {provider} Integration
+            </h3>
+            <ProviderForm
+              provider={provider}
+              config={configs[provider]}
+              onSave={(config) => handleSave(provider, config)}
+              darkMode={darkMode}
+            />
           </div>
         ))}
       </div>

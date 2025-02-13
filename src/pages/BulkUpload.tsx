@@ -54,7 +54,7 @@ export function BulkUpload() {
           description: 'Test template',
           designs: [],
           blueprints: [],
-          tags: [],
+          tags: ['test','foo'],
           status: 'active',
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString()

@@ -8,6 +8,7 @@ import {
   Images,
   User,
   Store,
+  DollarSignIcon,
 //   icons,
 } from 'lucide-react';
 
@@ -76,4 +77,10 @@ export const userMenu = [
     path: '/settings',
     icon: Settings,
   },
+  {
+    id: 'billing',
+    label: 'Billing',
+    path: '/billing',
+    icon: DollarSignIcon,
+  }
 ];
