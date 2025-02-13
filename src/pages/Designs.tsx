@@ -88,11 +88,6 @@ export function Designs() {
   const handleFileUpload = async (acceptedFiles: File[]) => {
     try {
       if (bulkMode === 'csv' && acceptedFiles[0]?.type === 'text/csv') {
-        if (TEST_MODE) {
-          await new Promise(resolve => setTimeout(resolve, 1000));
-          return;
-        }
-
         const csvFile = acceptedFiles[0];
         const text = await csvFile.text();
         const { data } = Papa.parse<{ title: string; description: string; tags: string }>(text, { header: true });
@@ -122,26 +117,46 @@ export function Designs() {
       } else {
         let counter = bulkStartNumber;
         for (const file of acceptedFiles) {
-          if (!file.type.startsWith('image/')) continue;
+          if (!file.type.startsWith('image/')) {
+            console.error('Invalid file type:', file.type);
+            continue;
+          }
           
           if (TEST_MODE) {
             await new Promise(resolve => setTimeout(resolve, 500));
             continue;
           }
 
+          // Ensure designs bucket exists
+          const { data: buckets } = await supabase.storage.listBuckets();
+          if (!buckets?.find(b => b.name === 'designs')) {
+            const { error: bucketError } = await supabase.storage.createBucket('designs', {
+              public: false,
+              fileSizeLimit: 50 * 1024 * 1024, // 50MB
+              allowedMimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/svg+xml']
+            });
+            if (bucketError) throw bucketError;
+          }
+
           const fileExt = file.name.split('.').pop();
           const fileName = `${Math.random()}.${fileExt}`;
-          const filePath = `${currentShop?.id}/${fileName}`;
+          const filePath = `${user?.id}/${currentShop?.id}/${fileName}`;
 
           const { error: uploadError } = await supabase.storage
-            .from('designs')
+            .from('designs') 
             .upload(filePath, file);
 
           if (uploadError) throw uploadError;
 
+          // Get public URL for the uploaded file
+          const { data: { publicUrl } } = await supabase.storage
+            .from('designs')
+            .getPublicUrl(filePath);
+
           const { error: dbError } = await supabase.from('designs').insert({
             name: bulkMode === 'files' ? file.name : `${bulkPrefix} ${counter++}`,
-            thumbnailUrl: filePath,
+            thumbnailUrl: publicUrl,
+            file_url: publicUrl,
             shop_id: currentShop?.id,
             category: 'Uncategorized',
             tags: [],
@@ -158,10 +173,18 @@ export function Designs() {
           } as Partial<Design>);
 
           if (dbError) throw dbError;
+          
+          setQueue(prev => prev.map(i => 
+            i.id === item.id ? { ...i, status: 'success' } : i
+          ));
         }
       }
     } catch (error) {
-      console.error('Error uploading files:', error instanceof Error ? error.message : 'Unknown error');
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      console.error('Error uploading files:', errorMessage);
+      setQueue(prev => prev.map(i => 
+        i.status === 'uploading' ? { ...i, status: 'error', error: errorMessage } : i
+      ));
     } finally {
       setUploading(false);
     }

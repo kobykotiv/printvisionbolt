@@ -135,15 +135,16 @@ export async function handler(req: Request): Promise<Response> {
   };
 
   try {
-    const blueprints = await searchBlueprints(params);
+    const apiKey = process.env.PROVIDER_API_KEY;
+    if (!apiKey) {
+      throw new Error('Missing provider API key');
+    }
+
+    const { results, pagination } = await blueprintService.searchBlueprints(params, apiKey);
     
     return new Response(JSON.stringify({
-      results: blueprints,
-      pagination: {
-        page: params.page,
-        limit: params.limit,
-        total: mockBlueprints.length // In a real app, get total from API
-      }
+      results,
+      pagination
     }), {
       headers: {
         'Content-Type': 'application/json'

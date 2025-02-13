@@ -1,5 +1,6 @@
 import React from 'react';
 import { FileText, Layout, Upload } from 'lucide-react';
+import { useShop } from '../../contexts/ShopContext';
 import { cn } from '../../lib/utils';
 
 interface UsageData {
@@ -60,12 +61,20 @@ const mockUsageData: UsageData = {
 };
 
 export function FreeUsageWidget() {
+  const { currentShop } = useShop();
   const { templatesCount, itemsPerTemplate, designUploadsToday } = mockUsageData;
+
+  if (!currentShop) {
+    return null;
+  }
 
   return (
     <div className="bg-white p-6 rounded-lg border border-gray-200 space-y-6">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-medium text-gray-900">Free Tier Usage</h3>
+        <div>
+          <h3 className="text-lg font-medium text-gray-900">Shop Usage</h3>
+          <p className="text-sm text-gray-500">{currentShop.name}</p>
+        </div>
       </div>
 
       <div className="space-y-4">

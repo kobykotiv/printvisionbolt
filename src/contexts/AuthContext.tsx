@@ -1,14 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
-import { TEST_MODE, MOCK_USER, DEMO_TOKEN } from '../lib/test-mode';
+import { TEST_MODE, MOCK_USER } from '../lib/test-mode';
 
 interface AuthContextType {
   user: User | null;
   signIn: (email: string, password: string) => Promise<void>;
-  signInWithToken: (token: string) => Promise<void>;
+  signUp: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
   loading: boolean;
+  error: string | null;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -16,6 +17,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (TEST_MODE) {
@@ -41,34 +43,72 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => subscription.unsubscribe();
   }, []);
 
-  const signInWithToken = async (token: string) => {
-    if (TEST_MODE && token === DEMO_TOKEN) {
-      setUser(MOCK_USER as User);
-      return;
-    }
+  const signIn = async (email: string, password: string) => {
+    try {
+      setError(null);
+      if (TEST_MODE) {
+        setUser(MOCK_USER as User);
+        return;
+      }
 
-    throw new Error('Invalid demo token');
-  };
-
-  const value = {
-    user,
-    signIn: TEST_MODE ? async () => {
-      setUser(MOCK_USER as User); 
-    } : async (email: string, password: string) => { 
       const { error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
+
       if (error) throw error;
-    }, 
-    signInWithToken,
-    signOut: TEST_MODE ? async () => {
-      setUser(null);
-    } : async () => {
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign in');
+      throw err;
+    }
+  };
+
+  const signUp = async (email: string, password: string) => {
+    try {
+      setError(null);
+      if (TEST_MODE) {
+        setUser(MOCK_USER as User);
+        return;
+      }
+
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
+        },
+      });
+
+      if (error) throw error;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign up');
+      throw err;
+    }
+  };
+
+  const signOut = async () => {
+    try {
+      setError(null);
+      if (TEST_MODE) {
+        setUser(null);
+        return;
+      }
+
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
-    },
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to sign out');
+      throw err;
+    }
+  };
+
+  const value = {
+    user,
+    signIn,
+    signUp,
+    signOut,
     loading,
+    error
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

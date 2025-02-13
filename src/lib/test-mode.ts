@@ -1,5 +1,5 @@
 // Enable this flag to use mock data instead of Supabase
-export const TEST_MODE = true;
+export const TEST_MODE = false;
 
 // Demo account credentials
 export const MOCK_USER = {

@@ -1,41 +1,89 @@
 import React from 'react';
-import { BarChart, Users, ShoppingBag, TrendingUp, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { BarChart, Users, ShoppingBag, TrendingUp, AlertCircle, CheckCircle2, Palette, FileStack } from 'lucide-react';
 import { useShop } from '../contexts/ShopContext';
 import { FreeUsageWidget } from '../components/ui/FreeUsageWidget';
+import { supabase } from '../lib/supabase';
+import { TEST_MODE } from '../lib/test-mode';
 
 export function Dashboard() {
   const { currentShop } = useShop();
   const [loading, setLoading] = React.useState(true);
+  const [stats, setStats] = React.useState({
+    totalDesigns: 0,
+    activeTemplates: 0,
+    totalCollections: 0,
+    totalProducts: 0
+  });
 
-  const stats = [
+  React.useEffect(() => {
+    if (currentShop) {
+      loadStats();
+    }
+  }, [currentShop]);
+
+  const loadStats = async () => {
+    try {
+      if (TEST_MODE) {
+        const mockStats = {
+          totalDesigns: Math.floor(Math.random() * 100),
+          activeTemplates: Math.floor(Math.random() * 20),
+          totalCollections: Math.floor(Math.random() * 10),
+          totalProducts: Math.floor(Math.random() * 300)
+        };
+        setStats(mockStats);
+        setLoading(false);
+        return;
+      }
+
+      // Get real-time stats from Supabase
+      const { data: shopData, error: shopError } = await supabase
+        .from('shops')
+        .select(`
+          id,
+          designs:designs(count),
+          templates:pod_templates(count),
+          collections:collections(count),
+          sync_logs:sync_logs(count)
+        `)
+        .eq('id', currentShop.id)
+        .single();
+
+      if (shopError) throw shopError;
+
+      setStats({
+        totalDesigns: shopData.designs[0]?.count || 0,
+        activeTemplates: shopData.templates[0]?.count || 0,
+        totalCollections: shopData.collections[0]?.count || 0,
+        totalProducts: shopData.sync_logs[0]?.count || 0
+      });
+    } catch (error) {
+      console.error('Error loading stats:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const dashboardStats = [
     {
       name: 'Total Designs',
-      value: '89',
-      icon: BarChart,
-      change: '+4.75%',
-      changeType: 'positive',
+      value: stats.totalDesigns,
+      icon: Palette
     },
     {
-      name: 'Active Products',
-      value: '243',
-      icon: ShoppingBag,
-      change: '+21.5%',
-      changeType: 'positive',
+      name: 'Active Templates',
+      value: stats.activeTemplates,
+      icon: FileStack
     },
     {
-      name: 'Total Sales',
-      value: '$12,789',
-      icon: TrendingUp,
-      change: '+10.18%',
-      changeType: 'positive',
+      name: 'Collections',
+      value: stats.totalCollections,
+      icon: BarChart
     },
     {
-      name: 'Total Customers',
-      value: '573',
-      icon: Users,
-      change: '+12.3%',
-      changeType: 'positive',
-    },
+      name: 'Total Products',
+      value: stats.totalProducts,
+      icon: ShoppingBag
+    }
   ];
 
   React.useEffect(() => {
@@ -68,7 +116,7 @@ export function Dashboard() {
       </h1>
       
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {stats.map((stat) => {
+        {dashboardStats.map((stat) => {
           const Icon = stat.icon;
           return (
             <div
@@ -86,15 +134,6 @@ export function Dashboard() {
               <dd className="ml-16 flex items-baseline pb-6">
                 <p className="text-2xl font-semibold text-gray-900">
                   {stat.value}
-                </p>
-                <p
-                  className={`ml-2 flex items-baseline text-sm font-semibold ${
-                    stat.changeType === 'positive'
-                      ? 'text-green-600'
-                      : 'text-red-600'
-                  }`}
-                >
-                  {stat.change}
                 </p>
               </dd>
             </div>

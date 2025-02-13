@@ -1,33 +1,26 @@
 /*
-  # Add multi-tenant support and role-based access control
-
-  1. New Tables
-    - `shops`
-      - `id` (uuid, primary key)
-      - `user_id` (uuid, references auth.users)
-      - `name` (text)
-      - `settings` (jsonb)
-      - `created_at` (timestamp)
-      - `updated_at` (timestamp)
-    
-    - `user_roles`
-      - `id` (uuid, primary key)
-      - `user_id` (uuid, references auth.users)
-      - `role` (enum: admin, manager, designer)
-      - `shop_id` (uuid, references shops)
-      - `created_at` (timestamp)
-
-  2. Changes
-    - Add `shop_id` to existing tables
-    - Update RLS policies
-
+  # Initial Database Setup
+  
+  1. Core Types
+    - product_status enum
+    - supplier_type enum
+    - user_role enum
+  
+  2. Base Tables
+    - shops (organization unit)
+    - user_roles (role-based access)
+  
   3. Security
-    - Enable RLS on new tables
-    - Add policies for role-based access
+    - RLS policies for base tables
 */
 
+-- Create custom types
+CREATE TYPE product_status AS ENUM ('draft', 'active', 'archived');
+CREATE TYPE supplier_type AS ENUM ('printify', 'printful', 'gooten', 'gelato');
+CREATE TYPE user_role AS ENUM ('admin', 'manager', 'designer');
+
 -- Create shops table
-CREATE TABLE IF NOT EXISTS shops (
+CREATE TABLE shops (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id uuid REFERENCES auth.users NOT NULL,
   name text NOT NULL,
@@ -36,11 +29,8 @@ CREATE TABLE IF NOT EXISTS shops (
   updated_at timestamptz DEFAULT now()
 );
 
--- Create role enum
-CREATE TYPE user_role AS ENUM ('admin', 'manager', 'designer');
-
 -- Create user_roles table
-CREATE TABLE IF NOT EXISTS user_roles (
+CREATE TABLE user_roles (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id uuid REFERENCES auth.users NOT NULL,
   role user_role NOT NULL,
@@ -48,12 +38,6 @@ CREATE TABLE IF NOT EXISTS user_roles (
   created_at timestamptz DEFAULT now(),
   UNIQUE(user_id, shop_id)
 );
-
--- Add shop_id to existing tables
-ALTER TABLE designs ADD COLUMN shop_id uuid REFERENCES shops;
-ALTER TABLE products ADD COLUMN shop_id uuid REFERENCES shops;
-ALTER TABLE collections ADD COLUMN shop_id uuid REFERENCES shops;
-ALTER TABLE supplier_integrations ADD COLUMN shop_id uuid REFERENCES shops;
 
 -- Enable RLS
 ALTER TABLE shops ENABLE ROW LEVEL SECURITY;
@@ -100,23 +84,22 @@ CREATE POLICY "Only admins can manage roles"
     )
   );
 
--- Update existing RLS policies to include shop_id checks
-CREATE POLICY "Users can access shop designs"
-  ON designs FOR ALL
-  TO authenticated
-  USING (
-    EXISTS (
-      SELECT 1 FROM user_roles
-      WHERE user_roles.user_id = auth.uid()
-      AND user_roles.shop_id = designs.shop_id
-    )
-  );
-
 -- Add indexes for performance
 CREATE INDEX idx_shops_user_id ON shops(user_id);
 CREATE INDEX idx_user_roles_user_id ON user_roles(user_id);
 CREATE INDEX idx_user_roles_shop_id ON user_roles(shop_id);
-CREATE INDEX idx_designs_shop_id ON designs(shop_id);
-CREATE INDEX idx_products_shop_id ON products(shop_id);
-CREATE INDEX idx_collections_shop_id ON collections(shop_id);
-CREATE INDEX idx_supplier_integrations_shop_id ON supplier_integrations(shop_id);
+
+-- Create updated_at trigger function
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = now();
+  RETURN NEW;
+END;
+$$ language 'plpgsql';
+
+-- Add updated_at triggers
+CREATE TRIGGER update_shops_updated_at
+  BEFORE UPDATE ON shops
+  FOR EACH ROW
+  EXECUTE FUNCTION update_updated_at_column();

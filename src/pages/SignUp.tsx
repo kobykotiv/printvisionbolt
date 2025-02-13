@@ -1,11 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Palette, UserPlus, AlertCircle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import { supabase } from '../lib/supabase';
 
 export function SignUp() {
   const navigate = useNavigate();
-  const { signIn } = useAuth();
+  const { signUp } = useAuth();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
@@ -24,12 +25,53 @@ export function SignUp() {
     setLoading(true);
 
     try {
-      // In a real app, implement registration logic here
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      await signIn(email, password);
+      // 1. Create user account
+      const { data: authData, error: authError } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+
+      if (authError) throw authError;
+      if (!authData.user) throw new Error('Failed to create account');
+
+      // 2. Create initial shop
+      const { error: shopError } = await supabase
+        .from('shops')
+        .insert({
+          user_id: authData.user.id,
+          name: 'My Shop',
+          settings: {
+            tier: 'free',
+            features: {
+              maxDesigns: 100,
+              maxTemplates: 10,
+              maxDailyUploads: 50
+            }
+          }
+        });
+
+      if (shopError) throw shopError;
+
+      // 3. Create user settings
+      const { error: settingsError } = await supabase
+        .from('user_settings')
+        .insert({
+          user_id: authData.user.id,
+          settings: {
+            theme: 'light',
+            notifications: {
+              email: true,
+              push: true
+            }
+          }
+        });
+
+      if (settingsError) throw settingsError;
+
       navigate('/app');
     } catch (err) {
-      setError('Failed to create account');
+      setError(err instanceof Error ? err.message : 'Failed to create account');
+      console.error('Registration error:', err);
     } finally {
       setLoading(false);
     }
@@ -46,12 +88,9 @@ export function SignUp() {
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
           Or{' '}
-          <button
-            onClick={() => navigate('/login')}
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
+          <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
             sign in to your existing account
-          </button>
+          </Link>
         </p>
       </div>
 
@@ -136,26 +175,6 @@ export function SignUp() {
               </button>
             </div>
           </form>
-
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Or continue with</span>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <button
-                onClick={() => navigate('/demo-login')}
-                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-              >
-                Try Demo Account
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>

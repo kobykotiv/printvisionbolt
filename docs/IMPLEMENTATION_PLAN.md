@@ -1,141 +1,178 @@
-# Implementation Plan
+# Template Management System Implementation Plan
 
-## Phase 1: Core Infrastructure Enhancement
+## 1. Data Model Enhancements
 
-### 1. Shop Context & Store Selection (Priority)
-- [ ] Enhance ShopContext with:
-  - Error state management
-  - Retry mechanism for failed loads
-  - Persistent shop selection using localStorage
-  - Shop change event system
-  - Real-time data refresh on store change
+### Template-Design Relationships
+```typescript
+interface TemplateDesign {
+  id: string;
+  designId: string;
+  blueprintId: string;
+  mappings: PlaceholderMapping[];
+  status: 'pending' | 'processing' | 'completed' | 'error';
+}
 
-- [ ] Create StoreSelector component with:
-  - Loading states
-  - Error feedback
-  - Persistent selection
-  - Dropdown UI
-  - Mobile-friendly design
+interface QueueItem {
+  id: string;
+  type: 'design_upload' | 'supplier_sync';
+  status: 'queued' | 'processing' | 'completed' | 'failed';
+  progress: number;
+  error?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+```
 
-### 2. Asset Management System
-- [ ] Enhance AssetUploader:
-  - Add version control support
-  - Implement metadata validation
-  - Add bulk upload capability
-  - Progress tracking
-  - Error recovery
+### Database Schema Updates
+```sql
+-- Template-Design relationships
+CREATE TABLE template_designs (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  template_id uuid REFERENCES templates(id) ON DELETE CASCADE,
+  design_id uuid REFERENCES designs(id) ON DELETE CASCADE,
+  blueprint_id uuid REFERENCES blueprints(id) ON DELETE CASCADE,
+  mappings jsonb DEFAULT '[]',
+  status text NOT NULL DEFAULT 'pending',
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
 
-- [ ] Improve AssetMetadataEditor:
-  - Validation rules implementation
-  - Auto-save functionality
-  - Version history tracking
-  - Usage rights management
+-- Processing queue
+CREATE TABLE queue_items (
+  id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  type text NOT NULL,
+  status text NOT NULL DEFAULT 'queued',
+  progress integer DEFAULT 0,
+  error text,
+  metadata jsonb DEFAULT '{}',
+  created_at timestamptz DEFAULT now(),
+  updated_at timestamptz DEFAULT now()
+);
 
-- [ ] Enhance AssetVersionHistory:
-  - Timeline visualization
-  - Diff viewer
-  - Restore functionality
-  - Audit logging
+-- Add indexes
+CREATE INDEX idx_template_designs_template_id ON template_designs(template_id);
+CREATE INDEX idx_template_designs_design_id ON template_designs(design_id);
+CREATE INDEX idx_template_designs_status ON template_designs(status);
+CREATE INDEX idx_queue_items_status ON queue_items(status);
+```
 
-### 3. Template System
-- [ ] Optimize BlueprintSelectorModal:
-  - Enhanced search capabilities
-  - Preview functionality
-  - Category filtering
-  - Recent/Favorite blueprints
+## 2. API Structure
 
-- [ ] Improve TemplateForm:
-  - Auto-save functionality
-  - Validation enhancements
-  - Real-time preview
-  - Error boundary implementation
+### Template Management
+- `GET /api/templates` - List templates
+- `POST /api/templates` - Create template
+- `GET /api/templates/:id` - Get template details
+- `PUT /api/templates/:id` - Update template
+- `DELETE /api/templates/:id` - Delete template
+- `POST /api/templates/:id/designs` - Add designs to template
+- `DELETE /api/templates/:id/designs/:designId` - Remove design from template
 
-### 4. Integration Stability
-- [ ] Enhance ConnectionStatus:
-  - Real-time status updates
-  - Detailed error reporting
-  - Auto-reconnect functionality
-  - Status history
+### Design Processing
+- `POST /api/designs/upload` - Upload designs (with queue support)
+- `GET /api/designs/queue/:id` - Get upload queue status
+- `POST /api/designs/process` - Process design batch
+- `GET /api/designs/process/:id` - Get processing status
 
-- [ ] Improve ProviderForm:
-  - Enhanced validation
-  - Connection testing
-  - API key management
-  - Rate limit monitoring
+### Sync Operations
+- `POST /api/sync/templates/:id` - Trigger template sync
+- `GET /api/sync/status/:id` - Get sync status
+- `POST /api/sync/retry/:id` - Retry failed sync
 
-## Implementation Steps
+## 3. Component Architecture
 
-### Week 1: Shop Management
-1. Update ShopContext
-2. Implement StoreSelector
-3. Add persistence layer
-4. Implement error handling
-5. Add real-time refresh
+### Core Components
+```typescript
+// Template Management
+interface TemplateManagerProps {
+  onTemplateSelect: (template: Template) => void;
+  onTemplateCreate: (template: Template) => void;
+  onTemplateUpdate: (template: Template) => void;
+  onTemplateDelete: (templateId: string) => void;
+}
 
-### Week 2: Asset Management
-1. Update asset uploading system
-2. Implement version control
-3. Enhance metadata management
-4. Add bulk operations support
+// Design Upload
+interface DesignUploaderProps {
+  onUploadComplete: (designs: Design[]) => void;
+  onUploadError: (error: Error) => void;
+  maxConcurrentUploads?: number;
+  supportedFormats: string[];
+}
 
-### Week 3: Template System
-1. Optimize blueprint selection
-2. Enhance template creation
-3. Implement auto-save
-4. Add real-time preview
+// Queue Management
+interface QueueManagerProps {
+  items: QueueItem[];
+  onItemComplete: (item: QueueItem) => void;
+  onItemError: (item: QueueItem, error: Error) => void;
+  onRetry: (item: QueueItem) => void;
+}
+```
 
-### Week 4: Integration & Stability
-1. Enhance provider connections
-2. Implement retry mechanisms
-3. Add monitoring systems
-4. Improve error handling
+## 4. Implementation Phases
 
-## Technical Considerations
+### Phase 1: Core Template Management
+- [ ] Update database schema
+- [ ] Implement template CRUD operations
+- [ ] Add template-design relationships
+- [ ] Create template management UI
 
-### Architecture
-- Implement proper error boundaries
-- Use React Suspense for loading states
-- Implement proper TypeScript types
-- Follow React best practices
+### Phase 2: Design Upload System
+- [ ] Implement design upload queue
+- [ ] Add progress tracking
+- [ ] Create batch upload UI
+- [ ] Add error handling and retries
 
-### Performance
-- Implement code splitting
-- Optimize bundle size
-- Use proper caching strategies
-- Implement proper lazy loading
+### Phase 3: Processing Queue
+- [ ] Implement queue system
+- [ ] Add queue monitoring
+- [ ] Create queue management UI
+- [ ] Implement retry mechanisms
 
-### Testing
-- Unit tests for all new components
-- Integration tests for workflows
-- E2E tests for critical paths
-- Performance testing
+### Phase 4: Sync System
+- [ ] Add provider sync logic
+- [ ] Implement batch processing
+- [ ] Create sync status UI
+- [ ] Add error reporting
 
-## Success Metrics
+### Phase 5: UI/UX Enhancements
+- [ ] Add loading states
+- [ ] Implement error boundaries
+- [ ] Create feedback system
+- [ ] Add batch operation controls
 
-- [ ] Reduced error rates in shop operations
-- [ ] Improved asset upload success rate
-- [ ] Faster template creation time
-- [ ] Higher provider connection stability
-- [ ] Improved user satisfaction scores
+## 5. Error Handling
 
-## Risk Mitigation
+### Error Types
+```typescript
+interface ApiError {
+  code: string;
+  message: string;
+  details?: Record<string, any>;
+}
 
-1. Progressive Implementation
-   - Roll out changes incrementally
-   - Monitor for regressions
-   - Easy rollback capability
+interface QueueError {
+  itemId: string;
+  type: 'upload' | 'process' | 'sync';
+  error: Error;
+  retryCount: number;
+}
+```
 
-2. Testing Strategy
-   - Comprehensive test coverage
-   - User acceptance testing
-   - Performance benchmarking
+### Error Handling Strategy
+1. Use error boundaries for component-level errors
+2. Implement retry mechanisms for transient failures
+3. Add detailed error logging and monitoring
+4. Provide user-friendly error messages and recovery options
 
-3. Error Handling
-   - Proper error boundaries
-   - Detailed error logging
-   - User-friendly error messages
+## 6. Performance Considerations
 
-4. Performance Monitoring
-   - Real-time metrics
-   - Performance budgets
-   - Automated alerts
+### Optimization Strategies
+1. Implement request batching for bulk operations
+2. Use connection pooling for database operations
+3. Add caching for frequently accessed data
+4. Optimize image processing and uploads
+
+### Monitoring
+1. Track queue performance metrics
+2. Monitor sync operation success rates
+3. Measure upload and processing times
+4. Track error rates and types

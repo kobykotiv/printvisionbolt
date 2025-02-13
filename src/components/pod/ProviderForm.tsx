@@ -1,7 +1,8 @@
 import React from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import type { PodIntegrationConfig, PodProvider, Store } from '../../lib/types/pod';
 import { ConnectionStatus } from './ConnectionStatus';
+import { getProviderStores } from '../../lib/services/podStoreService';
 import { TEST_MODE } from '../../lib/test-mode';
 
 interface ProviderFormProps {
@@ -37,7 +38,7 @@ export function ProviderForm({
   const [stores, setStores] = React.useState<Store[]>([]);
   const [loadingStores, setLoadingStores] = React.useState(false);
 
-  const { register, handleSubmit, formState: { errors, isDirty } } = useForm<PodIntegrationConfig>({
+  const { register, handleSubmit, formState: { errors, isDirty }, control } = useForm<PodIntegrationConfig>({
     defaultValues: config || {
       connection: {
         id: '',
@@ -58,6 +59,11 @@ export function ProviderForm({
     }
   });
 
+  const apiKey = useWatch({
+    control,
+    name: 'connection.apiKey'
+  });
+
   React.useEffect(() => {
     loadStores();
   }, [provider]);
@@ -65,22 +71,40 @@ export function ProviderForm({
   const loadStores = async () => {
     setLoadingStores(true);
     try {
+      if (!apiKey) {
+        setStores([]);
+        return;
+      }
+
       if (TEST_MODE) {
         await new Promise(resolve => setTimeout(resolve, 500));
         setStores(MOCK_STORES[provider]);
         return;
       }
 
-      // In a real app, fetch stores from the provider's API
-      const response = await fetch(`/api/pod/${provider}/stores`);
-      const data = await response.json();
-      setStores(data);
+      const result = await getProviderStores(provider, apiKey);
+      if (result.success && result.store) {
+        setStores([result.store]);
+      } else {
+        setStores([]);
+        if (result.error) {
+          console.error(`Error loading stores: ${result.error}`);
+        }
+      }
     } catch (error) {
       console.error('Error loading stores:', error);
+      setStores([]);
     } finally {
       setLoadingStores(false);
     }
   };
+
+  // Reload stores when API key changes
+  React.useEffect(() => {
+    if (apiKey) {
+      loadStores();
+    }
+  }, [apiKey]);
 
   return (
     <form onSubmit={handleSubmit(onSave)} className="space-y-6">

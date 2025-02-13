@@ -1,11 +1,11 @@
 import React from 'react';
-import { Upload, Settings, Template, Save } from 'lucide-react';
+import { Upload, Settings, BookTemplate as Template, Save } from 'lucide-react';
 import { useDropzone } from 'react-dropzone';
 import { supabase } from '../lib/supabase';
-import { TEST_MODE } from '../lib/test-mode';
 import type { Template as TemplateType } from '../lib/types/template';
 import type { Design } from '../lib/types/design';
 import { useShop } from '../contexts/ShopContext';
+import { TEST_MODE } from '../lib/test-mode';
 
 interface BulkUploadConfig {
   prefix: string;
@@ -97,8 +97,18 @@ export function BulkUpload() {
   const handleUpload = async () => {
     setUploading(true);
     let currentNumber = config.startNumber;
+    const bucket = 'user_designs';
 
     try {
+      // Ensure bucket exists
+      const { data: buckets } = await supabase.storage.listBuckets();
+      if (!buckets?.find(b => b.name === bucket)) {
+        await supabase.storage.createBucket(bucket, {
+          public: false,
+          fileSizeLimit: 50 * 1024 * 1024 // 50MB
+        });
+      }
+
       for (const item of queue) {
         if (item.status === 'success') continue;
 
@@ -119,13 +129,18 @@ export function BulkUpload() {
           // 1. Upload file to storage
           const fileExt = item.file.name.split('.').pop();
           const fileName = `${Math.random()}.${fileExt}`;
-          const filePath = `${currentShop?.id}/${fileName}`;
+          const filePath = `${currentShop?.id}/${config.category}/${fileName}`;
 
           const { error: uploadError } = await supabase.storage
-            .from('designs')
+            .from(bucket)
             .upload(filePath, item.file);
 
           if (uploadError) throw uploadError;
+
+          // Generate signed URL
+          const { data: { signedUrl } } = await supabase.storage
+            .from(bucket)
+            .createSignedUrl(filePath, 365 * 24 * 60 * 60); // 1 year expiry
 
           // 2. Create design record
           const { data: design, error: designError } = await supabase
@@ -134,7 +149,8 @@ export function BulkUpload() {
               name: `${config.prefix} ${currentNumber}`,
               category: config.category,
               tags: config.tags,
-              thumbnailUrl: filePath,
+              file_url: signedUrl,
+              thumbnail_url: signedUrl, // In production, generate actual thumbnail
               shop_id: currentShop?.id,
               metadata: {
                 width: 0, // Will be updated by worker

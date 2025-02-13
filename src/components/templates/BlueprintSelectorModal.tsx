@@ -1,6 +1,8 @@
 import React from 'react';
 import { Search, Filter, Check } from 'lucide-react';
 import type { Blueprint } from '../../lib/types/template';
+import { useShop } from '../../contexts/ShopContext';
+import { blueprintValidationService } from '../../lib/services/blueprintValidationService';
 import { Modal } from '../ui/Modal';
 import { LoadingSpinner } from '../ui/LoadingSpinner';
 import { cn } from '../../lib/utils';
@@ -25,6 +27,7 @@ export function BlueprintSelectorModal({
   selectedBlueprints = [],
   defaultProvider
 }: BlueprintSelectorModalProps) {
+  const { currentShop } = useShop();
   const [loading, setLoading] = React.useState(true);
   const [search, setSearch] = React.useState('');
   const [selectedProvider, setSelectedProvider] = React.useState<string | undefined>(defaultProvider);
@@ -32,6 +35,8 @@ export function BlueprintSelectorModal({
   const [selected, setSelected] = React.useState<Set<string>>(
     new Set(selectedBlueprints.map(b => b.id))
   );
+  const [validationErrors, setValidationErrors] = React.useState<Record<string, string>>({});
+  const [usageStats, setUsageStats] = React.useState<any>(null);
 
   React.useEffect(() => {
     loadBlueprints();
@@ -59,6 +64,15 @@ export function BlueprintSelectorModal({
       }, []);
 
       setBlueprintGroups(groups);
+      
+      // Update usage stats
+      if (currentShop?.settings?.tier) {
+        const stats = blueprintValidationService.getUsageStats(
+          selectedBlueprints,
+          currentShop.settings.tier
+        );
+        setUsageStats(stats);
+      }
     } catch (error) {
       console.error('Failed to load blueprints:', error);
     } finally {
@@ -80,13 +94,42 @@ export function BlueprintSelectorModal({
   }, [blueprintGroups, search, selectedProvider]);
 
   const toggleBlueprint = (blueprint: Blueprint) => {
-    const newSelected = new Set(selected);
-    if (newSelected.has(blueprint.id)) {
+    if (!currentShop?.settings?.tier) return;
+
+    if (selected.has(blueprint.id)) {
+      // Remove blueprint
+      const newSelected = new Set(selected);
       newSelected.delete(blueprint.id);
+      setSelected(newSelected);
+      
+      // Clear validation error
+      const newErrors = { ...validationErrors };
+      delete newErrors[blueprint.id];
+      setValidationErrors(newErrors);
     } else {
-      newSelected.add(blueprint.id);
+      // Validate addition
+      const validation = blueprintValidationService.validateBlueprintAddition(
+        blueprint,
+        selectedBlueprints,
+        currentShop.settings.tier
+      );
+
+      if (validation.isValid) {
+        setSelected(new Set([...selected, blueprint.id]));
+      } else {
+        setValidationErrors({
+          ...validationErrors,
+          [blueprint.id]: validation.error || 'Invalid selection'
+        });
+      }
     }
-    setSelected(newSelected);
+
+    // Update usage stats
+    const stats = blueprintValidationService.getUsageStats(
+      [...selectedBlueprints, blueprint],
+      currentShop.settings.tier
+    );
+    setUsageStats(stats);
   };
 
   const handleConfirm = () => {
@@ -105,6 +148,51 @@ export function BlueprintSelectorModal({
       size="lg"
     >
       <div className="space-y-6">
+        {/* Usage Stats */}
+        {usageStats && (
+          <div className="bg-gray-50 p-4 rounded-lg mb-6">
+            <h3 className="text-sm font-medium text-gray-700 mb-2">Plan Usage</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm text-gray-600">Blueprints</p>
+                <div className="flex items-center mt-1">
+                  <div className="flex-1 bg-gray-200 rounded-full h-2">
+                    <div
+                      className={cn(
+                        "h-full rounded-full",
+                        usageStats.blueprints.remaining === 0
+                          ? "bg-red-500"
+                          : usageStats.blueprints.remaining < 3
+                          ? "bg-yellow-500"
+                          : "bg-green-500"
+                      )}
+                      style={{
+                        width: usageStats.blueprints.total === -1
+                          ? "0%"
+                          : `${(usageStats.blueprints.used / usageStats.blueprints.total) * 100}%`
+                      }}
+                    />
+                  </div>
+                  <span className="ml-2 text-sm text-gray-600">
+                    {usageStats.blueprints.total === -1
+                      ? "Unlimited"
+                      : `${usageStats.blueprints.used}/${usageStats.blueprints.total}`}
+                  </span>
+                </div>
+              </div>
+              
+              <div>
+                <p className="text-sm text-gray-600">Print Areas</p>
+                <p className="mt-1 text-sm font-medium text-gray-900">
+                  {usageStats.printAreas.max === -1
+                    ? "Unlimited"
+                    : `Max ${usageStats.printAreas.max} per blueprint`}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Search and Filter */}
         <div className="flex space-x-4">
           <div className="flex-1 relative">
@@ -163,7 +251,15 @@ export function BlueprintSelectorModal({
                       )}
                       <div className="aspect-w-1 aspect-h-1 bg-gray-100 rounded-md overflow-hidden mb-3">
                         {/* Blueprint preview image would go here */}
+                        
                       </div>
+                      {validationErrors[blueprint.id] && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-red-50 bg-opacity-90">
+                          <p className="text-xs text-red-600 p-2 text-center">
+                            {validationErrors[blueprint.id]}
+                          </p>
+                        </div>
+                      )}
                       <h4 className="text-sm font-medium text-gray-900 truncate">
                         {blueprint.title}
                       </h4>

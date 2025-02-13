@@ -1,9 +1,11 @@
 import React from 'react';
-import { ChevronDown, Store, AlertCircle } from 'lucide-react';
+import { ChevronDown, Store, AlertCircle, Lock, ArrowRight } from 'lucide-react';
 import { useShop } from '../../contexts/ShopContext';
+import { useNavigate } from 'react-router-dom';
 
 export function StoreSelector() {
-  const { currentShop, shops, setCurrentShop, loading } = useShop();
+  const { currentShop, shops, setCurrentShop, loading, isAtShopLimit } = useShop();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
@@ -89,6 +91,22 @@ export function StoreSelector() {
               </li>
             ))}
           </ul>
+        </div>
+      )}
+
+      {isAtShopLimit && (
+        <div className="mt-2 bg-indigo-50 p-3 rounded-lg">
+          <p className="text-sm text-indigo-700 mb-2">
+            <Lock className="inline-block h-4 w-4 mr-1" />
+            Free tier limited to 1 shop
+          </p>
+          <button
+            onClick={() => navigate('/app/billing')}
+            className="w-full flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md"
+          >
+            Upgrade to Add More Shops
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </button>
         </div>
       )}
 

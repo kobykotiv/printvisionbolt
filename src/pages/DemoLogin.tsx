@@ -1,29 +1,22 @@
 import React from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Loader } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+import { DEMO_TOKEN } from '../lib/test-mode';
 
 export function DemoLogin() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const { signInWithToken } = useAuth();
   const [error, setError] = React.useState<string | null>(null);
 
   React.useEffect(() => {
     const token = searchParams.get('token');
-    if (!token) {
+    if (!token || token !== DEMO_TOKEN) {
       setError('Invalid demo link');
       return;
     }
 
-    signInWithToken(token)
-      .then(() => {
-        navigate('/app');
-      })
-      .catch((err) => {
-        console.error('Demo login error:', err);
-        setError('Failed to access demo account');
-      });
+    // In test mode, just redirect to login with demo credentials pre-filled
+    navigate('/login', { state: { demo: true } });
   }, [searchParams, signInWithToken, navigate]);
 
   if (error) {

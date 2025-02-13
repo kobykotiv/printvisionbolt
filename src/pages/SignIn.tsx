@@ -1,15 +1,14 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { Palette, LogIn, AlertCircle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
-import { RegisterModal } from '../components/ui/RegisterModal';
 
 export function SignIn() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { signIn } = useAuth();
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const [showRegister, setShowRegister] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState(false);
 
@@ -20,7 +19,8 @@ export function SignIn() {
 
     try {
       await signIn(email, password);
-      navigate('/app');
+      const from = location.state?.from?.pathname || '/app';
+      navigate(from);
     } catch (err) {
       setError('Invalid email or password');
       console.error('Sign in error:', err);
@@ -38,22 +38,12 @@ export function SignIn() {
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Sign in to your account
         </h2>
-        <div className="mt-2 text-center text-sm text-gray-600 space-x-1">
-          <span>New to PrintVision.Cloud?</span>
-          <button
-            onClick={() => setShowRegister(true)}
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
-            Create an account
-          </button>
-          <span>or</span>
-          <button
-            onClick={() => navigate('/')}
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
-            go back to homepage
-          </button>
-        </div>
+        <p className="mt-2 text-center text-sm text-gray-600">
+          Or{' '}
+          <Link to="/signup" className="font-medium text-indigo-600 hover:text-indigo-500">
+            create a new account
+          </Link>
+        </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
@@ -95,6 +85,14 @@ export function SignIn() {
               </div>
             </div>
 
+            <div className="flex items-center justify-between">
+              <div className="text-sm">
+                <Link to="/forgot-password" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Forgot your password?
+                </Link>
+              </div>
+            </div>
+
             {error && (
               <div className="rounded-md bg-red-50 p-4">
                 <div className="flex">
@@ -118,48 +116,9 @@ export function SignIn() {
                 {loading ? 'Signing in...' : 'Sign in'}
               </button>
             </div>
-
-            <div className="mt-4">
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-300" />
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-2 bg-white text-gray-500">Demo account</span>
-                </div>
-              </div>
-              <div className="mt-4 grid grid-cols-1 gap-3">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setEmail('demo@example.com');
-                    setPassword('demo123');
-                  }}
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
-                >
-                  Fill demo credentials
-                </button>
-              </div>
-            </div>
           </form>
         </div>
       </div>
-
-      <RegisterModal
-        isOpen={showRegister}
-        onClose={() => setShowRegister(false)}
-        onRegister={async (data) => {
-          // In test mode, just close the modal and show success message
-          if (TEST_MODE) {
-            alert('Account created successfully! You can now sign in.');
-            return;
-          }
-          
-          // In real app, implement registration logic here
-          const { email, password } = data;
-          // Add registration code
-        }}
-      />
     </div>
   );
 }
