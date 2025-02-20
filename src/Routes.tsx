@@ -48,8 +48,8 @@ export function AppRoutes() {
       </Route>
 
       {/* Fallback Route */}
-      <Route 
-        path="*" 
+      <Route
+        path="*"
         element={<Navigate to={isAuthenticated ? "/app" : "/"} replace />} 
       />
     </Routes>
