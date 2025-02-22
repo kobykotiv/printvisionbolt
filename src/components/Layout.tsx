@@ -6,6 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useShop } from '../contexts/ShopContext';
 import { TierBasedNavigation } from './navigation/TierBasedNavigation';
 import type { SubscriptionTier } from '../lib/types/subscription';
+import { FreeUsageWidget } from './ui/FreeUsageWidget';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -89,7 +90,14 @@ export function Layout({ children }: LayoutProps) {
                   showUserMenu && "transform rotate-180"
                 )} />
               </button>
-              
+              {/* Tier Usage */}
+              <div className="mt-8">
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                  <div className="lg:col-span-2">
+                    <FreeUsageWidget />
+                  </div>
+                </div>
+              </div>
               <button
                 onClick={() => navigate('/app/settings')}
                 className="flex items-center gap-2 px-2 py-1 w-full text-left text-sm text-gray-600 hover:bg-gray-50 rounded-md"
