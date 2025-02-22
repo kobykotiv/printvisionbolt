@@ -23,12 +23,15 @@ export interface CollectionWithRelations extends CollectionBase {
 }
 
 export interface CollectionHierarchyNode extends CollectionBase {
+  children: never[];
   designs: string[];
   subCollections: string[];
   hasChildren: boolean;
   childCount: number;
   designCount: number;
   inheritedDesignCount: number;
+  description?: string;
+  tags?: string[];
 }
 
 export interface CollectionCreateInput {

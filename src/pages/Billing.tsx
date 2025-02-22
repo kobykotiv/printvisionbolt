@@ -16,41 +16,51 @@ interface PricingPlan {
 
 const plans: PricingPlan[] = [
   {
-    name: 'Free',
+    name: "Free",
     price: 0,
     features: [
-      { name: '1 Shop', included: true },
-      { name: 'Basic Templates', included: true },
-      { name: '10 Daily Uploads', included: true },
-      { name: 'Community Support', included: true },
-      { name: 'Multiple Shops', included: false },
-      { name: 'API Access', included: false },
-    ]
+      { name: "1 Shop", included: true },
+      { name: "3 Templates", included: true },
+      { name: "10 Daily Uploads", included: true },
+      { name: "Community Support", included: true },
+      { name: "Multiple Shops", included: false },
+      { name: "API Access", included: false },
+    ],
   },
   {
-    name: 'Creator',
+    name: "Creator",
+    price: 9,
+    features: [
+      { name: "Up to 2 Shops", included: true },
+      { name: "10 Templates", included: true },
+      { name: "100 Daily Uploads", included: true },
+      { name: "Community Support", included: true },
+    ],
+  },
+  {
+    name: "Creator",
     price: 19,
     features: [
-      { name: 'Up to 3 Shops', included: true },
-      { name: 'Advanced Templates', included: true },
-      { name: '100 Daily Uploads', included: true },
-      { name: 'Priority Support', included: true },
-      { name: 'API Access', included: true },
-      { name: 'Custom Branding', included: true },
-    ]
+      { name: "Up to 3 Shops", included: true },
+      { name: "30 Templates", included: true },
+      { name: "100 Daily Uploads", included: true },
+      { name: "Priority Support", included: true },
+      { name: "API Access", included: true },
+      { name: "Custom Branding", included: true },
+    ],
   },
   {
-    name: 'Pro',
-    price: 49,
+    name: "Pro",
+    price: 29,
     features: [
-      { name: 'Unlimited Shops', included: true },
-      { name: 'Custom Templates', included: true },
-      { name: 'Unlimited Uploads', included: true },
-      { name: 'Dedicated Support', included: true },
-      { name: 'Advanced API', included: true },
-      { name: 'White Label', included: true },
-    ]
-  }
+      { name: "Unlimited Shops", included: true },
+      { name: "Unlimited Templates", included: true },
+      { name: "Unlimited Uploads", included: true },
+      { name: "Dedicated Support", included: true },
+      { name: "API Access", included: true },
+      // { name: "White Label", included: true },
+    ],
+  },
 ];
 
 export function Billing() {
