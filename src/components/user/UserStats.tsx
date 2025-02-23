@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { useShop } from '../../contexts/ShopContext';
 import type { SubscriptionTier } from '../../lib/types/subscription';
 import type { Json } from '../../lib/database.types';
+import { User } from 'lucide-react';
 
 interface UsageStats {
   uploads: number;
@@ -53,15 +54,20 @@ export const UserStats: React.FC = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-lg p-4 w-80">
-      <div className="flex justify-between items-center mb-4">
-        <div>
-          <h3 className="font-semibold text-gray-900">Usage Statistics</h3>
-          <p className="text-sm text-gray-500">{user.email}</p>
+    <div className="flex justify-between items-center mb-4">
+      <div className="flex items-center gap-2">
+        <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
+        <User className="h-4 w-4 text-indigo-600" />
         </div>
-        <span className="px-2 py-1 text-xs font-semibold bg-indigo-100 text-indigo-800 rounded-full">
-          {userTier.charAt(0).toUpperCase() + userTier.slice(1)}
-        </span>
+        <div>
+        <h3 className="font-semibold text-gray-900">Usage Statistics</h3>
+        <p className="text-sm text-gray-500">{user.email}</p>
+        </div>
       </div>
+      <span className="px-2 py-1 text-xs font-semibold bg-indigo-100 text-indigo-800 rounded-full">
+        {userTier.charAt(0).toUpperCase() + userTier.slice(1)}
+      </span>
+    </div>
 
       <div className="space-y-4">
         {/* Storage Usage */}

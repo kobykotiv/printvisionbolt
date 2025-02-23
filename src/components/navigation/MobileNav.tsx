@@ -18,6 +18,7 @@ export const MobileNav: React.FC<MobileNavProps> = ({ isOpen, onClose }) => {
     { path: '/collections', label: 'Collections' },
     { path: '/upload', label: 'Upload' },
     { path: '/sync', label: 'Sync' },
+    { path: 'bulk-upload-2-collection', label: 'Bulk Upload' },
     { path: '/drops', label: 'Drops', enterprise: true },
     { path: '/auto-sync', label: 'Auto Sync', enterprise: true },
     { path: '/seasonal-sync', label: 'Seasonal Sync', enterprise: true },

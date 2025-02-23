@@ -1,5 +1,6 @@
 import type { Blueprint } from '../../../../lib/types/template';
 import type { PodProvider } from '../../../../lib/types/pod';
+import { blueprintService } from '../../../../lib/services/blueprintService';
 
 // Simple in-memory cache
 const cache = new Map<string, {
