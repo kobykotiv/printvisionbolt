@@ -1,6 +1,7 @@
 import React from 'react';
 import { Search, Filter, Plus } from 'lucide-react';
 import { BlueprintSearchModal } from '../components/templates/BlueprintSearchModal';
+import { Blueprint } from '../lib/types/template';
 
 const Blueprints: React.FC = () => {
   const [isSearchModalOpen, setIsSearchModalOpen] = React.useState(false);
@@ -143,8 +144,9 @@ const Blueprints: React.FC = () => {
         {/* Search Modal */}
         <BlueprintSearchModal
           isOpen={isSearchModalOpen}
-          onClose={() => setIsSearchModalOpen(false)}
-        />
+          onClose={() => setIsSearchModalOpen(false)} onSelect={function (blueprints: Blueprint[]): void {
+            throw new Error('Function not implemented.');
+          } }        />
       </div>
     </div>
   );
