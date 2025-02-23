@@ -1,7 +1,8 @@
 import { ReactNode } from 'react';
-import { AppShell, Navbar, Header } from '@mantine/core';
+import { AppShell, Navbar, Header, Group } from '@mantine/core';
 import { NavigationMenu } from './NavigationMenu';
 import { TopBar } from './TopBar';
+import { UserProfile } from '@/components/user/UserProfile';
 
 interface DashboardLayoutProps {
   children: ReactNode;
@@ -18,7 +19,10 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       }
       header={
         <Header height={60} p="xs">
-          <TopBar />
+          <Group position="apart">
+            <TopBar />
+            <UserProfile />
+          </Group>
         </Header>
       }
     >

@@ -1,116 +1,71 @@
-import { useState, useCallback, useEffect } from 'react';
-import { Grid, Group, TextInput, MultiSelect, ActionIcon, Card, Image, Text, Badge, Checkbox, LoadingOverlay } from '@mantine/core';
-import { IconSearch, IconAdjustments } from '@tabler/icons-react';
-import { ColorPicker } from '@/components/designs/ColorPicker';
+import { useState, useCallback } from 'react';
+import { Grid, Group, Stack, Button } from '@mantine/core';
+import { IconUpload, IconTableExport } from '@tabler/icons-react';
+import { DesignGrid } from '@/components/designs/DesignGrid';
+import { DesignFilters } from '@/components/designs/DesignFilters';
+import { BulkActionBar } from '@/components/common/BulkActionBar';
+import { UploadModal } from '@/components/designs/UploadModal';
+import { useDesigns } from '@/hooks/useDesigns';
 import type { Design } from '@/types/models';
 
 export default function DesignsPage() {
-  const [search, setSearch] = useState('');
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [selectedColors, setSelectedColors] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [designs, setDesigns] = useState<Design[]>([]);
   const [selectedDesigns, setSelectedDesigns] = useState<string[]>([]);
-  const [page, setPage] = useState(1);
-  const [total, setTotal] = useState(0);
+  const [uploadModalOpen, setUploadModalOpen] = useState(false);
+  const { designs, loading, filters, setFilters, refresh } = useDesigns();
 
-  const fetchDesigns = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await DesignsAPI.list({
-        search,
-        tags: selectedTags,
-        colors: selectedColors,
-        page,
-        limit: 12
-      });
-      setDesigns(response.data);
-      setTotal(response.total);
-    } catch (error) {
-      notifications.show({
-        title: 'Error',
-        message: 'Failed to fetch designs',
-        color: 'red'
-      });
-    } finally {
-      setLoading(false);
+  const bulkActions = [
+    {
+      label: 'Add to Collection',
+      onClick: () => {/* Implement collection assignment */}
+    },
+    {
+      label: 'Export Selected',
+      onClick: () => {/* Implement export */},
+      icon: <IconTableExport size={16} />
+    },
+    {
+      label: 'Delete Selected',
+      color: 'red',
+      onClick: () => {/* Implement bulk delete */}
     }
-  }, [search, selectedTags, selectedColors, page]);
-
-  useEffect(() => {
-    fetchDesigns();
-  }, [fetchDesigns]);
+  ];
 
   return (
-    <>
-      <Group position="apart" mb="xl">
+    <Stack spacing="lg">
+      <Group position="apart">
+        <h1>Designs</h1>
         <Group>
-          <TextInput
-            icon={<IconSearch size={16} />}
-            placeholder="Search designs..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            style={{ width: 300 }}
-          />
-          <MultiSelect
-            placeholder="Filter by tags"
-            data={[]} // TODO: Fetch tags
-            value={selectedTags}
-            onChange={setSelectedTags}
-          />
-          <ColorPicker
-            value={selectedColors}
-            onChange={setSelectedColors}
-          />
+          <Button 
+            leftIcon={<IconUpload size={16} />}
+            onClick={() => setUploadModalOpen(true)}
+          >
+            Upload Designs
+          </Button>
         </Group>
-        <ActionIcon variant="filled" size="lg">
-          <IconAdjustments size={20} />
-        </ActionIcon>
       </Group>
 
-      <div style={{ position: 'relative' }}>
-        <LoadingOverlay visible={loading} />
-        <Grid>
-          {designs.map((design) => (
-            <Grid.Col key={design.id} span={3}>
-              <Card shadow="sm">
-                <Group position="right" mb="xs">
-                  <Checkbox
-                    checked={selectedDesigns.includes(design.id)}
-                    onChange={(e) => {
-                      setSelectedDesigns(prev =>
-                        e.currentTarget.checked
-                          ? [...prev, design.id]
-                          : prev.filter(id => id !== design.id)
-                      );
-                    }}
-                  />
-                </Group>
-                <Card.Section>
-                  <Image
-                    src={design.previewUrl}
-                    height={200}
-                    alt={design.name}
-                  />
-                </Card.Section>
-                <Text weight={500} mt="sm">{design.name}</Text>
-                <Group spacing={5} mt="xs">
-                  {design.tags.map(tag => (
-                    <Badge key={tag} size="sm">{tag}</Badge>
-                  ))}
-                </Group>
-              </Card>
-            </Grid.Col>
-          ))}
-        </Grid>
-      </div>
-
-      <Pagination
-        total={Math.ceil(total / 12)}
-        value={page}
-        onChange={setPage}
-        mt="xl"
+      <DesignFilters
+        filters={filters}
+        onChange={setFilters}
       />
-    </>
+
+      <BulkActionBar
+        selectedCount={selectedDesigns.length}
+        actions={bulkActions}
+      />
+
+      <DesignGrid
+        designs={designs}
+        loading={loading}
+        selectedDesigns={selectedDesigns}
+        onSelectionChange={setSelectedDesigns}
+      />
+
+      <UploadModal
+        opened={uploadModalOpen}
+        onClose={() => setUploadModalOpen(false)}
+        onComplete={refresh}
+      />
+    </Stack>
   );
 }

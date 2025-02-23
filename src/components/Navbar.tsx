@@ -35,50 +35,50 @@ const Navbar: React.FC = () => {
                 PrintVision.Cloud
               </div>
               {/* Main Menu Items */}
-              <Link to="/shop-selector" className="hover:text-blue-500">
+              <Link to="app/shop-selector" className="hover:text-blue-500">
                 Shop Selector
               </Link>
-              <Link to="/templates" className="hover:text-blue-500">
+              <Link to="app/templates" className="hover:text-blue-500">
                 Templates
               </Link>
-              <Link to="/blueprints" className="hover:text-blue-500">
+              <Link to="app/blueprints" className="hover:text-blue-500">
                 Blueprints
               </Link>
-              <Link to="/brand-assets" className="hover:text-blue-500">
+              <Link to="app/brand-assets" className="hover:text-blue-500">
                 Brand Assets
               </Link>
-              <Link to="/designs" className="hover:text-blue-500">
+              <Link to="app/designs" className="hover:text-blue-500">
                 Designs
               </Link>
-              <Link to="/collections" className="hover:text-blue-500">
+              <Link to="app/collections" className="hover:text-blue-500">
                 Collections
               </Link>
-              <Link to="/upload" className="hover:text-blue-500">
+              <Link to="app/upload" className="hover:text-blue-500">
                 Upload
               </Link>
-              <Link to="/sync" className="hover:text-blue-500">
+              <Link to="app/sync" className="hover:text-blue-500">
                 Sync
               </Link>
               {/* Enterprise Features */}
-              <Link to="/drops" className="hover:text-blue-500">
+              <Link to="app/drops" className="hover:text-blue-500">
                 Drops
               </Link>
-              <Link to="/auto-sync" className="hover:text-blue-500">
+              <Link to="app/auto-sync" className="hover:text-blue-500">
                 Auto Sync
               </Link>
-              <Link to="/seasonal-sync" className="hover:text-blue-500">
+              <Link to="app/seasonal-sync" className="hover:text-blue-500">
                 Seasonal Sync
               </Link>
             </div>
             {/* Right side: Additional options */}
             <div className="flex items-center space-x-4">
-              <Link to="/analytics" className="hover:text-blue-500">
+              <Link to="app/analytics" className="hover:text-blue-500">
                 Analytics
               </Link>
-              <Link to="/notifications" className="hover:text-blue-500">
+              <Link to="app/notifications" className="hover:text-blue-500">
                 Notifications
               </Link>
-              <Link to="/settings" className="hover:text-blue-500">
+              <Link to="app/settings" className="hover:text-blue-500">
                 Settings
               </Link>
             </div>
