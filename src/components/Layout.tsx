@@ -36,12 +36,14 @@ export function Layout({ children }: LayoutProps) {
         <div className="w-64 bg-white shadow-lg">
           <div className="flex flex-col h-16 px-6 py-3">
             <div className="flex items-center justify-between">
-              <h1 className="text-xl font-bold text-gray-900">PrintVision.Cloud</h1>
+              <h1 className="text-xl font-bold text-gray-900">
+                PrintVision.Cloud
+              </h1>
             </div>
 
             <div className="relative mt-2">
               <select
-                value={currentShop?.id || ''}
+                value={currentShop?.id || ""}
                 onChange={(e) => {
                   const shop = shops.find((s) => s.id === e.target.value);
                   if (shop) setCurrentShop(shop);
@@ -65,8 +67,10 @@ export function Layout({ children }: LayoutProps) {
               userTier={userTier}
               onUpgradeClick={handleUpgradeClick}
             />
-            
+
             {/* User Widget */}
+            <FreeUsageWidget />
+
             <div className="mt-auto pt-4 border-t">
               <button
                 onClick={() => setShowUserMenu(!showUserMenu)}
@@ -81,35 +85,30 @@ export function Layout({ children }: LayoutProps) {
                       {user?.email}
                     </p>
                     <p className="text-xs text-gray-500">
-                      {userTier.charAt(0).toUpperCase() + userTier.slice(1)} Plan
+                      {userTier.charAt(0).toUpperCase() + userTier.slice(1)}{" "}
+                      Plan
                     </p>
                   </div>
                 </div>
-                <ChevronDown className={cn(
-                  "h-4 w-4 text-gray-400 transition-transform",
-                  showUserMenu && "transform rotate-180"
-                )} />
+                <ChevronDown
+                  className={cn(
+                    "h-4 w-4 text-gray-400 transition-transform",
+                    showUserMenu && "transform rotate-180"
+                  )}
+                />
               </button>
-              {/* Tier Usage */}
-              <div className="mt-8">
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                  <div className="lg:col-span-2">
-                    <FreeUsageWidget />
-                  </div>
-                </div>
-              </div>
               <button
-                onClick={() => navigate('/app/settings')}
+                onClick={() => navigate("/app/settings")}
                 className="flex items-center gap-2 px-2 py-1 w-full text-left text-sm text-gray-600 hover:bg-gray-50 rounded-md"
               >
                 <Settings className="h-4 w-4" />
                 <span>Settings</span>
               </button>
-              
+
               <button
                 onClick={() => {
                   signOut();
-                  navigate('/');
+                  navigate("/");
                 }}
                 className="flex items-center gap-2 px-2 py-1 w-full text-left text-sm text-red-600 hover:bg-red-50 rounded-md mt-2"
               >
