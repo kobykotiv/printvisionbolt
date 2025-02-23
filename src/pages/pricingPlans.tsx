@@ -12,7 +12,7 @@ export const pricingPlans = [
   },
   {
     name: 'Creator',
-    price: 19,
+    price: 1,
     features: [
       'Up to 10 Items/Supplier',
       'Up to 10 Templates',
@@ -26,7 +26,7 @@ export const pricingPlans = [
   },
   {
     name: 'Pro',
-    price: 29,
+    price: 9,
     features: [
       'Unlimited Items/Supplier',
       'Unlimited Templates',
@@ -39,7 +39,7 @@ export const pricingPlans = [
   },
   {
     name: 'Enterprise',
-    price: 99,
+    price: 29,
     features: [
       'Everything in Pro',
       'Unlimited Designs',
