@@ -9,12 +9,20 @@ const Navbar: React.FC = () => {
   return (
     <>
       <nav className="bg-white shadow-md border-b border-gray-200">
-        
         <div className="container mx-auto px-4 py-3">
           {/* Mobile View */}
           <div className="flex items-center justify-between lg:hidden">
-            <div className="font-bold text-xl text-gray-800">
-              PrintVision.Cloud
+            <div className="flex items-center space-x-4">
+              <button
+                onClick={() => setIsMobileNavOpen(true)}
+                className="p-2 hover:bg-gray-100 rounded-md"
+                aria-label="Open menu"
+              >
+                <Menu className="h-6 w-6" />
+              </button>
+              <div className="font-bold text-xl text-gray-800">
+                PrintVision.Cloud
+              </div>
             </div>
           </div>
 
