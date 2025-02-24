@@ -4,6 +4,7 @@ import { useShop } from '../../contexts/ShopContext';
 import type { SubscriptionTier } from '../../lib/types/subscription';
 import type { Json } from '../../lib/database.types';
 import { User } from 'lucide-react';
+import { createClient } from "@supabase/supabase-js";
 
 interface UsageStats {
   uploads: number;
@@ -24,6 +25,10 @@ interface ShopSettings extends Record<string, Json | undefined> {
 }
 
 export const UserStats: React.FC = () => {
+  const supabase = createClient(
+    process.env.VITE_SUPABASE_URL as string,
+    process.env.VITE_SUPABASE_ANON_KEY as string
+  );
   const { user } = useAuth();
   const { currentShop } = useShop();
   const [usageStats] = React.useState<UsageStats>({
@@ -56,18 +61,27 @@ export const UserStats: React.FC = () => {
     <div className="bg-white rounded-lg shadow-lg p-4 w-80">
     <div className="flex justify-between items-center mb-4">
       <div className="flex items-center gap-2">
-        <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-        <User className="h-4 w-4 text-indigo-600" />
-        </div>
-        <div>
-        <h3 className="font-semibold text-gray-900">Usage Statistics</h3>
-        <p className="text-sm text-gray-500">{user.email}</p>
-        </div>
+      <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
+      <User className="h-4 w-4 text-indigo-600" />
+      </div>
+      <div>
+      <h3 className="font-semibold text-gray-900">Usage Statistics</h3>
+      <p className="text-sm text-gray-500">{user.email}</p>
+      </div>
       </div>
       <span className="px-2 py-1 text-xs font-semibold bg-indigo-100 text-indigo-800 rounded-full">
-        {userTier.charAt(0).toUpperCase() + userTier.slice(1)}
+      {userTier.charAt(0).toUpperCase() + userTier.slice(1)}
       </span>
     </div>
+    <button
+      onClick={() => {
+        // Supabase log out current user.
+        supabase.auth.signOut();
+      }}
+      className="px-4 py-2 bg-red-500 text-white text-sm font-semibold rounded-lg hover:bg-red-600"
+    >
+      Logout
+    </button>
 
       <div className="space-y-4">
         {/* Storage Usage */}
