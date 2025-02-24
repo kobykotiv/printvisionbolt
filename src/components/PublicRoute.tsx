@@ -1,67 +1,28 @@
 import React from 'react';
-import { useAuth } from '../../hooks/useAuth';
-import { LoadingScreen } from '../../components/common/LoadingScreen';
-import { logger } from '../features/blueprints/utils/logger';
-import { getDefaultRedirectPath } from '../../config/navigation';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { LoadingSpinner } from './ui/LoadingSpinner';
 
 interface PublicRouteProps {
   children: React.ReactNode;
-  /** If true, authenticated users will be redirected to their dashboard */
-  redirectAuthenticated?: boolean;
-  /** Additional CSS classes for the wrapper */
-  className?: string;
 }
 
-export function PublicRoute({ 
-  children, 
-  redirectAuthenticated = true,
-  className = '' 
-}: PublicRouteProps) {
-  const { isAuthenticated, isLoading } = useAuth();
-  const [redirecting, setRedirecting] = React.useState(false);
+export function PublicRoute({ children }: PublicRouteProps) {
+  const { user, loading } = useAuth();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/app';
 
-  React.useEffect(() => {
-    if (!isLoading && isAuthenticated && redirectAuthenticated) {
-      setRedirecting(true);
-      logger.debug('Public route redirect', {
-        path: window.location.pathname,
-        reason: 'user authenticated',
-        timestamp: new Date().toISOString()
-      });
-
-      const redirectPath = getDefaultRedirectPath(true);
-      // Add a small delay to ensure logging completes
-      setTimeout(() => {
-        window.location.href = redirectPath;
-      }, 100);
-    }
-  }, [isLoading, isAuthenticated, redirectAuthenticated]);
-
-  if (isLoading || redirecting) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <LoadingScreen />
+        <LoadingSpinner size="lg" />
       </div>
     );
   }
 
-  // Don't render anything if we're about to redirect
-  if (isAuthenticated && redirectAuthenticated) {
-    return null;
+  if (user) {
+    return <Navigate to={from} replace />;
   }
 
-  return (
-    <div className={`min-h-screen bg-gray-50 ${className}`}>
-      {children}
-      
-      {/* Development Mode Indicator */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="fixed bottom-4 right-4">
-          <div className="bg-gray-800 bg-opacity-75 text-white text-xs px-2 py-1 rounded-md">
-            Public Route
-          </div>
-        </div>
-      )}
-    </div>
-  );
+  return <>{children}</>;
 }
