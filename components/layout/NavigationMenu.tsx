@@ -1,47 +1,114 @@
-import { NavLink } from '@mantine/core';
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import {
-  IconDashboard,
-  IconShoppingCart,
-  IconPalette,
-  IconFolder,
-  IconSync,
-  IconSettings,
-} from '@tabler/icons-react';
+import React, { useState, useEffect } from 'react';
+import { Navigation } from '../../src/components/Navigation';
+import { Button } from '../ui/Button';
 
-export function NavigationMenu() {
-  const router = useRouter();
+interface NavigationMenuProps {
+  className?: string;
+}
 
-  const links = [
-    { href: '/app/dashboard', label: 'Dashboard', icon: IconDashboard },
-    { href: '/app/shops', label: 'Shops', icon: IconShoppingCart },
-    { href: '/app/designs', label: 'Designs', icon: IconPalette },
-    { href: '/app/collections', label: 'Collections', icon: IconFolder },
-    { href: '/app/sync', label: 'Sync', icon: IconSync },
-    { href: '/app/settings', label: 'Settings', icon: IconSettings },
-  ];
+export function NavigationMenu({ className = '' }: NavigationMenuProps) {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [currentPath, setCurrentPath] = useState(window.location.pathname);
 
-  const isActive = (href: string) => {
-    const currentPath = router.pathname;
-    if (href === '/app/dashboard') {
-      return currentPath === href;
-    }
-    return currentPath.startsWith(href);
-  };
+  // Update current path when navigation occurs
+  useEffect(() => {
+    const handleNavigation = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      setCurrentPath(customEvent.detail.path);
+      setIsMobileMenuOpen(false); // Close mobile menu after navigation
+    };
+
+    window.addEventListener('navigation', handleNavigation);
+    
+    // Clean up
+    return () => {
+      window.removeEventListener('navigation', handleNavigation);
+    };
+  }, []);
+
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      const menu = document.getElementById('mobile-menu');
+      const button = document.getElementById('mobile-menu-button');
+
+      if (menu && button && !menu.contains(target) && !button.contains(target)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <nav>
-      {links.map(({ href, label, icon: Icon }) => (
-        <Link key={href} href={href} passHref legacyBehavior>
-          <NavLink
-            component="a"
-            active={isActive(href)}
-            label={label}
-            icon={<Icon size={16} />}
-          />
-        </Link>
-      ))}
-    </nav>
+    <div className={className}>
+      {/* Desktop Navigation */}
+      <div className="hidden md:flex md:w-64 md:flex-col">
+        <div className="flex flex-col flex-grow pt-5 overflow-y-auto bg-white">
+          <Navigation />
+        </div>
+      </div>
+
+      {/* Mobile Navigation */}
+      <div className="md:hidden">
+        <Button
+          id="mobile-menu-button"
+          variant="ghost"
+          size="sm"
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="p-2 -ml-1 rounded-md"
+          aria-label="Open navigation menu"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            {isMobileMenuOpen ? (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            ) : (
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            )}
+          </svg>
+        </Button>
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div
+            id="mobile-menu"
+            className="absolute left-0 right-0 z-50 p-2 mt-2 origin-top-left bg-white rounded-md shadow-lg"
+          >
+            <div className="p-2">
+              <Navigation />
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Mobile Menu Backdrop */}
+      {isMobileMenuOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black bg-opacity-25 md:hidden"
+          aria-hidden="true"
+          onClick={() => setIsMobileMenuOpen(false)}
+        />
+      )}
+    </div>
   );
 }

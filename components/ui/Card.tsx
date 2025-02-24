@@ -1,43 +1,30 @@
-import { Card as MantineCard, CardProps, createStyles } from '@mantine/core';
-import { forwardRef } from 'react';
+import React from 'react';
 
-const useStyles = createStyles((theme) => ({
-  root: {
-    backgroundColor: 'white',
-    borderRadius: theme.radius.lg,
-    border: `1px solid ${theme.colors.dark[1]}`,
-    transition: 'all 150ms',
-    '&:hover': {
-      boxShadow: theme.shadows.md,
-    },
-  },
-  withHover: {
-    cursor: 'pointer',
-    '&:hover': {
-      transform: 'translateY(-2px)',
-      boxShadow: theme.shadows.lg,
-    },
-  },
-}));
-
-interface CustomCardProps extends CardProps {
+export interface CustomCardProps extends React.HTMLAttributes<HTMLDivElement> {
   hoverable?: boolean;
+  shadow?: 'none' | 'sm' | 'md' | 'lg';
 }
 
-export const Card = forwardRef<HTMLDivElement, CustomCardProps>(
-  ({ hoverable, className, ...props }, ref) => {
-    const { classes, cx } = useStyles();
+const shadowStyles = {
+  none: '',
+  sm: 'shadow-sm',
+  md: 'shadow-md',
+  lg: 'shadow-lg'
+};
 
+export const Card = React.forwardRef<HTMLDivElement, CustomCardProps>(
+  ({ hoverable = false, shadow = 'sm', className = '', children, ...props }, ref) => {
+    const baseStyles = 'bg-white rounded-lg border border-gray-200';
+    const hoverStyles = hoverable ? 'transition-all duration-200 hover:-translate-y-1 hover:shadow-lg cursor-pointer' : '';
+    
     return (
-      <MantineCard
+      <div
         ref={ref}
-        className={cx(
-          classes.root,
-          { [classes.withHover]: hoverable },
-          className
-        )}
+        className={`${baseStyles} ${shadowStyles[shadow]} ${hoverStyles} ${className}`}
         {...props}
-      />
+      >
+        {children}
+      </div>
     );
   }
 );
