@@ -1,13 +1,14 @@
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
-import { LoadingScreen } from '@/components/common/LoadingScreen';
+import React from 'react';
 
-export default function HomePage() {
-  const router = useRouter();
+const LandingPage = () => {
+  return (
+    <div>
+      <h1>Welcome to PrintVision.Cloud</h1>
+      <p>Stunning! Print on Demand that scales.</p>
+      <a href="/auth/login">Log in</a>
+      <a href="/auth/register">Sign up</a>
+    </div>
+  );
+};
 
-  useEffect(() => {
-    router.replace('/app/dashboard');
-  }, [router]);
-
-  return <LoadingScreen message="Redirecting..." />;
-}
+export default LandingPage;
