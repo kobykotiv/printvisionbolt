@@ -1,475 +1,205 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  Palette, 
-  Layers,
-  Zap,
-  Globe,
-  ShoppingBag,
-  Users,
-  CheckCircle,
-  ArrowRight,
-  Loader
-} from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
-import { Modal } from '../components/ui/Modal';
-import { pricingPlans } from './pricingPlans';
+import { Link } from 'react-router-dom';
+import { LandingLayout } from '../components/layout/LandingLayout';
 
-interface DemoStep {
-  title: string;
-  description: string;
-  duration: number;
-}
+export default function Landing() {
+  const plans = [
+    {
+      name: 'Free',
+      price: '0',
+      description: 'Perfect for getting started',
+      features: ['Limited items/templates', 'Basic sync features', 'Community support', 'Ad-supported'],
+    },
+    {
+      name: 'Creator',
+      price: '1',
+      description: 'Great for small creators',
+      features: ['Additional templates', 'No ads', 'Email support'],
+    },
+    {
+      name: 'Pro',
+      price: '9',
+      description: 'Built for growing businesses',
+      features: ['Increased item limits', 'Priority support', 'Advanced API access'],
+    },
+    {
+      name: 'Enterprise',
+      price: '29',
+      description: 'For large-scale operations',
+      features: ['Unlimited everything', 'Custom integrations', 'Dedicated support', 'Full API access'],
+    },
+  ];
 
-const demoSteps: DemoStep[] = [
-  {
-    title: 'Connecting to Printify API',
-    description: 'Establishing secure connection and retrieving product catalog...',
-    duration: 1500
-  },
-  {
-    title: 'Syncing with Printful',
-    description: 'Loading templates and product variants...',
-    duration: 2000
-  },
-  {
-    title: 'Loading Gooten Integration',
-    description: 'Fetching available products and pricing...',
-    duration: 1800
-  },
-  {
-    title: 'Preparing Demo Data',
-    description: 'Setting up mock products and collections...',
-    duration: 1200
-  }
-];
-
-const features = [
-  {
-    icon: Palette,
-    title: 'Design Management',
-    description: 'Upload and manage your designs with version control and metadata tracking.'
-  },
-  {
-    icon: Layers,
-    title: 'Template System',
-    description: 'Create and customize product templates for multiple print providers.'
-  },
-  {
-    icon: Zap,
-    title: 'Automated Sync',
-    description: 'Automatically sync your designs and products with print-on-demand providers.'
-  },
-  {
-    icon: Globe,
-    title: 'Multi-Platform',
-    description: 'Connect with multiple print providers and e-commerce platforms.'
-  },
-  {
-    icon: ShoppingBag,
-    title: 'Product Management',
-    description: 'Manage your products across all connected platforms from one place.'
-  },
-  {
-    icon: Users,
-    title: 'Team Collaboration',
-    description: 'Work together with your team using role-based access control.'
-  }
-];
-
-export function Landing() {
-  const navigate = useNavigate();
-  const { signIn } = useAuth();
-  const [showDemoModal, setShowDemoModal] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
-  const [currentStep, setCurrentStep] = React.useState(0);
-  const [stepProgress, setStepProgress] = React.useState(0);
-
-  const runDemoSequence = async () => {
-    setShowDemoModal(true);
-    setCurrentStep(0);
-    setStepProgress(0);
-
-    for (let i = 0; i < demoSteps.length; i++) {
-      setCurrentStep(i);
-      const step = demoSteps[i];
-      
-      // Simulate progress within each step
-      for (let progress = 0; progress <= 100; progress += 5) {
-        setStepProgress(progress);
-        await new Promise(resolve => setTimeout(resolve, step.duration / 20));
-      }
-    }
-
-    // Complete the demo sequence
-    try {
-      await signIn('demo@example.com', 'demo123');
-      setShowDemoModal(false);
-      navigate('/app/dashboard');
-    } catch (error) {
-      console.error('Error logging in:', error);
-      setShowDemoModal(false);
-    }
-  };
-
-  const handleDemoLogin = async () => {
-    setLoading(true);
-    try {
-      await runDemoSequence();
-    } catch (error) {
-      console.error('Error logging in:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const testimonials = [
+    {
+      quote: "PrintVision.Cloud has completely transformed how I manage my POD business. The automation features save me hours every week.",
+      author: "Sarah J.",
+      role: "Independent Creator",
+    },
+    {
+      quote: "The template system is a game-changer. I can create and publish new designs across multiple platforms in minutes.",
+      author: "Mike R.",
+      role: "E-commerce Store Owner",
+    },
+    {
+      quote: "Their API integration helped us scale our operations from hundreds to thousands of products effortlessly.",
+      author: "Christina L.",
+      role: "Print Shop Manager",
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <Palette className="h-8 w-8 text-indigo-600" />
-              <span className="ml-2 text-xl font-bold text-gray-900">PrintVision.Cloud</span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={handleDemoLogin}
-                disabled={loading}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-600 bg-indigo-50 hover:bg-indigo-100"
-              >
-                Try Demo
-              </button>
-              <button
-                onClick={() => navigate('/login')}
-                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-              >
-                Sign In
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
-
+    <LandingLayout>
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <section className="relative bg-white dark:bg-secondary-900 overflow-hidden">
+        <div className="max-w-7xl mx-auto pt-20 pb-16 px-4 sm:pt-24 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-              <span className="block">Streamline Your</span>
-              <span className="block text-indigo-600">Print-on-Demand Business</span>
+            <h1 className="text-4xl tracking-tight font-extrabold text-secondary-900 dark:text-white sm:text-5xl md:text-6xl">
+              <span className="block">Effortlessly Automate Your</span>
+              <span className="block text-primary-600 dark:text-primary-500">Print-on-Demand Business</span>
             </h1>
-            <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-              Manage your designs, products, and print-on-demand operations across multiple platforms from a single dashboard.
+            <p className="mt-3 max-w-md mx-auto text-base text-secondary-500 dark:text-secondary-400 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
+              Seamlessly sync, manage, and expand your product listings across multiple platforms—all from one intuitive dashboard.
             </p>
-            {/* Screenshot */}
-            <div className="mt-8 mb-8">
-              <div className="relative mx-auto max-w-5xl">
-                <div className="relative rounded-lg shadow-xl overflow-hidden">
-                  <img
-                    src="/screenshot.png"
-                    alt="PrintVision.Cloud Dashboard"
-                    className="w-full h-auto object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent"></div>
-                </div>
-              </div>
-            </div>
             <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
               <div className="rounded-md shadow">
-                <button
-                  onClick={() => navigate('/signup')}
-                  className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
-                >
-                  Get Started
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </button>
+                <Link to="/signup" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 md:py-4 md:text-lg md:px-10 dark:bg-primary-500 dark:hover:bg-primary-600">
+                  Start for Free
+                </Link>
+              </div>
+              <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
+                <a href="#features" className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-600 bg-white hover:bg-secondary-50 md:py-4 md:text-lg md:px-10 dark:bg-secondary-800 dark:text-primary-400 dark:hover:bg-secondary-700">
+                  Explore Features
+                </a>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      {/* API Integration Section */}
-      <div className="bg-gray-50 py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-              Seamless Integration with Print-on-Demand Providers
-            </h2>
-            <p className="mt-4 text-lg text-gray-500">
-              Connect your business with leading print-on-demand services through our powerful API integrations.
-            </p>
-          </div>
+      </section>
 
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="px-6 py-8">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <img src="https://printify.com/wp-content/themes/printify/images/logo.svg" alt="Printify" className="h-8" />
-                  </div>
-                </div>
-                <div className="mt-5">
-                  <h3 className="text-lg font-medium text-gray-900">Printify Integration</h3>
-                  <ul className="mt-4 space-y-3">
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span className="ml-3 text-gray-500">Automatic product sync</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span className="ml-3 text-gray-500">Real-time inventory updates</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span className="ml-3 text-gray-500">Bulk product creation</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="px-6 py-8">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <img src="https://www.printful.com/static/images/layout/printful-logo.svg" alt="Printful" className="h-8" />
-                  </div>
-                </div>
-                <div className="mt-5">
-                  <h3 className="text-lg font-medium text-gray-900">Printful Integration</h3>
-                  <ul className="mt-4 space-y-3">
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span className="ml-3 text-gray-500">Automated order routing</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span className="ml-3 text-gray-500">Design template sync</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span className="ml-3 text-gray-500">Shipping rate calculator</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-              <div className="px-6 py-8">
-                <div className="flex items-center">
-                  <div className="flex-shrink-0">
-                    <img src="https://www.gooten.com/wp-content/uploads/2020/10/gooten-logo-2x.png" alt="Gooten" className="h-8" />
-                  </div>
-                </div>
-                <div className="mt-5">
-                  <h3 className="text-lg font-medium text-gray-900">Gooten Integration</h3>
-                  <ul className="mt-4 space-y-3">
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span className="ml-3 text-gray-500">Global production network</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span className="ml-3 text-gray-500">Smart order routing</span>
-                    </li>
-                    <li className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
-                      <span className="ml-3 text-gray-500">Quality control automation</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Features Section */}
-      <div className="bg-gray-50 py-24">
+      {/* How It Works Section */}
+      <section id="how-it-works" className="py-16 bg-secondary-50 dark:bg-secondary-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-              Everything you need to scale your POD business
-            </h2>
-            <p className="mt-4 text-lg text-gray-500">
-              Powerful features to help you manage and grow your print-on-demand business efficiently.
+            <h2 className="text-3xl font-extrabold text-secondary-900 dark:text-white sm:text-4xl">How It Works</h2>
+            <p className="mt-4 max-w-2xl mx-auto text-xl text-secondary-500 dark:text-secondary-400">
+              Get started in minutes with our simple setup process
             </p>
           </div>
-
-          <div className="mt-20">
-            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {features.map((feature) => {
-                const Icon = feature.icon;
-                return (
-                  <div key={feature.title} className="pt-6">
-                    <div className="flow-root bg-white rounded-lg px-6 pb-8">
-                      <div className="-mt-6">
-                        <div>
-                          <span className="inline-flex items-center justify-center p-3 bg-indigo-500 rounded-md shadow-lg">
-                            <Icon className="h-6 w-6 text-white" />
-                          </span>
-                        </div>
-                        <h3 className="mt-8 text-lg font-medium text-gray-900 tracking-tight">
-                          {feature.title}
-                        </h3>
-                        <p className="mt-5 text-base text-gray-500">
-                          {feature.description}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Pricing Section */}
-      <div className="bg-white py-24">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900 sm:text-4xl">
-              Simple, transparent pricing
-            </h2>
-            <p className="mt-4 text-lg text-gray-500">
-              Choose the plan that best fits your needs. All plans include a 14-day free trial.
-            </p>
-          </div>
-
-          <div className="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {pricingPlans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`relative flex flex-col rounded-2xl border ${
-                  plan.popular ? 'border-indigo-600' : 'border-gray-200'
-                } p-8 shadow-sm`}
-              >
-                {plan.popular && (
-                  <div className="absolute -top-4 right-8">
-                    <span className="inline-flex items-center rounded-full bg-indigo-100 px-4 py-1 text-xs font-medium text-indigo-600">
-                      Most Popular
-                    </span>
-                  </div>
-                )}
-
-                <div className="mb-6">
-                  <h3 className="text-lg font-medium text-gray-900">{plan.name}</h3>
-                  <p className="mt-4">
-                    <span className="text-4xl font-bold tracking-tight text-gray-900">
-                      ${plan.price}
-                    </span>
-                    <span className="text-base font-medium text-gray-500">/month</span>
-                  </p>
-                </div>
-
-                <ul className="space-y-4 flex-1">
-                  {plan.features.map((feature) => (
-                    <li key={feature} className="flex items-start">
-                      <CheckCircle className="h-5 w-5 text-indigo-500 shrink-0" />
-                      <span className="ml-3 text-base text-gray-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <button
-                  onClick={() => navigate('/signup')}
-                  className={`mt-8 w-full rounded-md px-4 py-2 text-sm font-semibold shadow-sm ${
-                    plan.popular
-                      ? 'bg-indigo-600 text-white hover:bg-indigo-500'
-                      : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'
-                  }`}
-                >
-                  Get started
-                </button>
+          <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+            {[
+              {
+                title: 'Connect your supplier',
+                description: 'Integrate with Printify, Printful, Gooten, and more',
+                icon: '🔌',
+              },
+              {
+                title: 'Create templates',
+                description: 'Design and customize your product templates',
+                icon: '🎨',
+              },
+              {
+                title: 'Sync products',
+                description: 'Push to Shopify, Amazon, TikTok Shop, and beyond',
+                icon: '🔄',
+              },
+              {
+                title: 'Automate drops',
+                description: 'Schedule releases and manage inventory automatically',
+                icon: '⚡',
+              },
+            ].map((step, index) => (
+              <div key={index} className="relative bg-white dark:bg-secondary-900 p-6 rounded-lg shadow-sm">
+                <div className="text-4xl mb-4">{step.icon}</div>
+                <h3 className="text-lg font-medium text-secondary-900 dark:text-white">{step.title}</h3>
+                <p className="mt-2 text-base text-secondary-500 dark:text-secondary-400">{step.description}</p>
               </div>
             ))}
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Contact Section */}
-      <div className="bg-gray-50 py-24">
+      {/* Pricing Section */}
+      <section id="pricing" className="py-16 bg-secondary-50 dark:bg-secondary-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900">Ready to get started?</h2>
-            <p className="mt-4 text-lg text-gray-500">
-              Join thousands of print-on-demand businesses using PrintVision.Cloud to streamline their operations.
-            </p>
-            <div className="mt-8">
-              <button
-                onClick={() => navigate('/signup')}
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700"
-              >
-                Start Free Trial
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Footer */}
-      <footer className="bg-white border-t">
-        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center">
-              <Palette className="h-8 w-8 text-indigo-600" />
-              <span className="ml-2 text-xl font-bold text-gray-900">PrintVision.Cloud</span>
-            </div>
-            <p className="text-base text-gray-500">
-              &copy; {new Date().getFullYear()} PrintVision.Cloud. All rights reserved.
+          <div className="text-center">
+            <h2 className="text-3xl font-extrabold text-secondary-900 dark:text-white sm:text-4xl">Simple, Transparent Pricing</h2>
+            <p className="mt-4 max-w-2xl mx-auto text-xl text-secondary-500 dark:text-secondary-400">
+              Choose the plan that best fits your business needs
             </p>
           </div>
-        </div>
-      </footer>
-
-      {/* Demo Loading Modal */}
-      <Modal
-        isOpen={showDemoModal}
-        onClose={() => {}}
-        title="Setting Up Demo Environment"
-      >
-        <div className="space-y-6">
-          {demoSteps.map((step, index) => (
-            <div
-              key={index}
-              className={`${
-                index === currentStep
-                  ? 'text-gray-900'
-                  : index < currentStep
-                  ? 'text-green-600'
-                  : 'text-gray-400'
-              }`}
-            >
-              <div className="flex items-center">
-                {index < currentStep ? (
-                  <CheckCircle className="h-5 w-5 mr-2" />
-                ) : index === currentStep ? (
-                  <Loader className="h-5 w-5 mr-2 animate-spin" />
-                ) : (
-                  <div className="h-5 w-5 mr-2" />
-                )}
-                <span className="font-medium">{step.title}</span>
-              </div>
-              {index === currentStep && (
-                <div className="mt-2">
-                  <p className="text-sm text-gray-500">{step.description}</p>
-                  <div className="mt-2 h-2 bg-gray-200 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-indigo-600 transition-all duration-500"
-                      style={{ width: `${stepProgress}%` }}
-                    />
-                  </div>
+          <div className="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+            {plans.map((plan, index) => (
+              <div key={index} className="bg-white dark:bg-secondary-900 rounded-lg shadow-sm divide-y divide-secondary-200 dark:divide-secondary-700">
+                <div className="p-6">
+                  <h3 className="text-lg font-medium text-secondary-900 dark:text-white">{plan.name}</h3>
+                  <p className="mt-2 text-sm text-secondary-500 dark:text-secondary-400">{plan.description}</p>
+                  <p className="mt-4">
+                    <span className="text-4xl font-extrabold text-secondary-900 dark:text-white">${plan.price}</span>
+                    <span className="text-base font-medium text-secondary-500 dark:text-secondary-400">/mo</span>
+                  </p>
+                  <Link to="/signup" className="mt-8 block w-full bg-primary-600 dark:bg-primary-500 text-white rounded-md py-2 text-sm font-semibold text-center hover:bg-primary-700 dark:hover:bg-primary-600">
+                    Start {plan.name} Plan
+                  </Link>
                 </div>
-              )}
-            </div>
-          ))}
+                <div className="px-6 pt-6 pb-8">
+                  <h4 className="text-sm font-medium text-secondary-900 dark:text-white">What's included</h4>
+                  <ul className="mt-6 space-y-4">
+                    {plan.features.map((feature, featureIndex) => (
+                      <li key={featureIndex} className="flex">
+                        <span className="text-green-500">✓</span>
+                        <span className="ml-3 text-sm text-secondary-500 dark:text-secondary-400">{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </Modal>
-    </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="testimonials" className="py-16 bg-white dark:bg-secondary-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-extrabold text-secondary-900 dark:text-white sm:text-4xl">
+              Trusted by Print-on-Demand Creators
+            </h2>
+            <p className="mt-4 max-w-2xl mx-auto text-xl text-secondary-500 dark:text-secondary-400">
+              See what our users are saying about PrintVision.Cloud
+            </p>
+          </div>
+          <div className="mt-16 grid grid-cols-1 gap-8 lg:grid-cols-3">
+            {testimonials.map((testimonial, index) => (
+              <div key={index} className="bg-secondary-50 dark:bg-secondary-800 rounded-lg p-8">
+                <p className="text-lg text-secondary-900 dark:text-white">"{testimonial.quote}"</p>
+                <div className="mt-6">
+                  <p className="text-base font-medium text-secondary-900 dark:text-white">{testimonial.author}</p>
+                  <p className="text-sm text-secondary-500 dark:text-secondary-400">{testimonial.role}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="bg-primary-600 dark:bg-primary-500">
+        <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:py-16 lg:px-8 lg:flex lg:items-center lg:justify-between">
+          <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
+            <span className="block">Ready to get started?</span>
+            <span className="block text-primary-200">Start automating your print-on-demand business today.</span>
+          </h2>
+          <div className="mt-8 flex lg:mt-0 lg:flex-shrink-0">
+            <div className="inline-flex rounded-md shadow">
+              <Link to="/signup" className="inline-flex items-center justify-center px-5 py-3 border border-transparent text-base font-medium rounded-md text-primary-600 bg-white hover:bg-primary-50 dark:bg-secondary-800 dark:text-primary-400 dark:hover:bg-secondary-700">
+                Get started
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </LandingLayout>
   );
 }

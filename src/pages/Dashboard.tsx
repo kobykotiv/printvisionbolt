@@ -1,12 +1,17 @@
 import React from 'react';
-import { BarChart, Users, ShoppingBag, TrendingUp, AlertCircle, CheckCircle2, Palette, FileStack } from 'lucide-react';
+import { BarChart, ShoppingBag, AlertCircle, CheckCircle2, Palette, FileStack, Crown } from 'lucide-react';
 import { useShop } from '../contexts/ShopContext';
+import { useAuth } from '../contexts/auth/AuthContext';
+import { useToast } from '../contexts/ToastContext';
 import { FreeUsageWidget } from '../components/ui/FreeUsageWidget';
 import { supabase } from '../lib/supabase';
 import { TEST_MODE } from '../lib/test-mode';
+import Tutorial from '../components/ui/Tutorial'; // Import Tutorial component
 
 export function Dashboard() {
   const { currentShop } = useShop();
+  const { isDemoFree, isDemoEnterprise } = useAuth();
+  const { showToast } = useToast();
   const [loading, setLoading] = React.useState(true);
   const [stats, setStats] = React.useState({
     totalDesigns: 0,
@@ -14,9 +19,30 @@ export function Dashboard() {
     totalCollections: 0,
     totalProducts: 0
   });
+  const [showTutorial, setShowTutorial] = React.useState(false);
 
   React.useEffect(() => {
-    if (currentShop) {
+    const tutorialCompleted = localStorage.getItem('tutorialCompleted');
+    if (!tutorialCompleted) {
+      setShowTutorial(true);
+    }
+  }, []);
+
+  const completeTutorial = () => {
+    localStorage.setItem('tutorialCompleted', 'true');
+    setShowTutorial(false);
+  };
+
+  React.useEffect(() => {
+    if (isDemoFree) {
+      showToast('Welcome to the free demo! Some features are limited.', 'info');
+    } else if (isDemoEnterprise) {
+      showToast('Welcome to the enterprise demo! Full access enabled.', 'info');
+    }
+  }, [isDemoFree, isDemoEnterprise, showToast]);
+
+  React.useEffect(() => {
+    if (currentShop?.id) {
       loadStats();
     }
   }, [currentShop]);
@@ -25,14 +51,18 @@ export function Dashboard() {
     try {
       if (TEST_MODE) {
         const mockStats = {
-          totalDesigns: Math.floor(Math.random() * 100),
-          activeTemplates: Math.floor(Math.random() * 20),
-          totalCollections: Math.floor(Math.random() * 10),
-          totalProducts: Math.floor(Math.random() * 300)
+          totalDesigns: isDemoFree ? 5 : Math.floor(Math.random() * 100),
+          activeTemplates: isDemoFree ? 2 : Math.floor(Math.random() * 20),
+          totalCollections: isDemoFree ? 1 : Math.floor(Math.random() * 10),
+          totalProducts: isDemoFree ? 10 : Math.floor(Math.random() * 300)
         };
         setStats(mockStats);
         setLoading(false);
         return;
+      }
+
+      if (!currentShop?.id) {
+        throw new Error('No shop selected');
       }
 
       // Get real-time stats from Supabase
@@ -58,6 +88,7 @@ export function Dashboard() {
       });
     } catch (error) {
       console.error('Error loading stats:', error);
+      showToast('Failed to load dashboard statistics', 'error');
     } finally {
       setLoading(false);
     }
@@ -67,33 +98,28 @@ export function Dashboard() {
     {
       name: 'Total Designs',
       value: stats.totalDesigns,
-      icon: Palette
+      icon: Palette,
+      limited: isDemoFree
     },
     {
       name: 'Active Templates',
       value: stats.activeTemplates,
-      icon: FileStack
+      icon: FileStack,
+      limited: isDemoFree
     },
     {
       name: 'Collections',
       value: stats.totalCollections,
-      icon: BarChart
+      icon: BarChart,
+      limited: isDemoFree
     },
     {
       name: 'Total Products',
       value: stats.totalProducts,
-      icon: ShoppingBag
+      icon: ShoppingBag,
+      limited: isDemoFree
     }
   ];
-
-  React.useEffect(() => {
-    // Simulate loading data
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   if (loading) {
     return (
@@ -111,9 +137,24 @@ export function Dashboard() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-8">
-        Dashboard - {currentShop?.name}
-      </h1>
+      {showTutorial && <Tutorial onComplete={completeTutorial} />} {/* Show tutorial if needed */}
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-2xl font-bold text-gray-900">
+          Dashboard{currentShop?.name ? ` - ${currentShop.name}` : ''}
+        </h1>
+        {isDemoFree && (
+          <div className="flex items-center text-yellow-600">
+            <Crown className="h-5 w-5 mr-2" />
+            <span>Free Demo Mode</span>
+          </div>
+        )}
+        {isDemoEnterprise && (
+          <div className="flex items-center text-indigo-600">
+            <Crown className="h-5 w-5 mr-2" />
+            <span>Enterprise Demo Mode</span>
+          </div>
+        )}
+      </div>
       
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {dashboardStats.map((stat) => {
@@ -121,7 +162,8 @@ export function Dashboard() {
           return (
             <div
               key={stat.name}
-              className="relative overflow-hidden rounded-lg bg-white p-6 shadow"
+              className={`relative overflow-hidden rounded-lg bg-white p-6 shadow
+                ${stat.limited ? 'opacity-75' : ''}`}
             >
               <dt>
                 <div className="absolute rounded-md bg-indigo-500 p-3">
@@ -129,6 +171,9 @@ export function Dashboard() {
                 </div>
                 <p className="ml-16 truncate text-sm font-medium text-gray-500">
                   {stat.name}
+                  {stat.limited && (
+                    <span className="ml-2 text-xs text-yellow-600">(Limited)</span>
+                  )}
                 </p>
               </dt>
               <dd className="ml-16 flex items-baseline pb-6">
@@ -141,14 +186,43 @@ export function Dashboard() {
         })}
       </div>
 
+      {/* Feature Limitations Panel */}
+      {isDemoFree && (
+        <div className="mt-8 bg-gradient-to-r from-yellow-50 to-yellow-100 rounded-lg p-6">
+          <h2 className="text-lg font-medium text-yellow-800 mb-4">Free Demo Limitations</h2>
+          <ul className="space-y-2">
+            <li className="flex items-center text-yellow-700">
+              <AlertCircle className="h-5 w-5 mr-2" />
+              Limited to 5 designs
+            </li>
+            <li className="flex items-center text-yellow-700">
+              <AlertCircle className="h-5 w-5 mr-2" />
+              Basic analytics only
+            </li>
+            <li className="flex items-center text-yellow-700">
+              <AlertCircle className="h-5 w-5 mr-2" />
+              No team collaboration features
+            </li>
+          </ul>
+          <button 
+            onClick={() => showToast('Contact sales for enterprise demo access', 'info')}
+            className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500"
+          >
+            Upgrade to Enterprise
+          </button>
+        </div>
+      )}
+
       {/* Free Tier Usage */}
-      <div className="mt-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2">
-            <FreeUsageWidget />
+      {!isDemoEnterprise && (
+        <div className="mt-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2">
+              <FreeUsageWidget />
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* API Health Status */}
       <div className="mt-8">
@@ -157,7 +231,7 @@ export function Dashboard() {
           {[
             { name: 'Printify', status: 'healthy', latency: '120ms' },
             { name: 'Printful', status: 'healthy', latency: '89ms' },
-            { name: 'Gooten', status: 'degraded', latency: '350ms' },
+            { name: 'Gooten', status: isDemoFree ? 'unavailable' : 'degraded', latency: '350ms' },
           ].map((api) => (
             <div
               key={api.name}
@@ -169,8 +243,10 @@ export function Dashboard() {
               </div>
               {api.status === 'healthy' ? (
                 <CheckCircle2 className="h-5 w-5 text-green-500" />
-              ) : (
+              ) : api.status === 'degraded' ? (
                 <AlertCircle className="h-5 w-5 text-yellow-500" />
+              ) : (
+                <AlertCircle className="h-5 w-5 text-gray-400" />
               )}
             </div>
           ))}
@@ -207,7 +283,6 @@ export function Dashboard() {
                     </div>
                   </div>
                 </li>
-                {/* Add more activity items as needed */}
               </ul>
             </div>
           </div>
