@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import type { LucideIcon } from 'lucide-react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
