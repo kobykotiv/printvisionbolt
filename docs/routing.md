@@ -4,7 +4,7 @@
 
 ### Authentication Routes
 - `/auth/login` - User login page
-- `/auth/signup` - User registration
+- `/signup` - User registration
 - `/auth/forgot-password` - Password recovery
 
 ### Public Routes

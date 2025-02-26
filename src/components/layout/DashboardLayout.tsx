@@ -1,23 +1,43 @@
 import React, { useState } from 'react';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { 
-  LayoutDashboard, 
-  Image, 
-  Settings, 
-  LogOut, 
-  Menu, 
+import {
+  LayoutDashboard,
+  Image,
+  Settings,
+  LogOut,
+  Menu,
   X,
   User,
-  ShoppingBag
+  ShoppingBag,
+  BoxIcon,
+  Store,
+  FolderTree,
+  Calendar,
+  RefreshCw
 } from 'lucide-react';
 import { useAuth } from '../../contexts/auth/AuthContext';
 
 // Navigation items for the sidebar
 const navigationItems = [
-  { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-  { name: 'Designs', href: '/designs', icon: Image },
-  { name: 'Products', href: '/products', icon: ShoppingBag },
-  { name: 'Settings', href: '/settings', icon: Settings },
+  { name: 'Dashboard', href: '/app', icon: LayoutDashboard },
+  {
+    name: 'Content',
+    items: [
+      { name: 'Collections', href: '/app/collections', icon: FolderTree },
+      { name: 'Designs', href: '/app/designs', icon: Image },
+      { name: 'Templates', href: '/app/templates', icon: BoxIcon }
+    ]
+  },
+  {
+    name: 'POD Management',
+    items: [
+      { name: 'Stores', href: '/app/stores', icon: Store },
+      { name: 'Products', href: '/app/products', icon: ShoppingBag },
+      { name: 'Scheduled Drops', href: '/app/drops', icon: Calendar },
+      { name: 'Sync Status', href: '/app/sync', icon: RefreshCw }
+    ]
+  },
+  { name: 'Settings', href: '/app/settings', icon: Settings }
 ];
 
 const DashboardLayout = () => {
@@ -103,39 +123,58 @@ const DashboardLayout = () => {
   );
 };
 
+interface NavItem {
+  name: string;
+  href?: string;
+  icon?: LucideIcon;
+  items?: NavItem[];
+}
+
+const NavLink = ({ item }: { item: NavItem }) => {
+  if (!item.href || !item.icon) return null;
+  const Icon = item.icon;
+  return (
+    <Link
+      key={item.name}
+      to={item.href}
+      className="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-indigo-600"
+    >
+      <Icon className="mr-3 h-6 w-6 flex-shrink-0" />
+      {item.name}
+    </Link>
+  );
+};
+
+const NavSection = ({ item }: { item: NavItem }) => {
+  if (!item.items) return <NavLink item={item} />;
+  
+  return (
+    <div className="space-y-1">
+      <h3 className="px-2 pt-4 pb-2 text-xs font-semibold text-gray-500 uppercase tracking-wider">
+        {item.name}
+      </h3>
+      <div className="space-y-1">
+        {item.items.map((subItem) => (
+          <NavLink key={subItem.name} item={subItem} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const DesktopNavigation = () => (
   <nav className="mt-5 flex-1 space-y-1 px-2">
-    {navigationItems.map((item) => {
-      const Icon = item.icon;
-      return (
-        <Link
-          key={item.name}
-          to={item.href}
-          className="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-indigo-600"
-        >
-          <Icon className="mr-3 h-6 w-6 flex-shrink-0" />
-          {item.name}
-        </Link>
-      );
-    })}
+    {navigationItems.map((item) => (
+      <NavSection key={item.name} item={item} />
+    ))}
   </nav>
 );
 
 const MobileNavigation = () => (
   <nav className="mt-5 flex-1 space-y-1 px-2">
-    {navigationItems.map((item) => {
-      const Icon = item.icon;
-      return (
-        <Link
-          key={item.name}
-          to={item.href}
-          className="group flex items-center rounded-md px-2 py-2 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-indigo-600"
-        >
-          <Icon className="mr-3 h-6 w-6 flex-shrink-0" />
-          {item.name}
-        </Link>
-      );
-    })}
+    {navigationItems.map((item) => (
+      <NavSection key={item.name} item={item} />
+    ))}
   </nav>
 );
 
