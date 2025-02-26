@@ -1,39 +1,40 @@
 import React from 'react';
+import { z } from 'zod';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Plus, Trash2, Save, Upload } from 'lucide-react';
-import type { Template, TemplateDesign, Blueprint } from '../../lib/types/template';
+import type { TemplateDesign, Blueprint } from '../../lib/types/template';
 import { BlueprintSelectorModal } from './BlueprintSelectorModal';
 import { DesignUploader } from '../designs/DesignUploader';
 
-interface TemplateFormProps {
-  template?: Template;
-  onSave: (template: Template) => Promise<void>;
-  isLoading?: boolean;
+const templateSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().optional(),
+  tags: z.array(z.string()),
+  status: z.enum(['draft', 'active', 'archived']),
+});
+
+type TemplateFormData = z.infer<typeof templateSchema>;
+
+interface Props {
+  initialData?: Partial<TemplateFormData>;
+  onSave: (data: TemplateFormData) => Promise<void>;
+  onCancel?: () => void;
 }
 
-export function TemplateForm({ template, onSave, isLoading }: TemplateFormProps) {
+export function TemplateForm({ initialData, onSave, onCancel }: Props) {
   const [showBlueprintModal, setShowBlueprintModal] = React.useState(false);
   const [showDesignUploader, setShowDesignUploader] = React.useState(false);
-  
-  const { register, handleSubmit, watch, setValue, formState: { errors, isDirty } } = useForm<Template>({
-    defaultValues: template || {
-      id: '',
-      title: '',
-      description: '',
-      blueprints: [],
-      designs: [],
-      tags: [],
-      status: 'draft',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    }
+
+  const { register, handleSubmit, watch, setValue, formState: { errors, isSubmitting, isDirty } } = useForm<TemplateFormData>({
+    resolver: zodResolver(templateSchema),
+    defaultValues: initialData
   });
 
   const selectedBlueprints = watch('blueprints');
   const selectedDesigns = watch('designs');
 
   const handleBlueprintSelect = (blueprints: Blueprint[]) => {
-    // Add only new blueprints that aren't already selected
     const existingIds = new Set(selectedBlueprints.map(b => b.id));
     const newBlueprints = blueprints.filter(b => !existingIds.has(b.id));
     
@@ -75,8 +76,8 @@ export function TemplateForm({ template, onSave, isLoading }: TemplateFormProps)
           </label>
           <input
             type="text"
-            {...register('title', { required: 'Title is required' })}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            {...register('title')}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
           {errors.title && (
             <p className="mt-1 text-sm text-red-600">{errors.title.message}</p>
@@ -90,7 +91,7 @@ export function TemplateForm({ template, onSave, isLoading }: TemplateFormProps)
           <textarea
             {...register('description')}
             rows={3}
-            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
         </div>
 
@@ -194,14 +195,22 @@ export function TemplateForm({ template, onSave, isLoading }: TemplateFormProps)
         </div>
       </div>
 
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-3">
+        {onCancel && (
+          <button
+            type="button"
+            onClick={onCancel}
+            className="px-4 py-2 border rounded-md hover:bg-gray-50"
+          >
+            Cancel
+          </button>
+        )}
         <button
           type="submit"
-          disabled={!isDirty || isLoading}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={isSubmitting}
+          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-50"
         >
-          <Save className="h-4 w-4 mr-2" />
-          Save Template
+          {isSubmitting ? 'Saving...' : 'Save Template'}
         </button>
       </div>
 

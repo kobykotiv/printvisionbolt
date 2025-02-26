@@ -1,19 +1,19 @@
 import React, { createContext, useContext, useState } from 'react';
 import { Toast, ToastType } from '../components/ui/Toast';
 
-interface ToastContextType {
-  showToast: (message: string, type: ToastType) => void;
-}
+const ToastContext = createContext(null);
 
-const ToastContext = createContext<ToastContextType | undefined>(undefined);
+export const ToastProvider = ({ children }) => {
+  const [toasts, setToasts] = useState([]);
 
-export function ToastProvider({ children }: { children: React.ReactNode }) {
-  const [toasts, setToasts] = useState<Array<{ id: number; message: string; type: ToastType }>>([]);
-  let nextId = 0;
+  const addToast = (message) => {
+    setToasts([...toasts, message]);
+  };
 
-  const showToast = (message: string, type: ToastType) => {
-    const id = nextId++;
-    setToasts((current) => [...current, { id, message, type }]);
+  return (
+    <ToastContext.Provider value={{ toasts, addToast }}>
+      {children}
+      <div className="fixed bottom-0 right-0 z-50 p-4 space-y-4">
   };
 
   const removeToast = (id: number) => {
