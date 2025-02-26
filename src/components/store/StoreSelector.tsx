@@ -1,99 +1,118 @@
 import React from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Loader2, ExternalLink, AlertCircle } from 'lucide-react';
-import { StoreCard } from './StoreCard';
-import { storeService } from '../../lib/services/storeService';
-import type { Store, StoreProvider } from '../../lib/types/store';
+import { ChevronDown, Store, AlertCircle, Lock, ArrowRight } from 'lucide-react';
+import { useShop } from '../../contexts/ShopContext';
+import { useNavigate } from 'react-router-dom';
 
 export function StoreSelector() {
-  const { data: stores, isLoading, error } = useQuery({
-    queryKey: ['stores'],
-    queryFn: storeService.getStores
-  });
+  const { currentShop, shops, setCurrentShop, loading, isAtShopLimit } = useShop();
+  const navigate = useNavigate();
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [error, setError] = React.useState<string | null>(null);
+  const dropdownRef = React.useRef<HTMLDivElement>(null);
 
-  const [selectedProvider, setSelectedProvider] = React.useState<StoreProvider | null>(null);
+  // Close dropdown when clicking outside
+  React.useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
 
-  if (isLoading) {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleShopChange = async (shop: typeof currentShop) => {
+    try {
+      if (shop) {
+        // Store selection in localStorage for persistence
+        localStorage.setItem('selectedShopId', shop.id);
+        setCurrentShop(shop);
+      }
+      setIsOpen(false);
+      setError(null);
+    } catch (err) {
+      setError('Failed to switch shops. Please try again.');
+      console.error('Error switching shops:', err);
+    }
+  };
+
+  if (loading) {
     return (
-      <div className="flex items-center justify-center py-12">
-        <Loader2 className="h-8 w-8 animate-spin text-indigo-600" />
+      <div className="animate-pulse flex items-center h-10 px-4 py-2 bg-white rounded-lg shadow">
+        <div className="h-4 w-32 bg-gray-200 rounded"></div>
       </div>
     );
   }
 
   if (error) {
     return (
-      <div className="rounded-md bg-red-50 p-4">
-        <div className="flex">
-          <AlertCircle className="h-5 w-5 text-red-400" />
-          <div className="ml-3">
-            <h3 className="text-sm font-medium text-red-800">
-              Error loading stores
-            </h3>
-            <div className="mt-2 text-sm text-red-700">
-              {error instanceof Error ? error.message : 'An unexpected error occurred'}
-            </div>
-          </div>
-        </div>
+      <div className="flex items-center gap-2 text-red-600 bg-red-50 px-4 py-2 rounded-lg">
+        <AlertCircle className="h-4 w-4" />
+        <span className="text-sm">{error}</span>
       </div>
     );
   }
 
   return (
-    <div className="space-y-8">
-      {/* Provider Selection */}
-      <div>
-        <h2 className="text-lg font-medium text-gray-900 mb-4">
-          Select a Store Provider
-        </h2>
-        <div className="grid grid-cols-3 gap-4">
-          {['shopify', 'woocommerce', 'printProvider'].map((provider) => (
-            <button
-              key={provider}
-              onClick={() => setSelectedProvider(provider as StoreProvider)}
-              className={`
-                p-4 border rounded-lg text-left
-                ${selectedProvider === provider ? 
-                  'border-indigo-500 bg-indigo-50' : 
-                  'border-gray-200 hover:border-gray-300'
-                }
-              `}
-            >
-              <h3 className="font-medium capitalize">{provider}</h3>
-              <p className="text-sm text-gray-500 mt-1">
-                Connect your {provider} store
-              </p>
-            </button>
-          ))}
+    <div className="relative" ref={dropdownRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className={`flex items-center justify-between w-full px-4 py-2 text-left bg-white rounded-lg shadow hover:bg-gray-50 ${
+          isOpen ? 'ring-2 ring-indigo-500' : ''
+        }`}
+      >
+        <div className="flex items-center gap-2">
+          <Store className="h-4 w-4 text-gray-400" />
+          <span className="text-sm font-medium text-gray-700">
+            {currentShop?.name || 'Select a store'}
+          </span>
         </div>
-      </div>
+        <ChevronDown
+          className={`h-4 w-4 text-gray-400 transition-transform ${
+            isOpen ? 'transform rotate-180' : ''
+          }`}
+        />
+      </button>
 
-      {/* Connected Stores */}
-      {stores?.length > 0 && (
-        <div>
-          <h2 className="text-lg font-medium text-gray-900 mb-4">
-            Connected Stores
-          </h2>
-          <div className="grid grid-cols-1 gap-4">
-            {stores.map((store: Store) => (
-              <StoreCard
-                key={store.id}
-                store={store}
-                onSelect={() => {/* Handle store selection */}}
-              />
+      {isOpen && shops.length > 0 && (
+        <div className="absolute z-10 mt-1 w-full bg-white rounded-lg shadow-lg">
+          <ul className="py-1 max-h-60 overflow-auto">
+            {shops.map((shop) => (
+              <li key={shop.id}>
+                <button
+                  onClick={() => handleShopChange(shop)}
+                  className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-100 ${
+                    currentShop?.id === shop.id ? 'bg-indigo-50 text-indigo-700' : 'text-gray-700'
+                  }`}
+                >
+                  {shop.name}
+                </button>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       )}
 
-      {/* Provider-specific Connection Form */}
-      {selectedProvider && (
-        <div>
-          <h2 className="text-lg font-medium text-gray-900 mb-4">
-            Connect {selectedProvider}
-          </h2>
-          {/* Render provider-specific connection form */}
-          {/* This would be another component based on the selected provider */}
+      {isAtShopLimit && (
+        <div className="mt-2 bg-indigo-50 p-3 rounded-lg">
+          <p className="text-sm text-indigo-700 mb-2">
+            <Lock className="inline-block h-4 w-4 mr-1" />
+            Free tier limited to 1 shop
+          </p>
+          <button
+            onClick={() => navigate('/app/billing')}
+            className="w-full flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-md"
+          >
+            Upgrade to Add More Shops
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </button>
+        </div>
+      )}
+
+      {isOpen && shops.length === 0 && (
+        <div className="absolute z-10 mt-1 w-full bg-white rounded-lg shadow-lg p-4">
+          <p className="text-sm text-gray-500">No stores available</p>
         </div>
       )}
     </div>

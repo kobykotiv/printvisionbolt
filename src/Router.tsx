@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import DashboardLayout from './components/layout/DashboardLayout';
 import Landing from './pages/Landing';
@@ -9,11 +8,9 @@ import Pricing from './pages/Pricing';
 import FAQ from './pages/FAQ';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
-import { CollectionsPage } from './pages/CollectionsPage';
-import { DesignsPage } from './pages/DesignsPage';
 import NotFound from './components/NotFound';
 
-function Router() {
+const Router = () => {
   return (
     <Routes>
       {/* Public routes */}
@@ -27,16 +24,17 @@ function Router() {
       <Route path="/privacy" element={<Privacy />} />
 
       {/* Protected routes */}
-      <Route path="/app" element={<DashboardLayout />}>
-        <Route path="collections" element={<CollectionsPage />} />
-        <Route path="designs" element={<DesignsPage />} />
-        {/* Add other routes here */}
+      <Route element={<DashboardLayout />}>
+        <Route path="/dashboard" element={<div>Dashboard Content</div>} />
+        <Route path="/settings" element={<div>Settings Content</div>} />
+        <Route path="/designs" element={<div>Designs Content</div>} />
+        <Route path="/collections" element={<div>Collections Content</div>} />
       </Route>
 
       {/* 404 route */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
-}
+};
 
 export default Router;
