@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
               </div>
               {/* Main Menu Items */}
               <Link to="app/shop-selector" className="hover:text-blue-500">
-                Shop Selector
+                Shops
               </Link>
               <Link to="app/templates" className="hover:text-blue-500">
                 Templates

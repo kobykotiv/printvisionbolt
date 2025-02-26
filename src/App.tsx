@@ -6,6 +6,7 @@ import Router from './Router';
 import ErrorBoundary from './components/ErrorBoundary';
 import { AuthProvider } from './contexts/auth/AuthContext';
 import { ToastProvider } from './contexts/ToastContext'; // Import ToastProvider
+import { Blog } from './pages/Blog';
 
 function App() {
   return (

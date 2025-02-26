@@ -1,94 +1,113 @@
+import React from 'react';
 import { Loader2 } from 'lucide-react';
-import { cva, type VariantProps } from 'class-variance-authority';
-import { cn } from '../../lib/utils';
 
-const loadingVariants = cva(
-  'animate-spin text-primary',
-  {
-    variants: {
-      size: {
-        sm: 'w-4 h-4',
-        md: 'w-6 h-6',
-        lg: 'w-8 h-8',
-      },
-      variant: {
-        default: 'text-primary',
-        light: 'text-primary/60',
-        white: 'text-white',
-      },
-    },
-    defaultVariants: {
-      size: 'md',
-      variant: 'default',
-    },
-  }
-);
-
-export interface LoadingStateProps
-  extends React.HTMLAttributes<HTMLDivElement>,
-    VariantProps<typeof loadingVariants> {
-  fullscreen?: boolean;
-  text?: string;
-  size?: 'sm' | 'md' | 'lg';
-  variant?: 'default' | 'light' | 'white';
+interface LoadingStateProps {
+  /**
+   * Type of loading state to display
+   */
+  type?: 'spinner' | 'skeleton';
+  
+  /**
+   * Number of skeleton items to show
+   */
+  count?: number;
+  
+  /**
+   * Custom message to display
+   */
+  message?: string;
+  
+  /**
+   * Additional CSS classes
+   */
+  className?: string;
+  
+  /**
+   * Layout for skeleton items
+   */
+  layout?: 'grid' | 'list';
+  
+  /**
+   * Number of grid columns (when layout is 'grid')
+   */
+  columns?: number;
 }
 
 export function LoadingState({
-  className,
-  size,
-  variant,
-  fullscreen,
-  text,
-  ...props
+  type = 'spinner',
+  count = 4,
+  message = 'Loading...',
+  className = '',
+  layout = 'grid',
+  columns = 4
 }: LoadingStateProps) {
-  const content = (
-    <div
-      className={cn(
-        'flex flex-col items-center justify-center gap-2',
-        fullscreen && 'fixed inset-0 bg-background/80 backdrop-blur-sm',
-        className
-      )}
-      {...props}
+  if (type === 'spinner') {
+    return (
+      <div className={`flex flex-col items-center justify-center p-8 ${className}`}>
+        <Loader2 className="h-8 w-8 animate-spin text-primary mb-2" />
+        <p className="text-sm text-gray-500">{message}</p>
+      </div>
+    );
+  }
+
+  const gridCols = {
+    1: 'grid-cols-1',
+    2: 'grid-cols-1 sm:grid-cols-2',
+    3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+    4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4',
+  }[columns] || 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4';
+
+  return (
+    <div 
+      className={`
+        ${layout === 'grid' ? `grid ${gridCols} gap-6` : 'space-y-4'}
+        ${className}
+      `}
     >
-      <Loader2 className={loadingVariants({ size, variant })} />
-      {text && (
-        <p className={cn(
-          'text-sm',
-          variant === 'white' ? 'text-white' : 'text-muted-foreground'
-        )}>
-          {text}
-        </p>
-      )}
-    </div>
-  );
-
-  return fullscreen ? (
-    <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {content}
-    </div>
-  ) : content;
-}
-
-// Loading states for common scenarios
-export function TableLoadingState() {
-  return (
-    <div className="min-h-[200px] flex items-center justify-center">
-      <LoadingState text="Loading data..." />
+      {Array.from({ length: count }).map((_, i) => (
+        <div key={i} className="bg-white p-6 rounded-lg shadow animate-pulse">
+          <div className="h-8 w-8 bg-gray-200 rounded-md mb-4" />
+          <div className="space-y-3">
+            <div className="h-4 w-3/4 bg-gray-200 rounded" />
+            <div className="h-4 w-1/2 bg-gray-200 rounded" />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
 
-export function ButtonLoadingState() {
-  return <LoadingState size="sm" className="mr-2" />;
-}
+/**
+ * Custom hook to manage loading state with timeout
+ */
+export function useLoadingWithTimeout(initialState = false, timeout = 500) {
+  const [isLoading, setIsLoading] = React.useState(initialState);
+  const timer = React.useRef<NodeJS.Timeout>();
 
-export function PageLoadingState() {
-  return (
-    <LoadingState 
-      fullscreen 
-      size="lg" 
-      text="Loading..." 
-      className="p-4"
-    />
-  );
+  const startLoading = React.useCallback(() => {
+    setIsLoading(true);
+  }, []);
+
+  const stopLoading = React.useCallback(() => {
+    if (timer.current) {
+      clearTimeout(timer.current);
+    }
+    timer.current = setTimeout(() => {
+      setIsLoading(false);
+    }, timeout);
+  }, [timeout]);
+
+  React.useEffect(() => {
+    return () => {
+      if (timer.current) {
+        clearTimeout(timer.current);
+      }
+    };
+  }, []);
+
+  return {
+    isLoading,
+    startLoading,
+    stopLoading
+  };
 }

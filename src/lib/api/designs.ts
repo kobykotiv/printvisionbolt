@@ -1,78 +1,122 @@
-import { APIClient } from './client';
 import { Database } from '../database.types';
+import { APIClient } from './client';
 
-// Type for Design from database schema
-type DBDesign = Database['public']['Tables']['designs']['Row'];
+type Design = Database['public']['Tables']['designs']['Row'];
+type CreateDesign = Database['public']['Tables']['designs']['Insert'];
+type UpdateDesign = Database['public']['Tables']['designs']['Update'];
 
-// Extended type for API responses
-export interface Design extends DBDesign {
-  preview_url?: string;
-  stats?: {
-    views: number;
-    downloads: number;
-    shares: number;
-  };
-}
-
-export interface DesignFilters {
-  search?: string;
+interface DesignQueryParams {
+  shop_id?: string;
+  user_id?: string;
   tags?: string[];
-  colors?: string[];
   page?: number;
   limit?: number;
+  sort_by?: keyof Design;
+  sort_order?: 'asc' | 'desc';
 }
 
-export interface DesignListResponse {
+interface DesignResponse {
   data: Design[];
   total: number;
   page: number;
   limit: number;
 }
 
-class DesignsAPIClient extends APIClient {
+export class DesignsAPI extends APIClient {
   constructor() {
     super('/api/designs');
   }
 
-  async list(filters?: DesignFilters): Promise<DesignListResponse> {
-    return this.get<DesignListResponse>('/', { params: filters });
+  /**
+   * Fetch designs with optional filtering and pagination
+   */
+  async getDesigns(params: DesignQueryParams = {}): Promise<DesignResponse> {
+    return this.get<DesignResponse>('/', { params });
   }
 
-  async getById(id: string): Promise<Design> {
+  /**
+   * Fetch a single design by ID
+   */
+  async getDesign(id: string): Promise<Design> {
     return this.get<Design>(`/${id}`);
   }
 
-  async create(data: Omit<Design, 'id' | 'created_at' | 'updated_at'>): Promise<Design> {
-    return this.post<Design, Partial<Design>>('/', data);
+  /**
+   * Create a new design
+   */
+  async createDesign(design: CreateDesign): Promise<Design> {
+    return this.post<Design, CreateDesign>('/', design);
   }
 
-  async update(id: string, data: Partial<Design>): Promise<Design> {
-    return this.patch<Design, Partial<Design>>(`/${id}`, data);
+  /**
+   * Update an existing design
+   */
+  async updateDesign(id: string, updates: UpdateDesign): Promise<Design> {
+    return this.patch<Design, UpdateDesign>(`/${id}`, updates);
   }
 
-  async delete(id: string): Promise<void> {
+  /**
+   * Delete a design
+   */
+  async deleteDesign(id: string): Promise<void> {
     return this.delete(`/${id}`);
   }
 
-  async extractColors(imageUrl: string): Promise<string[]> {
-    return this.post<string[]>('/extract-colors', { imageUrl });
+  /**
+   * Upload design file and get file URL
+   */
+  async uploadDesignFile(file: File): Promise<{ file_url: string; thumbnail_url?: string }> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return this.post<{ file_url: string; thumbnail_url?: string }, FormData>(
+      '/upload',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
   }
 
-  async bulkUpdate(ids: string[], data: Partial<Design>): Promise<Design[]> {
-    return this.patch<Design[], { ids: string[] } & Partial<Design>>('/bulk', {
-      ids,
-      ...data,
-    });
+  /**
+   * Bulk create/update designs
+   */
+  async bulkCreateDesigns(designs: CreateDesign[]): Promise<{ 
+    successful: Design[];
+    failed: Array<{ design: CreateDesign; error: string }>;
+  }> {
+    return this.post<
+      { successful: Design[]; failed: Array<{ design: CreateDesign; error: string }> },
+      { designs: CreateDesign[] }
+    >('/bulk', { designs });
+  }
+
+  /**
+   * Get designs by tag
+   */
+  async getDesignsByTag(tag: string, params: Omit<DesignQueryParams, 'tags'> = {}): Promise<DesignResponse> {
+    return this.get<DesignResponse>('/tags/${tag}', { params });
+  }
+
+  /**
+   * Add tags to a design
+   */
+  async addTags(id: string, tags: string[]): Promise<Design> {
+    return this.post<Design, { tags: string[] }>(`/${id}/tags`, { tags });
+  }
+
+  /**
+   * Remove tags from a design
+   */
+  async removeTags(id: string, tags: string[]): Promise<Design> {
+    return this.patch<Design, { tags: string[] }>(`/${id}/tags/remove`, { tags });
   }
 }
 
-export const designsAPI = new DesignsAPIClient();
+// Create singleton instance
+export const designsAPI = new DesignsAPI();
 
-// React Query keys
-export const designKeys = {
-  all: ['designs'] as const,
-  lists: () => [...designKeys.all, 'list'] as const,
-  list: (filters: DesignFilters) => [...designKeys.lists(), filters] as const,
-  details: () => [...designKeys.all, 'detail'] as const,
-  detail: (id: string) => [...designKeys.details(), id] as const,
-};
+// Export type for use in hooks/components
+export type { Design, CreateDesign, UpdateDesign, DesignQueryParams, DesignResponse };

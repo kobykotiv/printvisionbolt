@@ -66,13 +66,13 @@ export function LandingLayout({ children }: LandingLayoutProps) {
                 {isDarkMode ? '🌞' : '🌙'}
               </button>
               <Link
-                to="/login"
+                to="/auth/login"
                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600"
               >
                 Sign In
               </Link>
               <Link
-                to="/signup"
+                to="/auth/signup"
                 className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-primary-600 bg-primary-50 hover:bg-primary-100 dark:text-primary-400 dark:bg-secondary-800 dark:hover:bg-secondary-700"
               >
                 Start Free
