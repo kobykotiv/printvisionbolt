@@ -9,6 +9,17 @@ import FAQ from './pages/FAQ';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import NotFound from './components/NotFound';
+import Collections from './pages/Collections';
+import {Designs} from './pages/Designs';
+import {Templates} from './pages/Templates';
+import {Products} from './pages/Products';
+import {Settings} from './pages/Settings';
+import {Dashboard} from './pages/Dashboard';
+import { Navigate } from 'react-router-dom';
+
+// Import components for new routes
+import {CollectionDetails} from './pages/CollectionDetails';
+import {TemplateDetails} from './pages/TemplateDetails';
 
 const Router = () => {
   return (
@@ -25,10 +36,17 @@ const Router = () => {
 
       {/* Protected routes */}
       <Route element={<DashboardLayout />}>
-        <Route path="/dashboard" element={<div>Dashboard Content</div>} />
-        <Route path="/settings" element={<div>Settings Content</div>} />
-        <Route path="/designs" element={<div>Designs Content</div>} />
-        <Route path="/collections" element={<div>Collections Content</div>} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/collections" element={<Collections />} />
+        <Route path="/collections/:id" element={<CollectionDetails />} />
+        <Route path="/designs" element={<Designs />} />
+        <Route path="/templates" element={<Templates />} />
+        <Route path="/templates/:id" element={<TemplateDetails />} />
+        <Route path="/products/*" element={<Products />} />
+        <Route path="/stores/*" element={<Navigate to="/products" />} /> 
+        <Route path="/sync/*" element={<Navigate to="/products/sync" />} />
+        <Route path="/drops/*" element={<Navigate to="/products/drops" />} />
+        <Route path="/settings" element={<Settings />} />
       </Route>
 
       {/* 404 route */}

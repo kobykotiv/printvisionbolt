@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { Toast, ToastType } from '../components/ui/Toast';
 
-<<<<<<< HEAD
 interface ToastMessage {
   id: number;
   message: string;
@@ -26,21 +25,6 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
   const addToast = (message: string, type: ToastType = 'success') => {
     const id = Date.now();
     setToasts([...toasts, { id, message, type }]);
-=======
-interface ToastContextType {
-  showToast: (message: string, type: ToastType) => void;
-}
-
-const ToastContext = createContext<ToastContextType | undefined>(undefined);
-
-export function ToastProvider({ children }: { children: React.ReactNode }) {
-  const [toasts, setToasts] = useState<Array<{ id: number; message: string; type: ToastType }>>([]);
-  let nextId = 0;
-
-  const showToast = (message: string, type: ToastType) => {
-    const id = nextId++;
-    setToasts((current) => [...current, { id, message, type }]);
->>>>>>> parent of ee2cfdb (implementing cms)
   };
 
   const removeToast = (id: number) => {

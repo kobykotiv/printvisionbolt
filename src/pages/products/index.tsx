@@ -220,7 +220,7 @@ const ProductsPage: React.FC = () => {
 
         <div className="flex justify-between items-center">
           <div className="text-sm text-gray-500">
-            Showing {mockProducts.length} of {mockProducts.length} products
+            Showing {products.length} of {products.length} products
           </div>
           <div className="flex space-x-2">
             <Button variant="outline" size="sm" disabled>Previous</Button>

@@ -2,15 +2,15 @@ import React from 'react';
 import { useShop } from '../contexts/ShopContext';
 import { CreditCard, Check, ArrowRight, Shield } from 'lucide-react';
 
-interface PlanFeature {
+export interface Feature {
   name: string;
   included: boolean;
 }
 
-interface PricingPlan {
+export interface PricingPlan {
   name: string;
   price: number;
-  features: PlanFeature[];
+  features: Feature[];
   current?: boolean;
 }
 
@@ -29,7 +29,7 @@ const plans: PricingPlan[] = [
   },
   {
     name: "Creator",
-    price: 9,
+    price: 1,
     features: [
       { name: "Up to 2 Shops", included: true },
       { name: "10 Templates", included: true },
@@ -38,8 +38,8 @@ const plans: PricingPlan[] = [
     ],
   },
   {
-    name: "Creator",
-    price: 19,
+    name: "Pro",
+    price: 9,
     features: [
       { name: "Up to 3 Shops", included: true },
       { name: "30 Templates", included: true },
@@ -50,7 +50,7 @@ const plans: PricingPlan[] = [
     ],
   },
   {
-    name: "Pro",
+    name: "Enterprise",
     price: 29,
     features: [
       { name: "Unlimited Shops", included: true },
@@ -64,7 +64,7 @@ const plans: PricingPlan[] = [
 ];
 
 export function Billing() {
-  const { currentShop } = useShop();
+  useShop();
   const [selectedPlan, setSelectedPlan] = React.useState<string | null>(null);
 
   // In production, fetch this from your backend
@@ -81,7 +81,7 @@ export function Billing() {
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Billing & Subscription</h2>
             <p className="mt-1 text-sm text-gray-500">
-              Manage your subscription and payment details
+              Manage your {selectedPlan} subscription and payment details
             </p>
           </div>
           <CreditCard className="h-8 w-8 text-gray-400" />
