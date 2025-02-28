@@ -18,8 +18,8 @@ webcontainer_compatible=true
 memory_limit=4gb
 
 # Build Tools
-vite_mode=true
-build_tool=vite
+turbo_mode=true
+build_tool=turbopack
 react_version=^18.0.0
 typescript_version=^4.9.0
 
