@@ -19,7 +19,7 @@ const plans: PricingPlan[] = [
     name: "Free",
     price: 0,
     features: [
-      { name: "1 Shop", included: true },
+      { name: "1 Shop Endpoint", included: true },
       { name: "3 Templates", included: true },
       { name: "10 Daily Uploads", included: true },
       { name: "Community Support", included: true },
@@ -31,14 +31,18 @@ const plans: PricingPlan[] = [
     name: "Creator",
     price: 1,
     features: [
-      { name: "Up to 2 Shops", included: true },
+      { name: "1 Shop Endpoint", included: true },
       { name: "10 Templates", included: true },
       { name: "100 Daily Uploads", included: true },
       { name: "Community Support", included: true },
     ],
   },
   {
+<<<<<<< HEAD
     name: "Pro",
+=======
+    name: "Creator",
+>>>>>>> parent of 2d55731 (Revert "implementing cms")
     price: 9,
     features: [
       { name: "Up to 3 Shops", included: true },
@@ -53,7 +57,7 @@ const plans: PricingPlan[] = [
     name: "Enterprise",
     price: 29,
     features: [
-      { name: "Unlimited Shops", included: true },
+      { name: "Up to 10 Shops", included: true },
       { name: "Unlimited Templates", included: true },
       { name: "Unlimited Uploads", included: true },
       { name: "Dedicated Support", included: true },

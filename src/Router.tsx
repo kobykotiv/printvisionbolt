@@ -1,3 +1,4 @@
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import DashboardLayout from './components/layout/DashboardLayout';
 import Landing from './pages/Landing';
@@ -8,6 +9,8 @@ import Pricing from './pages/Pricing';
 import FAQ from './pages/FAQ';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
+import { CollectionsPage } from './pages/CollectionsPage';
+import { DesignsPage } from './pages/DesignsPage';
 import NotFound from './components/NotFound';
 import Collections from './pages/Collections';
 import {Designs} from './pages/Designs';
@@ -21,7 +24,7 @@ import { Navigate } from 'react-router-dom';
 import {CollectionDetails} from './pages/CollectionDetails';
 import {TemplateDetails} from './pages/TemplateDetails';
 
-const Router = () => {
+function Router() {
   return (
     <Routes>
       {/* Public routes */}
@@ -35,6 +38,7 @@ const Router = () => {
       <Route path="/privacy" element={<Privacy />} />
 
       {/* Protected routes */}
+<<<<<<< HEAD
       <Route element={<DashboardLayout />}>
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/collections" element={<Collections />} />
@@ -47,12 +51,18 @@ const Router = () => {
         <Route path="/sync/*" element={<Navigate to="/products/sync" />} />
         <Route path="/drops/*" element={<Navigate to="/products/drops" />} />
         <Route path="/settings" element={<Settings />} />
+=======
+      <Route path="/app" element={<DashboardLayout />}>
+        <Route path="collections" element={<CollectionsPage />} />
+        <Route path="designs" element={<DesignsPage />} />
+        {/* Add other routes here */}
+>>>>>>> parent of 2d55731 (Revert "implementing cms")
       </Route>
 
       {/* 404 route */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
-};
+}
 
 export default Router;

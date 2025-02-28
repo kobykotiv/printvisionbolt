@@ -17,34 +17,46 @@ import {
   RefreshCw
 } from 'lucide-react';
 import { useAuth } from '../../contexts/auth/AuthContext';
+import { useNavigation } from '../../contexts/NavigationContext';
 
-// Navigation items for the sidebar
 const navigationItems = [
   { name: 'Dashboard', href: '/app', icon: LayoutDashboard },
   {
     name: 'Content',
     items: [
-      { name: 'Collections', href: '/app/collections', icon: FolderTree },
-      { name: 'Designs', href: '/app/designs', icon: Image },
-      { name: 'Templates', href: '/app/templates', icon: BoxIcon }
+      { name: 'Collections', href: '/app/collections', icon: FolderTree,
+        description: 'Organize designs with smart collections and bulk operations' },
+      { name: 'Designs', href: '/app/designs', icon: Image,
+        description: 'Manage design assets and link to templates' },
+      { name: 'Templates', href: '/app/templates', icon: BoxIcon,
+        description: 'Create and modify product templates' }
     ]
   },
   {
     name: 'POD Management',
     items: [
-      { name: 'Stores', href: '/app/stores', icon: Store },
-      { name: 'Products', href: '/app/products', icon: ShoppingBag },
-      { name: 'Scheduled Drops', href: '/app/drops', icon: Calendar },
-      { name: 'Sync Status', href: '/app/sync', icon: RefreshCw }
+      { name: 'Stores', href: '/app/stores', icon: Store,
+        description: 'Manage connected storefronts and API integrations' },
+      { name: 'Products', href: '/app/products', icon: ShoppingBag,
+        description: 'Browse catalogs and manage product variants' },
+      { name: 'Scheduled Drops', href: '/app/drops', icon: Calendar,
+        description: 'Schedule time-sensitive product launches' },
+      { name: 'Sync Status', href: '/app/sync', icon: RefreshCw,
+        description: 'Monitor sync progress and handle errors' }
     ]
   },
-  { name: 'Settings', href: '/app/settings', icon: Settings }
+  { 
+    name: 'Settings', 
+    href: '/app/settings', 
+    icon: Settings,
+    description: 'Configure account settings and integrations'
+  }
 ];
 
 const DashboardLayout = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { isSidebarOpen, toggleSidebar, closeSidebar } = useNavigation();
 
   const handleSignOut = async () => {
     try {
@@ -58,13 +70,13 @@ const DashboardLayout = () => {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Mobile sidebar */}
-      <div className={`fixed inset-0 z-40 lg:hidden ${sidebarOpen ? 'block' : 'hidden'}`}>
-        <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={() => setSidebarOpen(false)} />
+      <div className={`fixed inset-0 z-40 lg:hidden ${isSidebarOpen ? 'block' : 'hidden'}`}>
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-75" onClick={closeSidebar} />
         
         <div className="fixed inset-y-0 left-0 flex w-64 flex-col bg-white">
           <div className="flex h-16 items-center justify-between px-4">
             <span className="text-2xl font-bold text-indigo-600">PrintVision</span>
-            <button onClick={() => setSidebarOpen(false)} className="lg:hidden">
+            <button onClick={closeSidebar} className="lg:hidden">
               <X className="h-6 w-6" />
             </button>
           </div>
@@ -88,7 +100,7 @@ const DashboardLayout = () => {
           <button
             type="button"
             className="-ml-0.5 -mt-0.5 inline-flex h-12 w-12 items-center justify-center rounded-md text-gray-500 hover:text-gray-900"
-            onClick={() => setSidebarOpen(true)}
+            onClick={toggleSidebar}
           >
             <Menu className="h-6 w-6" />
           </button>
