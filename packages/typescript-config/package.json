@@ -1,10 +1,11 @@
 {
-  "name": "@printvisionbolt/typescript-config",
+  "name": "@repo/typescript-config",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+<<<<<<< HEAD
   },
   "files": [
 <<<<<<< HEAD
@@ -29,4 +30,7 @@
     "react-library.json"
   ]
 >>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
+=======
+  }
+>>>>>>> 8d7edcb (reset to Monorepo with turburepo)
 }

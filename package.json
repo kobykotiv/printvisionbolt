@@ -1,6 +1,7 @@
 {
-  "name": "printvisionbolt",
+  "name": "printvisionturbo",
   "private": true,
+<<<<<<< HEAD
   "version": "1.0.0",
 <<<<<<< HEAD
   "workspaces": [
@@ -60,26 +61,21 @@
     "apps/*",
     "packages/*"
   ],
+=======
+>>>>>>> 8d7edcb (reset to Monorepo with turburepo)
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "test": "turbo test",
-    "clean": "turbo clean && rm -rf node_modules",
-    "supabase:start": "supabase start",
-    "supabase:stop": "supabase stop",
-    "supabase:status": "supabase status"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "check-types": "turbo run check-types"
   },
   "devDependencies": {
-    "@types/node": "^20.10.0",
-    "@typescript-eslint/eslint-plugin": "^6.13.0",
-    "@typescript-eslint/parser": "^6.13.0",
-    "eslint": "^8.54.0",
-    "prettier": "^3.1.0",
-    "supabase": "^1.127.4",
-    "turbo": "^1.10.16",
-    "typescript": "^5.3.2"
+    "prettier": "^3.5.0",
+    "turbo": "^2.4.4",
+    "typescript": "5.7.3"
   },
+<<<<<<< HEAD
   "dependencies": {
     "@supabase/supabase-js": "^2.39.3",
     "@supabase/auth-helpers-nextjs": "^0.9.0",
@@ -87,4 +83,10 @@
   },
   "packageManager": "bun@1.0.0"
 >>>>>>> 60d53aa (day 2 configureing packages)
+=======
+  "packageManager": "pnpm@9.0.0",
+  "engines": {
+    "node": ">=18"
+  }
+>>>>>>> 8d7edcb (reset to Monorepo with turburepo)
 }

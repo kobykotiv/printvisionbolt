@@ -1,14 +1,17 @@
 {
-  "name": "@printvisionbolt/web",
+  "name": "web",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack --port 3000",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint --max-warnings 0",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
+<<<<<<< HEAD
     "next": "^14.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -28,13 +31,20 @@
     "tailwindcss": "^3.3.0",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31"
+=======
+    "@repo/ui": "workspace:*",
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+>>>>>>> 8d7edcb (reset to Monorepo with turburepo)
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "typescript": "^5.0.0",
-    "eslint": "^8.0.0",
-    "eslint-config-next": "^14.0.0"
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/node": "^22",
+    "@types/react": "19.0.8",
+    "@types/react-dom": "19.0.3",
+    "eslint": "^9.21.0",
+    "typescript": "5.7.3"
   }
 }

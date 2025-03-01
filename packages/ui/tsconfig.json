@@ -1,16 +1,15 @@
 {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "extends": "@printvisionbolt/typescript-config/library.json",
+=======
+  "extends": "@repo/typescript-config/react-library.json",
+>>>>>>> 8d7edcb (reset to Monorepo with turburepo)
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src",
-    "jsx": "react-jsx",
-    "module": "ESNext",
-    "paths": {
-      "@printvisionbolt/*": ["../../packages/*/src"]
-    }
+    "outDir": "dist"
   },
+<<<<<<< HEAD
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"],
   "references": [
@@ -45,4 +44,8 @@
     { "path": "../api-types" }
   ]
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+>>>>>>> 8d7edcb (reset to Monorepo with turburepo)
 }

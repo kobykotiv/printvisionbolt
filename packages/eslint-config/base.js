@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 module.exports = {
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -14,12 +15,37 @@ module.exports = {
     browser: true,
     node: true,
     es6: true
+=======
+import js from "@eslint/js";
+import eslintConfigPrettier from "eslint-config-prettier";
+import turboPlugin from "eslint-plugin-turbo";
+import tseslint from "typescript-eslint";
+import onlyWarn from "eslint-plugin-only-warn";
+
+/**
+ * A shared ESLint configuration for the repository.
+ *
+ * @type {import("eslint").Linter.Config}
+ * */
+export const config = [
+  js.configs.recommended,
+  eslintConfigPrettier,
+  ...tseslint.configs.recommended,
+  {
+    plugins: {
+      turbo: turboPlugin,
+    },
+    rules: {
+      "turbo/no-undeclared-env-vars": "warn",
+    },
+>>>>>>> 8d7edcb (reset to Monorepo with turburepo)
   },
-  settings: {
-    react: {
-      version: "detect"
-    }
+  {
+    plugins: {
+      onlyWarn,
+    },
   },
+<<<<<<< HEAD
   rules: {
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
@@ -85,3 +111,9 @@ module.exports = {
   }
 };
 >>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
+=======
+  {
+    ignores: ["dist/**"],
+  },
+];
+>>>>>>> 8d7edcb (reset to Monorepo with turburepo)

@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
   "globalDependencies": [
@@ -12,9 +13,13 @@
     "NODE_ENV",
     "NEXT_PUBLIC_\\*"
   ],
+=======
+  "ui": "tui",
+>>>>>>> 8d7edcb (reset to Monorepo with turburepo)
   "tasks": {
 <<<<<<< HEAD
     "build": {
+<<<<<<< HEAD
       "dependsOn": [
         "^build"
       ],
@@ -85,6 +90,21 @@
         "test/**/*.tsx"
       ]
 >>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
+=======
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+>>>>>>> 8d7edcb (reset to Monorepo with turburepo)
     }
   }
 }

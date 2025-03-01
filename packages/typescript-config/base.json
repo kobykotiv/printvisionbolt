@@ -2,14 +2,17 @@
   "$schema": "https://json.schemastore.org/tsconfig",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "display": "Base",
+=======
+>>>>>>> 8d7edcb (reset to Monorepo with turburepo)
   "compilerOptions": {
-    "strict": true,
+    "declaration": true,
+    "declarationMap": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
+    "incremental": false,
     "isolatedModules": true,
+<<<<<<< HEAD
     "jsx": "preserve",
     "baseUrl": ".",
     "incremental": true,
@@ -49,4 +52,16 @@
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
   },
   "exclude": ["node_modules"]
+=======
+    "lib": ["es2022", "DOM", "DOM.Iterable"],
+    "module": "NodeNext",
+    "moduleDetection": "force",
+    "moduleResolution": "NodeNext",
+    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2022"
+  }
+>>>>>>> 8d7edcb (reset to Monorepo with turburepo)
 }
