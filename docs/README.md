@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # PrintVision Documentation
 
 ## Overview
@@ -89,6 +90,18 @@ PrintVision is a comprehensive print-on-demand platform with three main componen
 - [Monitoring & Maintenance](./deployment/monitoring.md)
 
 <<<<<<< HEAD
+=======
+# PrintVisionBolt Documentation
+
+## Table of Contents
+
+- [Monorepo Structure](./monorepo-structure.md)
+- [Development Guide](./development-guide.md)
+- [Deployment Guide](./deployment-guide.md)
+
+## Quick Start
+
+>>>>>>> 91d08cd (prep)
 ```bash
 # Install dependencies
 pnpm install
@@ -101,6 +114,7 @@ pnpm build
 ```
 
 For detailed documentation about the monorepo structure and configuration, see [Monorepo Structure](./monorepo-structure.md).
+<<<<<<< HEAD
 >>>>>>> ef09bbd (prep)
 =======
 ## Quick Links
@@ -108,3 +122,5 @@ For detailed documentation about the monorepo structure and configuration, see [
 - [Technical Specifications](./technical_spec.md)
 - [Implementation Timeline](./release_timeline.md)
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
+=======
+>>>>>>> 91d08cd (prep)

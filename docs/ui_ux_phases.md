@@ -85,11 +85,14 @@ interface ComponentVariants extends GlassComponent {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
 ### Product Template Management
 =======
+=======
+>>>>>>> 91d08cd (prep)
 ### Analytics Dashboard
 - Glass-effect KPI cards
 - Chart components with transparency
@@ -98,6 +101,7 @@ interface ComponentVariants extends GlassComponent {
 - Real-time updates with animations
 
 ### Product Management
+<<<<<<< HEAD
 >>>>>>> ef09bbd (prep)
 =======
 
@@ -105,6 +109,8 @@ interface ComponentVariants extends GlassComponent {
 
 ### Product Template Management
 >>>>>>> 60d53aa (day 2 configureing packages)
+=======
+>>>>>>> 91d08cd (prep)
 - Glass-effect product cards
 - Bulk action interface
 - Product editor with blur effects

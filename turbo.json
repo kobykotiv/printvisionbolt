@@ -4,6 +4,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
   "globalDependencies": [
@@ -28,10 +29,13 @@
         "dist/**"
       ]
 =======
+=======
+>>>>>>> 91d08cd (prep)
   "globalDependencies": ["**/.env.*local"],
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
+<<<<<<< HEAD
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": {
@@ -93,13 +97,12 @@
 =======
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
+=======
+>>>>>>> 91d08cd (prep)
       "outputs": [".next/**", "!.next/cache/**"]
     },
     "lint": {
-      "dependsOn": ["^lint"]
-    },
-    "check-types": {
-      "dependsOn": ["^check-types"]
+      "outputs": []
     },
     "dev": {
       "cache": false,

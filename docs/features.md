@@ -101,6 +101,7 @@ const enterpriseTierFeatures = {
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## Database CRUD Operations
 
 ### Users Table
@@ -143,11 +144,14 @@ const enterpriseTierFeatures = {
 <<<<<<< HEAD
 - Use Stripe
 =======
+=======
+>>>>>>> 91d08cd (prep)
 ### Custom Domain Setup
 - DNS verification
 - SSL certificate provisioning
 - Domain aliasing
 - Self-hosted DNS management
+<<<<<<< HEAD
 =======
 ## Database CRUD Operations
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
@@ -189,14 +193,41 @@ const enterpriseTierFeatures = {
 
 
 <<<<<<< HEAD
+=======
+
+### Multi-language Support
+- Translation management
+- Currency conversion
+- Regional pricing
+- Content localization
+- Self-hosted language packs
+
+### Analytics Integration
+- Real-time tracking
+- Custom events
+- Conversion tracking
+- A/B testing capability
+- Self-hosted data storage
+
+### UI Customization
+- Glassomorphic effects library
+- Gradient accent system
+- Dark/Light mode support
+- Custom branding options
+- Responsive design system
+
+>>>>>>> 91d08cd (prep)
 ### Performance Optimization
 - Bun runtime optimization
 - Edge function deployment
 - Custom caching strategies
 - Self-hosted CDN integration
+<<<<<<< HEAD
 >>>>>>> ef09bbd (prep)
 =======
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 =======
 - Use Stripe
 >>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
+=======
+>>>>>>> 91d08cd (prep)

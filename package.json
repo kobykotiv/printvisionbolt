@@ -1,5 +1,5 @@
 {
-  "name": "printvisionturbo",
+  "name": "printvisionbolt",
   "private": true,
 <<<<<<< HEAD
   "version": "1.0.0",
@@ -64,17 +64,18 @@
 =======
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
   "scripts": {
-    "build": "turbo run build",
     "dev": "turbo run dev",
+    "build": "turbo run build",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types"
   },
   "devDependencies": {
     "prettier": "^3.5.0",
-    "turbo": "^2.4.4",
+    "turbo": "latest",
     "typescript": "5.7.3"
   },
+<<<<<<< HEAD
 <<<<<<< HEAD
   "dependencies": {
     "@supabase/supabase-js": "^2.39.3",
@@ -89,4 +90,14 @@
     "node": ">=18"
   }
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
+=======
+  "packageManager": "bun@1.0.21",
+  "engines": {
+    "node": ">=18"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
+>>>>>>> 91d08cd (prep)
 }

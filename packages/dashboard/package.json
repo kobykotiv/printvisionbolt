@@ -1,6 +1,7 @@
 {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "name": "@printvisionbolt/dashboard-core",
 =======
   "name": "@printvisionbolt/dashboard",
@@ -8,6 +9,9 @@
 =======
   "name": "@printvisionbolt/dashboard-core",
 >>>>>>> 974034b (feat: Update Docker configuration, rename dashboard package, and add Supabase setup)
+=======
+  "name": "@printvisionbolt/dashboard",
+>>>>>>> 91d08cd (prep)
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -22,6 +26,7 @@
     "react-dom": "^18.0.0",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@printvisionbolt/shared-ui": "*"
 =======
     "@printvisionbolt/shared-ui": "workspace:*"
@@ -29,6 +34,9 @@
 =======
     "@printvisionbolt/shared-ui": "*"
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+    "@printvisionbolt/shared-ui": "workspace:*"
+>>>>>>> 91d08cd (prep)
   },
   "devDependencies": {
     "typescript": "^4.9.0",
