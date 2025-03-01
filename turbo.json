@@ -1,38 +1,21 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [
-    "**/.env"
-  ],
-  "globalEnv": [
-    "NODE_ENV",
-    "NEXT_PUBLIC_\\*"
-  ],
+  "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        ".next/**",
-        "dist/**"
-      ]
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "lint": {
+      "dependsOn": ["^lint"]
+    },
+    "check-types": {
+      "dependsOn": ["^check-types"]
     },
     "dev": {
       "cache": false,
-      "persistent": true,
-      "maxParallelTasks": 15
-    },
-    "lint": {},
-    "test": {
-      "dependsOn": [
-        "^build"
-      ],
-      "inputs": [
-        "src/**/*.tsx",
-        "src/**/*.ts",
-        "test/**/*.ts",
-        "test/**/*.tsx"
-      ]
+      "persistent": true
     }
   }
 }

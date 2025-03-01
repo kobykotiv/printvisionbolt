@@ -1,40 +1,22 @@
+<<<<<<< HEAD
+node_modules
+=======
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
 # Dependencies
 node_modules
-.pnpm-store
-.bun
+.pnp
+.pnp.js
 
-# Build
-dist
-build
-.next
-out
-*.tsbuildinfo
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
 # Testing
 coverage
-
-# Debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-.pnpm-debug.log*
-
-# Environment
-.env
-.env.*
-!.env.example
-
-# IDE
-.idea
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-
-# OS
-.DS_Store
-*.pem
 
 # Turbo
 .turbo
@@ -42,18 +24,19 @@ yarn-error.log*
 # Vercel
 .vercel
 
-# Supabase
-supabase/.temp
-**/supabase/.branches
-**/supabase/.temp
-.supabase
+# Build Outputs
+.next/
+out/
+build
+dist
 
-# Cache
-.cache
-.mf
-.rollup.cache
-tsconfig.tsbuildinfo
 
-# Logs
-logs
-*.log
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Misc
+.DS_Store
+*.pem
+>>>>>>> 9be19e8 (reset to Monorepo with turburepo)

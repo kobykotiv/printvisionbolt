@@ -1,17 +1,8 @@
 {
-  "extends": "@printvisionbolt/typescript-config/library.json",
+  "extends": "@repo/typescript-config/react-library.json",
   "compilerOptions": {
-    "outDir": "dist",
-    "rootDir": "src",
-    "jsx": "react-jsx",
-    "module": "ESNext",
-    "paths": {
-      "@printvisionbolt/*": ["../../packages/*/src"]
-    }
+    "outDir": "dist"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"],
-  "references": [
-    { "path": "../api-types" }
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }

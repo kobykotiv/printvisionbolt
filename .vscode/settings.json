@@ -1,4 +1,7 @@
 {
-    "markdown.preview.doubleClickToSwitchToEditor": false,
-    "markdown.preview.automaticallyShowPreview": false
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ]
 }

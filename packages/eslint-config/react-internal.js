@@ -1,30 +1,39 @@
-module.exports = {
-  extends: [
-    "./base.js",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:jsx-a11y/recommended"
-  ],
-  settings: {
-    react: {
-      version: "detect"
-    }
+import js from "@eslint/js";
+import eslintConfigPrettier from "eslint-config-prettier";
+import tseslint from "typescript-eslint";
+import pluginReactHooks from "eslint-plugin-react-hooks";
+import pluginReact from "eslint-plugin-react";
+import globals from "globals";
+import { config as baseConfig } from "./base.js";
+
+/**
+ * A custom ESLint configuration for libraries that use React.
+ *
+ * @type {import("eslint").Linter.Config} */
+export const config = [
+  ...baseConfig,
+  js.configs.recommended,
+  eslintConfigPrettier,
+  ...tseslint.configs.recommended,
+  pluginReact.configs.flat.recommended,
+  {
+    languageOptions: {
+      ...pluginReact.configs.flat.recommended.languageOptions,
+      globals: {
+        ...globals.serviceworker,
+        ...globals.browser,
+      },
+    },
   },
-  rules: {
-    "react/react-in-jsx-scope": "off",
-    "react/prop-types": "off",
-    "react/no-unknown-property": ["error", { ignore: ["css"] }],
-    "jsx-a11y/alt-text": "warn",
-    "jsx-a11y/aria-props": "warn",
-    "jsx-a11y/aria-proptypes": "warn",
-    "jsx-a11y/aria-unsupported-elements": "warn",
-    "jsx-a11y/role-has-required-aria-props": "warn",
-    "jsx-a11y/role-supports-aria-props": "warn"
+  {
+    plugins: {
+      "react-hooks": pluginReactHooks,
+    },
+    settings: { react: { version: "detect" } },
+    rules: {
+      ...pluginReactHooks.configs.recommended.rules,
+      // React scope no longer necessary with new JSX transform.
+      "react/react-in-jsx-scope": "off",
+    },
   },
-  overrides: [
-    {
-      files: ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
-      extends: ["plugin:testing-library/react"]
-    }
-  ]
-}
+];

@@ -1,35 +1,45 @@
 import React from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { LogOut, Store, User, ChevronDown, Settings } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { User, ChevronDown } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { useAuth } from '../contexts/AuthContext';
+<<<<<<< HEAD
+import { LoginWidget } from './auth/LoginWidget';
+import { UserStats } from './user/UserStats';
+import Navbar from './Navbar';
+=======
 import { useShop } from '../contexts/ShopContext';
 import { TierBasedNavigation } from './navigation/TierBasedNavigation';
 import type { SubscriptionTier } from '../lib/types/subscription';
 import { FreeUsageWidget } from './ui/FreeUsageWidget';
+>>>>>>> 5f5f746 (Moved tier usage)
 
 interface LayoutProps {
   children: React.ReactNode;
 }
 
 export function Layout({ children }: LayoutProps) {
-  const location = useLocation();
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
-  const { currentShop, shops, setCurrentShop } = useShop();
   const [showUserMenu, setShowUserMenu] = React.useState(false);
 
-  // Get tier from current shop's settings
-  const userTier: SubscriptionTier = currentShop?.settings?.tier || 'free';
+  // If user is not authenticated, show login widget
+  if (!user) {
+    return (
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+        <LoginWidget />
+      </div>
+    );
+  }
 
-  const handleUpgradeClick = () => {
-    if (currentShop) {
-      navigate(`/app/billing?shop=${currentShop.id}`);
-    }
-  };
-
+  // For authenticated users, show layout with navbar
   return (
     <div className="min-h-screen bg-gray-100">
+<<<<<<< HEAD
+      <div className="flex flex-col h-screen">
+        {/* Navigation */}
+        <Navbar />
+=======
       <div className="flex h-screen">
         {/* Sidebar */}
         {/* Sidebar */}
@@ -40,7 +50,10 @@ export function Layout({ children }: LayoutProps) {
                 PrintVision.Cloud
               </h1>
             </div>
+>>>>>>> 55be4bd (prepping for docker)
 
+<<<<<<< HEAD
+=======
             <div className="relative mt-2">
               <select
                 value={currentShop?.id || ""}
@@ -118,10 +131,20 @@ export function Layout({ children }: LayoutProps) {
             </div>
           </nav>
         </div>
+>>>>>>> 5f5f746 (Moved tier usage)
 
         {/* Main content */}
-        <div className="flex-1 overflow-auto">
-          <main className="p-8">{children}</main>
+        <div className="flex-1 overflow-auto pb-24">
+          <main className="container mx-auto px-4 py-8 mt-4">
+            {children}
+          </main>
+        </div>
+
+        {/* Footer with User Stats */}
+        <div className="fixed bottom-4 right-4 w-auto bg-transparent">
+          <div className="mb-2">
+            <UserStats />
+          </div>
         </div>
       </div>
     </div>
