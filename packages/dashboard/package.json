@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
   "name": "@printvisionbolt/dashboard-core",
+=======
+  "name": "@printvisionbolt/dashboard",
+>>>>>>> ef09bbd (prep)
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -12,7 +16,11 @@
   "dependencies": {
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+<<<<<<< HEAD
     "@printvisionbolt/shared-ui": "*"
+=======
+    "@printvisionbolt/shared-ui": "workspace:*"
+>>>>>>> ef09bbd (prep)
   },
   "devDependencies": {
     "typescript": "^4.9.0",

@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+<<<<<<< HEAD
   "globalDependencies": [
     "**/.env"
   ],
@@ -16,6 +17,16 @@
         ".next/**",
         "dist/**"
       ]
+=======
+  "globalDependencies": ["**/.env.*local"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "lint": {
+      "outputs": []
+>>>>>>> ef09bbd (prep)
     },
     "dev": {
       "cache": false,

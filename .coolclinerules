@@ -41,7 +41,6 @@ commit_convention=conventional
 # Payment network
 payment_provider=stripe
 payment_currency=usd
-
 # Multi-Tenant Rules
 tenant_isolation=database_schema
 tenant_identification=header|subdomain
