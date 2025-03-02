@@ -1,5 +1,6 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
+<<<<<<< HEAD
   "display": "Base",
   "compilerOptions": {
     "strict": true,
@@ -12,6 +13,29 @@
     "baseUrl": ".",
     "incremental": true,
     "resolveJsonModule": true
+=======
+  "display": "Default",
+  "compilerOptions": {
+    "composite": false,
+    "declaration": true,
+    "declarationMap": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "inlineSources": false,
+    "isolatedModules": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "incremental": true,
+    "resolveJsonModule": true,
+    "jsx": "preserve"
+>>>>>>> 60d53aa (day 2 configureing packages)
   },
   "exclude": ["node_modules"]
 }

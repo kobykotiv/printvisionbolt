@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "extends": "@printvisionbolt/typescript-config/library.json",
   "compilerOptions": {
     "outDir": "dist",
@@ -14,4 +15,21 @@
   "references": [
     { "path": "../api-types" }
   ]
+=======
+  "extends": "@printvisionbolt/typescript-config/react-library.json",
+  "include": ["src", "*.ts", "*.tsx"],
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "rootDir": "src",
+    "outDir": "dist",
+    "declaration": true,
+    "declarationMap": true,
+    "resolveJsonModule": true
+  }
+>>>>>>> 60d53aa (day 2 configureing packages)
 }

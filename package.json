@@ -2,6 +2,7 @@
   "name": "printvisionbolt",
   "private": true,
   "version": "1.0.0",
+<<<<<<< HEAD
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -54,4 +55,27 @@
     "packages/*"
   ]
 >>>>>>> ef09bbd (prep)
+=======
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "clean": "turbo clean && rm -rf node_modules"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.0",
+    "@typescript-eslint/parser": "^6.13.0",
+    "eslint": "^8.54.0",
+    "prettier": "^3.1.0",
+    "turbo": "^1.10.16",
+    "typescript": "^5.3.2"
+  },
+  "packageManager": "bun@1.0.0"
+>>>>>>> 60d53aa (day 2 configureing packages)
 }

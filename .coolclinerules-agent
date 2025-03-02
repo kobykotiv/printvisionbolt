@@ -17,9 +17,12 @@ bundler_config={
     lazy_loading: true
 }
 
+<<<<<<< HEAD
 SEO_optimization=true
 image_optimization=true
 
+=======
+>>>>>>> 60d53aa (day 2 configureing packages)
 # Performance Settings
 memory_limit=4gb
 cache_strategy=persistent

@@ -1,13 +1,24 @@
 {
+<<<<<<< HEAD
+=======
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Next.js",
+>>>>>>> 60d53aa (day 2 configureing packages)
   "extends": "./base.json",
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
     "allowJs": true,
+<<<<<<< HEAD
     "noEmit": true,
+=======
+    "declaration": false,
+    "declarationMap": false,
+>>>>>>> 60d53aa (day 2 configureing packages)
     "incremental": true,
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
+<<<<<<< HEAD
     "target": "es5",
     "moduleResolution": "node",
     "resolveJsonModule": true,
@@ -15,5 +26,16 @@
     "esModuleInterop": true
   },
   "include": ["src", "next-env.d.ts"],
+=======
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "target": "es5",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+>>>>>>> 60d53aa (day 2 configureing packages)
   "exclude": ["node_modules"]
 }

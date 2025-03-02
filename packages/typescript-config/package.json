@@ -10,5 +10,15 @@
     "base.json",
     "nextjs.json",
     "react-library.json"
+<<<<<<< HEAD
   ]
+=======
+  ],
+  "dependencies": {
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.42",
+    "@types/react-dom": "^18.2.17",
+    "typescript": "^5.3.2"
+  }
+>>>>>>> 60d53aa (day 2 configureing packages)
 }
