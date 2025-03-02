@@ -1,5 +1,6 @@
 module.exports = {
 <<<<<<< HEAD
+<<<<<<< HEAD
   parser: "@typescript-eslint/parser",
   plugins: ["@typescript-eslint", "react-hooks"],
   extends: [
@@ -34,29 +35,33 @@ module.exports = {
   }
 };
 =======
+=======
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint", "react-hooks"],
+>>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "turbo"
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier"
   ],
   env: {
-    node: true,
     browser: true,
-    es2022: true
+    node: true,
+    es6: true
   },
-  parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint"],
+  settings: {
+    react: {
+      version: "detect"
+    }
+  },
   rules: {
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_"
-      }
-    ],
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "warn",
+<<<<<<< HEAD
     "no-console": ["warn", { allow: ["warn", "error"] }]
   },
   ignorePatterns: [
@@ -69,3 +74,14 @@ module.exports = {
   ]
 }
 >>>>>>> 60d53aa (day 2 configureing packages)
+=======
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ]
+  }
+};
+>>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)

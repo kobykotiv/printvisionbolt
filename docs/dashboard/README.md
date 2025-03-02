@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # PrintVision Dashboard Documentation
 
 ## Overview
@@ -249,146 +250,222 @@ NEXT_PUBLIC_API_URL=http://localhost:3001
 AUTH_SECRET=your-secret-key
 STRIPE_SECRET_KEY=sk_test_...
 ```
+=======
+# PrintVision Dashboard Documentation
+>>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
 
 ## Overview
-The vendor dashboard is a comprehensive management interface built with Next.js 13+, TypeScript, and our Glassomorphic UI system. It provides vendors with tools to manage their print-on-demand business effectively.
 
-## Core Features
+The PrintVision dashboard is a tier-based administration interface that provides print-on-demand vendors with capabilities matched to their subscription level. This documentation covers the architectural decisions, implementation patterns, and development guidelines.
 
-### 1. Product Management
-- Product creation and editing
-- Bulk upload capabilities
-- Inventory management
-- Print provider integration
-- Product variant management
+## Core Documentation
 
-### 2. Order Management
-- Order processing
-- Status tracking
-- Fulfillment management
-- Customer communication
-- Returns handling
+1. [Feature Tier Architecture](./feature-tier-architecture.md)
+   - Core architecture components
+   - Implementation guidelines
+   - Security measures
+   - Performance considerations
 
-### 3. Analytics & Reporting
-- Sales analytics
-- Customer insights
-- Performance metrics
-- Financial reporting
-- Inventory analytics
+2. [Tier-Based Routing](./tier-based-routing.md)
+   - Route structure
+   - Interface components by tier
+   - Component access control
+   - Layout strategies
 
-### 4. Store Customization
-- Theme management
-- Layout customization
-- Content management
-- SEO optimization
-- Domain settings
+3. [Print Provider Integration](./print-provider-integration.md)
+   - Provider integration patterns
+   - Tier-specific features
+   - Implementation guidelines
+   - Security considerations
+
+## Dashboard Features by Tier
+
+### Free Tier
+- Basic product management (up to 50 products)
+- Simple analytics dashboard
+- Manual order processing
+- Basic glass UI effects
+- Standard print provider integration
+
+### Creator Tier
+- Enhanced product management (up to 200 products)
+- Advanced analytics with export
+- Semi-automated order processing
+- Custom glass effects and gradients
+- Multiple print provider integration
+
+### Pro Tier
+- Unlimited products
+- Real-time analytics
+- Automated order processing
+- Custom UI effects and animations
+- Full API access
+- Advanced provider integration
+
+### Enterprise Tier
+- White-label solution
+- Custom analytics
+- Priority support
+- Branded UI elements
+- Custom provider integration
+- Unlimited resources
 
 ## Technical Implementation
 
-### Routes Structure
+### 1. Core Technologies
+- Next.js 13+ with App Router
+- TypeScript for type safety
+- Supabase (self-hosted) for database
+- tRPC for type-safe APIs
+- Bun for enhanced performance
+
+### 2. Key Components
+```typescript
+interface DashboardStructure {
+  auth: {
+    protection: 'route-based';
+    validation: 'server-side';
+    session: 'supabase';
+  };
+  ui: {
+    framework: 'glassomorphic';
+    styling: 'tailwind';
+    components: 'tier-aware';
+  };
+  api: {
+    structure: 'tRPC';
+    protection: 'tier-based';
+    caching: 'edge-optimized';
+  };
+}
 ```
-/dashboard
-├── / (Overview)
-├── /products
-│   ├── /
-│   ├── /new
-│   ├── /bulk
-│   └── /:id
-├── /orders
-│   ├── /
-│   └── /:id
-├── /analytics
-│   ├── /
-│   ├── /sales
-│   └── /customers
-└── /settings
-    ├── /
-    ├── /profile
-    ├── /billing
-    └── /team
+
+### 3. Performance Optimization
+- Tier-specific code splitting
+- Edge caching for API responses
+- Optimized glass effects rendering
+- Resource usage monitoring
+
+## Development Guidelines
+
+### 1. Component Development
+- Use the shared UI library
+- Implement tier-specific variants
+- Follow glass effect guidelines
+- Ensure responsive design
+
+### 2. Feature Implementation
+```typescript
+interface FeatureImplementation {
+  checks: {
+    tierValidation: boolean;
+    limitChecking: boolean;
+    upgradeFlow: boolean;
+  };
+  protection: {
+    routeLevel: boolean;
+    componentLevel: boolean;
+    apiLevel: boolean;
+  };
+  monitoring: {
+    usage: boolean;
+    performance: boolean;
+    errors: boolean;
+  };
+}
 ```
 
-### Key Components
-- `DashboardLayout`: Base layout with navigation and user context
-- `SideNav`: Main navigation component
-- `GlassCard`: Primary UI container component
-- `DataTable`: Reusable table component for data display
-- `Analytics`: Dashboard widgets and charts
+### 3. Testing Requirements
+- Unit tests for components
+- Integration tests for features
+- E2E tests for user flows
+- Performance testing
+- Security validation
 
-### Feature Availability by Tier
+## Deployment Strategy
 
-#### Free Tier
-- Basic product management (up to 50 products)
-- Basic analytics
-- Standard support
+### 1. Environment Setup
+```typescript
+interface DeploymentConfig {
+  environments: {
+    development: Configuration;
+    staging: Configuration;
+    production: Configuration;
+  };
+  monitoring: {
+    performance: boolean;
+    errors: boolean;
+    usage: boolean;
+  };
+  scaling: {
+    auto: boolean;
+    rules: ScalingRules;
+  };
+}
+```
 
-#### Creator Tier
-- Extended product limit (200 products)
-- Enhanced analytics
-- Priority support
-- Custom domain
+### 2. Release Process
+- Feature branch workflow
+- Automated testing
+- Staged rollouts
+- Performance monitoring
+- Rollback capability
 
-#### Pro Tier
-- Unlimited products
-- Advanced analytics
-- Premium support
-- All customization features
-- Performance optimizations
+## Security Considerations
 
-#### Enterprise Tier
-- Custom solutions
-- Dedicated support
-- White-label options
-- Custom integrations
+1. Authentication
+   - Route protection
+   - API access control
+   - Session management
+   - Rate limiting
 
-## Performance Guidelines
+2. Data Protection
+   - Tier-based access control
+   - Resource isolation
+   - Audit logging
+   - Encryption
 
-### Target Metrics
-- Page Load: < 2s
-- Time to Interactive: < 3s
-- API Response: < 100ms
-- Lighthouse Score: > 95
+## Next Steps
 
-### Optimization Techniques
-1. Image Optimization
-   - Next.js Image component
-   - Automatic optimization
-   - Lazy loading
+1. Immediate Priorities
+   - Implement tier-based routing
+   - Enhance glass UI components
+   - Add print provider integration
+   - Update documentation
 
-2. Data Fetching
-   - Server components
-   - Edge caching
-   - Incremental Static Regeneration
+2. Future Improvements
+   - Advanced analytics
+   - AI-powered features
+   - Enhanced automation
+   - Custom integrations
 
-3. UI Performance
-   - Code splitting
-   - Dynamic imports
-   - Virtualized lists
-
-## Security Measures
-- Role-based access control
-- Two-factor authentication
-- API rate limiting
-- Session management
-- Audit logging
-
-## Integration Points
-- Print Provider APIs
-- Payment Processors
-- Shipping Services
-- Analytics Services
-- Customer Support Tools
-
-## Error Handling
-- Graceful degradation
-- User-friendly error messages
-- Automatic error reporting
-- Recovery procedures
-- Offline capabilities
-
+<<<<<<< HEAD
 ## Additional Resources
 - [Technical Specification](../technical_spec.md)
 - [API Documentation](../api/README.md)
 - [UI/UX Guidelines](../ui_ux_phases.md)
 - [Performance Optimization](../deployment/performance.md)
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
+=======
+## Contributing
+
+1. Development Process
+   - Fork the repository
+   - Create feature branch
+   - Follow coding standards
+   - Submit pull request
+
+2. Documentation
+   - Keep README updated
+   - Document new features
+   - Update architectural docs
+   - Maintain changelog
+
+## Support
+
+- Technical documentation
+- Integration guides
+- Troubleshooting guides
+- API reference
+- Community support
+>>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)

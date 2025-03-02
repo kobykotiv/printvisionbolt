@@ -140,6 +140,7 @@ const enterpriseTierFeatures = {
 
 ### Payments
 
+<<<<<<< HEAD
 - Use Stripe
 =======
 ### Custom Domain Setup
@@ -196,3 +197,6 @@ const enterpriseTierFeatures = {
 >>>>>>> ef09bbd (prep)
 =======
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
+=======
+- Use Stripe
+>>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)

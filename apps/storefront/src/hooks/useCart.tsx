@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export type CartItem = {
   id: string;
   title: string;
@@ -11,6 +12,11 @@ type CartItem = {
   id: string;
   name: string;
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
+=======
+export type CartItem = {
+  id: string;
+  title: string;
+>>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
   price: number;
   quantity: number;
   imageUrl?: string;
