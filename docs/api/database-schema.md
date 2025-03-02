@@ -25,3 +25,4 @@ CREATE TABLE shop_providers (
 CREATE UNIQUE INDEX unique_shop_provider_type 
 ON shop_providers(shop_id, provider_type);
 ```
+
