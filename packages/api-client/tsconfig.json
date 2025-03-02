@@ -2,6 +2,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "extends": "@printvisionbolt/typescript-config/library.json",
   "compilerOptions": {
     "outDir": "dist",
@@ -31,12 +32,20 @@
     "strict": true,
     "outDir": "./dist",
 <<<<<<< HEAD
+=======
+  "extends": "@printvision/typescript-config/base.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "outDir": "./dist",
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     }
   }
+<<<<<<< HEAD
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 =======
     "rootDir": "./src"
@@ -57,4 +66,6 @@
     { "path": "../api-types" }
   ]
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
 }

@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 export type ProductStatus = 'draft' | 'published' | 'archived';
 
 export interface Product {
@@ -27,10 +28,19 @@ export interface Product {
   price: number;
   images: string[];
 <<<<<<< HEAD
+=======
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  images: string[];
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
   category: string;
   inStock: boolean;
   featuredImage?: string;
   variants?: ProductVariant[];
+<<<<<<< HEAD
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 =======
   category?: string;
@@ -41,10 +51,13 @@ export interface Product {
   created_at: string;
   updated_at: string;
 >>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
+=======
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
 }
 
 export interface ProductVariant {
   id: string;
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   title: string;
@@ -60,6 +73,11 @@ export interface ProductVariant {
   price: number;
   stock: number;
 >>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
+=======
+  name: string;
+  price: number;
+  inStock: boolean;
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
 }
 
 export interface Category {

@@ -1,6 +1,7 @@
 import { createTRPCReact } from '@trpc/react-query';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import type { AppRouter } from '@printvisionbolt/api';
 import superjson from 'superjson';
 import { httpBatchLink } from '@trpc/client';
@@ -103,11 +104,27 @@ export type RouterInputs = {
 };
 
 <<<<<<< HEAD
+=======
+import { type AppRouter } from '@printvisionbolt/api';
+
+export const trpc = createTRPCReact<AppRouter>();
+
+// Export type helpers
+export type RouterInput = {
+  [K in keyof AppRouter['_def']['record']]: {
+    [P in keyof AppRouter['_def']['record'][K]]: Parameters<
+      AppRouter['_def']['record'][K][P]
+    >[0];
+  };
+};
+
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
 export type RouterOutput = {
   [K in keyof AppRouter['_def']['record']]: {
     [P in keyof AppRouter['_def']['record'][K]]: ReturnType<
       AppRouter['_def']['record'][K][P]
     >;
+<<<<<<< HEAD
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 =======
 export type RouterOutputs = {
@@ -118,5 +135,7 @@ export type RouterOutputs = {
       ? TOutput
       : never;
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
   };
 };

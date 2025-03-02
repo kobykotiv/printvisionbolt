@@ -11,6 +11,7 @@
   "dependencies": {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@printvisionbolt/ui": "*",
     "@printvisionbolt/api": "*",
 =======
@@ -20,12 +21,16 @@
     "@printvisionbolt/ui": "*",
     "@printvisionbolt/api": "*",
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+    "@printvisionbolt/ui": "workspace:*",
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
     "@supabase/supabase-js": "^2.39.0",
     "@tanstack/react-query": "^5.12.2",
     "@trpc/client": "^10.44.1",
     "@trpc/next": "^10.44.1",
     "@trpc/react-query": "^10.44.1",
     "@trpc/server": "^10.44.1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "lucide-react": "^0.320.0",
@@ -41,6 +46,8 @@
 =======
     "lucide-react": "^0.320.0",
 >>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
+=======
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
     "next": "^14.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -49,12 +56,15 @@
   "devDependencies": {
     "@printvisionbolt/eslint-config": "workspace:*",
     "@printvisionbolt/typescript-config": "workspace:*",
+<<<<<<< HEAD
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 =======
     "zod": "^3.22.4"
   },
   "devDependencies": {
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",

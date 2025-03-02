@@ -70,16 +70,39 @@ const isAuthed = t.middleware(({ ctx, next }) => {
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 =======
 import { Context } from './context';
+import { ZodError } from 'zod';
+import { productRouter } from './routers/product';
+import { orderRouter } from './routers/order';
+import { authRouter } from './routers/auth';
 
-const t = initTRPC.context<Context>().create();
+const t = initTRPC.context<Context>().create({
+  errorFormatter({ shape, error }) {
+    return {
+      ...shape,
+      data: {
+        ...shape.data,
+        zodError:
+          error.cause instanceof ZodError ? error.cause.flatten() : null,
+      },
+    };
+  },
+});
+
+// Base router and procedure helpers
+export const router = t.router;
+export const publicProcedure = t.procedure;
 
 // Middleware to check authentication
-const isAuthenticated = t.middleware(async ({ ctx, next }) => {
+const isAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.user) {
     throw new TRPCError({
       code: 'UNAUTHORIZED',
+<<<<<<< HEAD
       message: 'You must be logged in to access this resource',
 >>>>>>> 93399e0 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
+=======
+      message: 'Not authenticated',
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
     });
   }
   return next({
@@ -105,6 +128,7 @@ const isAuthenticated = t.middleware(async ({ ctx, next }) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 export const protectedProcedure = t.procedure.use(isAuthed);
@@ -123,6 +147,8 @@ export const publicProcedure = t.procedure;
 export const protectedProcedure = t.procedure.use(isAuthenticated);
 >>>>>>> 1100452 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
 =======
+=======
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
 // Protected procedures
 export const protectedProcedure = t.procedure.use(isAuthed);
 
@@ -134,6 +160,7 @@ export const appRouter = router({
 });
 
 // Export type router type signature
+<<<<<<< HEAD
 export type AppRouter = typeof appRouter;
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 =======
@@ -148,3 +175,6 @@ export const router = t.router;
 export const publicProcedure = t.procedure;
 export const protectedProcedure = t.procedure.use(isAuthenticated);
 >>>>>>> 93399e0 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
+=======
+export type AppRouter = typeof appRouter;
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)

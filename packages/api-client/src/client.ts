@@ -1,6 +1,7 @@
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import type { AppRouter } from '@printvisionbolt/api/src/server/root';
 import superjson from 'superjson';
 
@@ -11,10 +12,13 @@ interface ApiClientConfig {
 
 export function createApiClient({ url, headers = {} }: ApiClientConfig) {
 =======
+=======
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
 import type { AppRouter } from '../../../apps/api/src/server/trpc';
 import superjson from 'superjson';
 
 export const createApiClient = (baseUrl: string, getToken?: () => string | null) => {
+<<<<<<< HEAD
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 =======
 import type { AppRouter } from '@printvisionbolt/api/src/server/root';
@@ -27,24 +31,30 @@ interface ApiClientConfig {
 
 export function createApiClient({ url, headers = {} }: ApiClientConfig) {
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
   return createTRPCProxyClient<AppRouter>({
     transformer: superjson,
     links: [
       httpBatchLink({
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         url,
         headers: async () => {
           return {
             ...headers,
           };
 =======
+=======
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
         url: `${baseUrl}/trpc`,
         headers: async () => {
           const token = getToken?.();
           return token ? {
             Authorization: `Bearer ${token}`,
           } : {};
+<<<<<<< HEAD
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 =======
         url,
@@ -53,16 +63,21 @@ export function createApiClient({ url, headers = {} }: ApiClientConfig) {
             ...headers,
           };
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
         },
       }),
     ],
   });
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 
 export type { AppRouter };
 =======
+=======
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
 };
 
 // Hook for managing auth state and tokens
@@ -131,6 +146,7 @@ try {
 } catch (error) {
   console.error('API Error:', error);
 }
+<<<<<<< HEAD
 */
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 =======
@@ -138,3 +154,6 @@ try {
 
 export type { AppRouter };
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+*/
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)

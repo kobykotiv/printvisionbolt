@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --glass-from: rgba(255, 255, 255, 0.2);
+    --glass-to: transparent;
+  }
+
+  .dark {
+    --glass-from: rgba(0, 0, 0, 0.2);
+    --glass-to: transparent;
+  }
+}
+
+@layer components {
+  .glass-effect {
+    @apply backdrop-blur-md bg-white/10 dark:bg-black/10;
+  }
+
+  .glass-border {
+    @apply border border-white/20 dark:border-white/10;
+  }
+
+  .glass-text {
+    @apply text-gray-900 dark:text-white/90;
+  }
+
+  .glass-shadow {
+    @apply shadow-xl;
+  }
+}
+
+@layer utilities {
+  .gradient-accent {
+    @apply before:absolute before:inset-0 before:bg-gradient-to-br before:from-white/20 dark:before:from-white/10 before:to-transparent before:opacity-30;
+  }
+}

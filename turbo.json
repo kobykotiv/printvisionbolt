@@ -114,10 +114,15 @@
     },
     "dev": {
       "cache": false,
+<<<<<<< HEAD
       "persistent": true
 <<<<<<< HEAD
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
 =======
+=======
+      "persistent": true,
+      "maxParallelTasks": 15
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
     },
     "lint": {},
     "test": {
@@ -125,5 +130,6 @@
       "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"]
 >>>>>>> 52bc04b (day 2 configureing packages)
     }
-  }
+  },
+  "globalEnv": ["NODE_ENV", "NEXT_PUBLIC_*"]
 }

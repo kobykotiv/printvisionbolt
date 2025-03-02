@@ -82,6 +82,7 @@ _No tasks currently blocked_
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - Payment processors = Stripe for payments to and from users
 - Shipping services = Handled by the print api
 - Analytics services 
@@ -106,3 +107,9 @@ _No tasks currently blocked_
 - Support tools
 
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+- Payment processors
+- Shipping services
+- Analytics services
+- Support tools
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)

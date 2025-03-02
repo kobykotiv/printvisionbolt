@@ -1,16 +1,15 @@
 {
-  "name": "web",
+  "name": "@printvisionbolt/web",
   "version": "0.1.0",
-  "type": "module",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack --port 3000",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
 <<<<<<< HEAD
     "next": "^14.0.0",
     "react": "^18.2.0",
@@ -27,24 +26,33 @@
     "@printvisionbolt/shared-ui": "*",
     "@printvisionbolt/utils": "*",
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+    "next": "^14.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@printvisionbolt/shared-ui": "workspace:*",
+    "@printvisionbolt/utils": "workspace:*",
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
     "clsx": "^2.0.0",
     "tailwindcss": "^3.3.0",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31"
+<<<<<<< HEAD
 =======
     "@repo/ui": "workspace:*",
     "next": "^15.1.6",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
+=======
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@types/node": "^22",
-    "@types/react": "19.0.8",
-    "@types/react-dom": "19.0.3",
-    "eslint": "^9.21.0",
-    "typescript": "5.7.3"
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0"
   }
 }

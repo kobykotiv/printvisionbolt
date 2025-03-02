@@ -1,6 +1,7 @@
 {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "name": "@printvisionbolt/api-client",
   "version": "0.0.0",
   "private": true,
@@ -85,10 +86,28 @@
   },
   "devDependencies": {
 <<<<<<< HEAD
+=======
+  "name": "@printvision/api-client",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/client.ts",
+  "types": "./src/client.ts",
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@trpc/client": "^10.45.0",
+    "@trpc/server": "^10.45.0",
+    "superjson": "^2.2.1"
+  },
+  "devDependencies": {
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
     "@types/node": "^20.11.0",
     "typescript": "^5.3.3",
     "eslint": "^8.56.0",
     "@printvision/eslint-config": "*"
+<<<<<<< HEAD
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 =======
     "@printvisionbolt/typescript-config": "workspace:*",
@@ -114,5 +133,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
   }
 }

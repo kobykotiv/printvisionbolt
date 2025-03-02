@@ -11,6 +11,7 @@
   "display": "Default",
 >>>>>>> 52bc04b (day 2 configureing packages)
   "compilerOptions": {
+<<<<<<< HEAD
     "composite": false,
     "declaration": true,
     "declarationMap": true,
@@ -76,14 +77,22 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "preserveWatchOutput": true,
+=======
+    "target": "es2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+>>>>>>> 318c476 (chore: Stage changes for turborepo migration)
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2020",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "incremental": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
-    "jsx": "preserve"
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true
   },
   "exclude": ["node_modules"]
 >>>>>>> 52bc04b (day 2 configureing packages)
