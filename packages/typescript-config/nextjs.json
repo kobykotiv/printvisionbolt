@@ -5,18 +5,20 @@
 =======
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Next.js",
+<<<<<<< HEAD
 >>>>>>> 60d53aa (day 2 configureing packages)
 =======
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 =======
   "$schema": "https://json.schemastore.org/tsconfig",
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
+=======
+>>>>>>> 52bc04b (day 2 configureing packages)
   "extends": "./base.json",
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
     "allowJs": true,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -65,4 +67,22 @@
     "noEmit": true
   }
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
+=======
+    "declaration": false,
+    "declarationMap": false,
+    "incremental": true,
+    "jsx": "preserve",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "esnext",
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "target": "es5",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+>>>>>>> 52bc04b (day 2 configureing packages)
 }

@@ -86,6 +86,7 @@ interface ComponentVariants extends GlassComponent {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 
 
@@ -111,6 +112,12 @@ interface ComponentVariants extends GlassComponent {
 >>>>>>> 60d53aa (day 2 configureing packages)
 =======
 >>>>>>> 91d08cd (prep)
+=======
+
+
+
+### Product Template Management
+>>>>>>> 52bc04b (day 2 configureing packages)
 - Glass-effect product cards
 - Bulk action interface
 - Product editor with blur effects

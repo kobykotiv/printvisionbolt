@@ -1,14 +1,19 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "name": "@printvisionbolt/ui",
 <<<<<<< HEAD
 <<<<<<< HEAD
   "version": "0.1.0",
 =======
   "name": "@repo/ui",
+=======
+  "name": "@printvisionbolt/ui",
+>>>>>>> 52bc04b (day 2 configureing packages)
   "version": "0.0.0",
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
   "private": true,
+<<<<<<< HEAD
   "exports": {
     "./*": "./src/*.tsx"
   },
@@ -108,24 +113,42 @@
     "react-dom": "^18.2.0"
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 =======
+=======
+  "sideEffects": false,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "license": "MIT",
+>>>>>>> 52bc04b (day 2 configureing packages)
   "scripts": {
-    "lint": "eslint . --max-warnings 0",
-    "generate:component": "turbo gen react-component",
-    "check-types": "tsc --noEmit"
-  },
-  "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@turbo/gen": "^2.4.0",
-    "@types/node": "^22.13.0",
-    "@types/react": "19.0.8",
-    "@types/react-dom": "19.0.3",
-    "eslint": "^9.21.0",
-    "typescript": "5.7.3"
+    "build": "tsup",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "dev": "tsup --watch",
+    "lint": "eslint \"src/**/*.ts*\"",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
+<<<<<<< HEAD
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
+=======
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "react": "^18.2.0",
+    "tailwind-merge": "^2.1.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "@printvisionbolt/eslint-config": "workspace:*",
+    "@printvisionbolt/typescript-config": "workspace:*",
+    "@types/react": "^18.2.42",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.3.6",
+    "tsup": "^8.0.1",
+    "typescript": "^5.3.2",
+    "vitest": "^1.0.4"
+>>>>>>> 52bc04b (day 2 configureing packages)
   }
 }

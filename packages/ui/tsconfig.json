@@ -2,6 +2,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "extends": "@printvisionbolt/typescript-config/library.json",
 =======
   "extends": "@repo/typescript-config/react-library.json",
@@ -25,10 +26,24 @@
   "compilerOptions": {
     "outDir": "dist",
 <<<<<<< HEAD
+=======
+  "extends": "@printvisionbolt/typescript-config/react-library.json",
+  "include": ["src", "*.ts", "*.tsx"],
+  "exclude": ["node_modules", "dist"],
+  "compilerOptions": {
+    "jsx": "react",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "rootDir": "src",
+    "outDir": "dist",
+>>>>>>> 52bc04b (day 2 configureing packages)
     "declaration": true,
     "declarationMap": true,
     "resolveJsonModule": true
   }
+<<<<<<< HEAD
 >>>>>>> 60d53aa (day 2 configureing packages)
 =======
     "rootDir": "src",
@@ -48,4 +63,6 @@
   "include": ["src"],
   "exclude": ["node_modules", "dist"]
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
+=======
+>>>>>>> 52bc04b (day 2 configureing packages)
 }

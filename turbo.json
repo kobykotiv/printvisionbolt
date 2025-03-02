@@ -5,6 +5,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
   "globalDependencies": [
@@ -103,11 +104,26 @@
     },
     "lint": {
       "outputs": []
+=======
+  "globalDependencies": ["**/.env"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "dist/**"]
+>>>>>>> 52bc04b (day 2 configureing packages)
     },
     "dev": {
       "cache": false,
       "persistent": true
+<<<<<<< HEAD
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
+=======
+    },
+    "lint": {},
+    "test": {
+      "dependsOn": ["^build"],
+      "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"]
+>>>>>>> 52bc04b (day 2 configureing packages)
     }
   }
 }

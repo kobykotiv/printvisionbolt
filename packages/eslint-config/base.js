@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 module.exports = {
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -39,12 +40,35 @@ export const config = [
       "turbo/no-undeclared-env-vars": "warn",
     },
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
+=======
+module.exports = {
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "prettier",
+    "turbo"
+  ],
+  env: {
+    node: true,
+    browser: true,
+    es2022: true
+>>>>>>> 52bc04b (day 2 configureing packages)
   },
-  {
-    plugins: {
-      onlyWarn,
-    },
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint"],
+  rules: {
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        argsIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        caughtErrorsIgnorePattern: "^_"
+      }
+    ],
+    "@typescript-eslint/no-explicit-any": "warn",
+    "no-console": ["warn", { allow: ["warn", "error"] }]
   },
+<<<<<<< HEAD
 <<<<<<< HEAD
   rules: {
     "react/react-in-jsx-scope": "off",
@@ -90,6 +114,8 @@ export const config = [
 <<<<<<< HEAD
     "no-console": ["warn", { allow: ["warn", "error"] }]
   },
+=======
+>>>>>>> 52bc04b (day 2 configureing packages)
   ignorePatterns: [
     "**/*.js",
     "node_modules",
@@ -99,6 +125,7 @@ export const config = [
     "build"
   ]
 }
+<<<<<<< HEAD
 >>>>>>> 60d53aa (day 2 configureing packages)
 =======
     "@typescript-eslint/no-unused-vars": [
@@ -117,3 +144,5 @@ export const config = [
   },
 ];
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
+=======
+>>>>>>> 52bc04b (day 2 configureing packages)

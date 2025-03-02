@@ -19,6 +19,7 @@ bundler_config={
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 SEO_optimization=true
 image_optimization=true
 
@@ -29,6 +30,8 @@ SEO_optimization=true
 image_optimization=true
 
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+>>>>>>> 52bc04b (day 2 configureing packages)
 # Performance Settings
 memory_limit=4gb
 cache_strategy=persistent

@@ -3,15 +3,22 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "display": "Base",
 =======
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
+=======
+  "display": "Default",
+>>>>>>> 52bc04b (day 2 configureing packages)
   "compilerOptions": {
+    "composite": false,
     "declaration": true,
     "declarationMap": true,
     "esModuleInterop": true,
-    "incremental": false,
+    "forceConsistentCasingInFileNames": true,
+    "inlineSources": false,
     "isolatedModules": true,
+<<<<<<< HEAD
 <<<<<<< HEAD
     "jsx": "preserve",
     "baseUrl": ".",
@@ -64,4 +71,20 @@
     "target": "ES2022"
   }
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
+=======
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "preserveWatchOutput": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ES2020",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "incremental": true,
+    "resolveJsonModule": true,
+    "jsx": "preserve"
+  },
+  "exclude": ["node_modules"]
+>>>>>>> 52bc04b (day 2 configureing packages)
 }
