@@ -54,7 +54,8 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "maxParallelTasks": 15
     },
     "lint": {},
     "test": {
@@ -62,5 +63,6 @@
       "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"]
 >>>>>>> 60d53aa (day 2 configureing packages)
     }
-  }
+  },
+  "globalEnv": ["NODE_ENV", "NEXT_PUBLIC_*"]
 }

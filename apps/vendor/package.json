@@ -9,7 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@printvisionbolt/ui": "*",
+=======
+    "@printvisionbolt/ui": "workspace:*",
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
     "@supabase/supabase-js": "^2.39.0",
     "@tanstack/react-query": "^5.12.2",
     "@trpc/client": "^10.44.1",
@@ -22,8 +26,13 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@printvisionbolt/eslint-config": "*",
     "@printvisionbolt/typescript-config": "*",
+=======
+    "@printvisionbolt/eslint-config": "workspace:*",
+    "@printvisionbolt/typescript-config": "workspace:*",
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",

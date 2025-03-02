@@ -1,9 +1,12 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 node_modules
 =======
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+=======
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 =======
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 # Dependencies
@@ -63,6 +66,7 @@ supabase/.temp
 tsconfig.tsbuildinfo
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Debug
 npm-debug.log*
 yarn-debug.log*
@@ -72,6 +76,11 @@ yarn-error.log*
 .DS_Store
 *.pem
 >>>>>>> 9be19e8 (reset to Monorepo with turburepo)
+=======
+# Logs
+logs
+*.log
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 =======
 # Logs
 logs

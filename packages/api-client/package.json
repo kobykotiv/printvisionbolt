@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "@printvisionbolt/api-client",
   "version": "0.0.0",
   "private": true,
@@ -48,5 +49,26 @@
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+=======
+  "name": "@printvision/api-client",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./src/client.ts",
+  "types": "./src/client.ts",
+  "scripts": {
+    "lint": "eslint . --ext .ts,.tsx",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@trpc/client": "^10.45.0",
+    "@trpc/server": "^10.45.0",
+    "superjson": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3",
+    "eslint": "^8.56.0",
+    "@printvision/eslint-config": "*"
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
   }
 }

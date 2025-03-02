@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "extends": "@printvisionbolt/typescript-config/base.json",
   "compilerOptions": {
     "target": "ES2022",
@@ -18,14 +19,26 @@
   "exclude": ["node_modules", "dist"]
 =======
   "extends": "@printvisionbolt/typescript-config/nextjs.json",
+=======
+  "extends": "@printvisionbolt/typescript-config/base.json",
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
   "compilerOptions": {
-    "plugins": [{ "name": "next" }],
+    "target": "es2020",
+    "module": "commonjs",
+    "lib": ["es2020"],
+    "outDir": "./dist",
+    "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     }
   },
+<<<<<<< HEAD
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 >>>>>>> 1100452 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
+=======
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 }

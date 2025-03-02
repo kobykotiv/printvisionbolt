@@ -100,6 +100,7 @@ const enterpriseTierFeatures = {
 ## Feature Implementation Guidelines
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## Database CRUD Operations
 
 ### Users Table
@@ -146,31 +147,52 @@ const enterpriseTierFeatures = {
 - SSL certificate provisioning
 - Domain aliasing
 - Self-hosted DNS management
+=======
+## Database CRUD Operations
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 
-### Multi-language Support
-- Translation management
-- Currency conversion
-- Regional pricing
-- Content localization
-- Self-hosted language packs
+### Users Table
 
-### Analytics Integration
-- Real-time tracking
-- Custom events
-- Conversion tracking
-- A/B testing capability
-- Self-hosted data storage
+- Create: Register new users with authentication details
+- Read: Fetch user profiles and preferences
+- Update: Modify user information and settings
+- Delete: Handle account termination
 
-### UI Customization
-- Glassomorphic effects library
-- Gradient accent system
-- Dark/Light mode support
-- Custom branding options
-- Responsive design system
+### Products Table
 
+- Create: Add new products to inventory
+- Read: Retrieve product details and availability
+- Update: Modify product information and stock
+- Delete: Remove products from catalog
+
+### Orders Table
+
+- Create: Process new customer orders
+- Read: Retrieve order history and status
+- Update: Modify order status and details
+- Delete: Cancel orders (soft delete)
+
+### Categories Table
+
+- Create: Add new product categories
+- Read: Fetch category listings
+- Update: Modify category information
+- Delete: Remove categories (with product reassignment)
+
+### Settings Table
+
+- Create: Initialize store configurations
+- Read: Fetch current settings
+- Update: Modify store preferences
+- Delete: Reset to defaults
+
+
+<<<<<<< HEAD
 ### Performance Optimization
 - Bun runtime optimization
 - Edge function deployment
 - Custom caching strategies
 - Self-hosted CDN integration
 >>>>>>> ef09bbd (prep)
+=======
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)

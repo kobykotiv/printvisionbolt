@@ -2,9 +2,15 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
+<<<<<<< HEAD
 export type CartItem = {
   id: string;
   title: string;
+=======
+type CartItem = {
+  id: string;
+  name: string;
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
   price: number;
   quantity: number;
   imageUrl?: string;

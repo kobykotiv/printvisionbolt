@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 export type ProductStatus = 'draft' | 'published' | 'archived';
 
 export interface Product {
@@ -13,13 +14,31 @@ export interface Product {
   vendor_id: string;
   created_at: string;
   updated_at: string;
+=======
+export interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  images: string[];
+  category: string;
+  inStock: boolean;
+  featuredImage?: string;
+  variants?: ProductVariant[];
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 }
 
 export interface ProductVariant {
   id: string;
+<<<<<<< HEAD
   title: string;
   price: number;
   stock: number;
+=======
+  name: string;
+  price: number;
+  inStock: boolean;
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 }
 
 export interface Category {

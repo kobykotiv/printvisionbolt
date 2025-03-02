@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "extends": "@printvisionbolt/typescript-config/library.json",
   "compilerOptions": {
     "outDir": "dist",
@@ -10,4 +11,17 @@
   "references": [
     { "path": "../api-types" }
   ]
+=======
+  "extends": "@printvision/typescript-config/base.json",
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  }
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 }

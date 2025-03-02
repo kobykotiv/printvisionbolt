@@ -16,26 +16,25 @@
 =======
   "display": "Default",
   "compilerOptions": {
-    "composite": false,
-    "declaration": true,
-    "declarationMap": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "inlineSources": false,
-    "isolatedModules": true,
-    "moduleResolution": "node",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "preserveWatchOutput": true,
+    "target": "es2020",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2020",
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "incremental": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
+<<<<<<< HEAD
     "jsx": "preserve"
 >>>>>>> 60d53aa (day 2 configureing packages)
+=======
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
   },
   "exclude": ["node_modules"]
 }

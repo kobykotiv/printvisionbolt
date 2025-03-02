@@ -79,8 +79,15 @@ _No tasks currently blocked_
 
 ### Integration Requirements
 - Print provider APIs
+<<<<<<< HEAD
 - Payment processors = Stripe for payments to and from users
 - Shipping services = Handled by the print api
 - Analytics services 
 - Support tools
 
+=======
+- Payment processors
+- Shipping services
+- Analytics services
+- Support tools
+>>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
