@@ -136,4 +136,6 @@ const enterpriseTierFeatures = {
 - Update: Modify store preferences
 - Delete: Reset to defaults
 
+### Payments
 
+- Use Stripe

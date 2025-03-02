@@ -1,35 +1,34 @@
 module.exports = {
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint", "react-hooks"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "turbo"
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier"
   ],
   env: {
-    node: true,
     browser: true,
-    es2022: true
+    node: true,
+    es6: true
   },
-  parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint"],
+  settings: {
+    react: {
+      version: "detect"
+    }
+  },
   rules: {
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_"
-      }
-    ],
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "warn",
-    "no-console": ["warn", { allow: ["warn", "error"] }]
-  },
-  ignorePatterns: [
-    "**/*.js",
-    "node_modules",
-    ".turbo",
-    "dist",
-    "coverage",
-    "build"
-  ]
-}
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ]
+  }
+};

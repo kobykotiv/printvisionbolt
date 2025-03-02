@@ -1,20 +1,25 @@
+export type ProductStatus = 'draft' | 'published' | 'archived';
+
 export interface Product {
   id: string;
-  name: string;
+  title: string;
   description: string;
   price: number;
   images: string[];
-  category: string;
-  inStock: boolean;
-  featuredImage?: string;
-  variants?: ProductVariant[];
+  category?: string;
+  status: ProductStatus;
+  stock: number;
+  metadata?: Record<string, unknown>;
+  vendor_id: string;
+  created_at: string;
+  updated_at: string;
 }
 
 export interface ProductVariant {
   id: string;
-  name: string;
+  title: string;
   price: number;
-  inStock: boolean;
+  stock: number;
 }
 
 export interface Category {
