@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "extends": "@printvisionbolt/typescript-config/base.json",
   "compilerOptions": {
     "target": "ES2022",
@@ -15,4 +16,16 @@
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
+=======
+  "extends": "@printvisionbolt/typescript-config/nextjs.json",
+  "compilerOptions": {
+    "plugins": [{ "name": "next" }],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+>>>>>>> 1100452 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
 }

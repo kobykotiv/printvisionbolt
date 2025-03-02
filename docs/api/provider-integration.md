@@ -43,6 +43,7 @@ class ProviderError extends Error {
   }
 }
 ```
+<<<<<<< HEAD
 # Provider-Specific Integration Guide
 
 ## Printful Integration
@@ -363,3 +364,7 @@ structure:
 
     - type: Footer
 ```
+=======
+
+[Documentation continues...]
+>>>>>>> 1100452 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)

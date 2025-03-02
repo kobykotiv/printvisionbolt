@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 'use client';
 
 import React from 'react';
@@ -76,6 +77,15 @@ export default function AdminDashboard() {
           </FeatureGuard>
         </div>
       </div>
+=======
+import React from 'react';
+
+export default function DashboardPage() {
+  return (
+    <div className="flex flex-col gap-4 p-4">
+      <h1 className="text-2xl font-bold">Dashboard</h1>
+      <p>Welcome to your dashboard</p>
+>>>>>>> 1100452 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
     </div>
   );
 }
