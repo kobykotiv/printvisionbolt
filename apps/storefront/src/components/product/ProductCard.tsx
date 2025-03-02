@@ -16,7 +16,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   const handleAddToCart = () => {
     addItem({
       id: product.id,
-      name: product.name,
+      title: product.title,
       price: product.price,
       quantity: 1,
       imageUrl: product.images[0]
@@ -29,7 +29,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         {product.images[0] ? (
           <Image
             src={product.images[0]}
-            alt={product.name}
+            alt={product.title}
             fill
             className="object-cover"
           />
@@ -42,7 +42,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       
       <div className="p-4">
         <Link href={`/products/${product.id}`} className="block">
-          <h3 className="text-lg font-medium mb-1">{product.name}</h3>
+          <h3 className="text-lg font-medium mb-1">{product.title}</h3>
           <p className="text-gray-600 text-sm mb-2 line-clamp-2">{product.description}</p>
         </Link>
         
@@ -51,7 +51,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           <button
             onClick={handleAddToCart}
             className="bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 transition"
-            aria-label={`Add ${product.name} to cart`}
+            aria-label={`Add ${product.title} to cart`}
           >
             <ShoppingCart size={18} />
           </button>

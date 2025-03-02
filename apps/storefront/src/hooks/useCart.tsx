@@ -2,9 +2,9 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
-type CartItem = {
+export type CartItem = {
   id: string;
-  name: string;
+  title: string;
   price: number;
   quantity: number;
   imageUrl?: string;
