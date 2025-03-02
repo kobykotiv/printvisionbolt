@@ -1,0 +1,32 @@
+{
+  "name": "@printvisionbolt/api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.8.0",
+    "@prisma/client": "^5.0.0",
+    "@supabase/supabase-js": "^2.49.1",
+    "@trpc/client": "^11.0.0-rc.819",
+    "@trpc/server": "^11.0.0-rc.819",
+    "next": "13.5.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.2",
+    "@types/react": "^18.2.25",
+    "@types/react-dom": "^18.2.10",
+    "eslint": "^8.50.0",
+    "eslint-config-next": "13.5.4",
+    "prisma": "^5.0.0",
+    "typescript": "^5.2.2"
+  }
+}
