@@ -1,7 +1,8 @@
 {
-  "name": "@printvision/typescript-config",
-  "version": "0.1.0",
+  "name": "@printvisionbolt/typescript-config",
+  "version": "0.0.0",
   "private": true,
+<<<<<<< HEAD
 <<<<<<< HEAD
   "license": "MIT",
   "publishConfig": {
@@ -44,12 +45,22 @@
   }
 >>>>>>> 60d53aa (day 2 configureing packages)
 =======
+=======
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+>>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)
     "base.json",
     "nextjs.json",
     "react-library.json"
   ]
+<<<<<<< HEAD
 >>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
 =======
   }
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
+=======
+>>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)
 }

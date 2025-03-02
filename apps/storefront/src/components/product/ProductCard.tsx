@@ -19,6 +19,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       title: product.title,
 =======
       name: product.name,
@@ -29,6 +30,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 =======
       name: product.name,
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+      title: product.title,
+>>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)
       price: product.price,
       quantity: 1,
       imageUrl: product.images[0]
@@ -44,6 +48,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             alt={product.title}
 =======
             alt={product.name}
@@ -54,6 +59,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 =======
             alt={product.name}
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+            alt={product.title}
+>>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)
             fill
             className="object-cover"
           />
@@ -69,6 +77,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           <h3 className="text-lg font-medium mb-1">{product.title}</h3>
 =======
           <h3 className="text-lg font-medium mb-1">{product.name}</h3>
@@ -79,6 +88,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 =======
           <h3 className="text-lg font-medium mb-1">{product.name}</h3>
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+          <h3 className="text-lg font-medium mb-1">{product.title}</h3>
+>>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)
           <p className="text-gray-600 text-sm mb-2 line-clamp-2">{product.description}</p>
         </Link>
         
@@ -90,6 +102,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             aria-label={`Add ${product.title} to cart`}
 =======
             aria-label={`Add ${product.name} to cart`}
@@ -100,6 +113,9 @@ export default function ProductCard({ product }: ProductCardProps) {
 =======
             aria-label={`Add ${product.name} to cart`}
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+            aria-label={`Add ${product.title} to cart`}
+>>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)
           >
             <ShoppingCart size={18} />
           </button>

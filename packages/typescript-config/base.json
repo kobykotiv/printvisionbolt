@@ -12,6 +12,7 @@
 >>>>>>> 52bc04b (day 2 configureing packages)
   "compilerOptions": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "composite": false,
     "declaration": true,
     "declarationMap": true,
@@ -79,6 +80,9 @@
     "preserveWatchOutput": true,
 =======
     "target": "es2020",
+=======
+    "target": "es2017",
+>>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
@@ -92,7 +96,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "baseUrl": "."
   },
   "exclude": ["node_modules"]
 >>>>>>> 52bc04b (day 2 configureing packages)

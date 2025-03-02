@@ -42,30 +42,36 @@ export const config = [
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
 =======
 module.exports = {
+  parser: "@typescript-eslint/parser",
+  plugins: ["@typescript-eslint", "react-hooks"],
   extends: [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier",
-    "turbo"
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended",
+    "prettier"
   ],
   env: {
-    node: true,
     browser: true,
+<<<<<<< HEAD
     es2022: true
 >>>>>>> 52bc04b (day 2 configureing packages)
+=======
+    node: true,
+    es6: true
   },
-  parser: "@typescript-eslint/parser",
-  plugins: ["@typescript-eslint"],
+  settings: {
+    react: {
+      version: "detect"
+    }
+>>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)
+  },
   rules: {
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      {
-        argsIgnorePattern: "^_",
-        varsIgnorePattern: "^_",
-        caughtErrorsIgnorePattern: "^_"
-      }
-    ],
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "warn",
+<<<<<<< HEAD
     "no-console": ["warn", { allow: ["warn", "error"] }]
   },
 <<<<<<< HEAD
@@ -75,6 +81,8 @@ module.exports = {
     "react/prop-types": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "warn",
+=======
+>>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)
     "@typescript-eslint/no-unused-vars": [
       "warn",
       {
@@ -84,6 +92,7 @@ module.exports = {
     ]
   }
 };
+<<<<<<< HEAD
 =======
 =======
   parser: "@typescript-eslint/parser",
@@ -146,3 +155,5 @@ module.exports = {
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
 =======
 >>>>>>> 52bc04b (day 2 configureing packages)
+=======
+>>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)

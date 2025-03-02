@@ -143,6 +143,7 @@ const enterpriseTierFeatures = {
 ### Payments
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 - Use Stripe
 =======
 =======
@@ -253,3 +254,6 @@ const enterpriseTierFeatures = {
 >>>>>>> 91d08cd (prep)
 =======
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+- Use Stripe
+>>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)

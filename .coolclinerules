@@ -39,6 +39,7 @@ git_branch_naming=feature/*|bugfix/*|release/*
 commit_convention=conventional
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Payment network
 payment_provider=stripe
 payment_currency=usd
@@ -48,6 +49,12 @@ payment_currency=usd
 >>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
 =======
 >>>>>>> 91d08cd (prep)
+=======
+# Payment network
+payment_provider=stripe
+payment_currency=usd
+
+>>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)
 # Multi-Tenant Rules
 tenant_isolation=database_schema
 tenant_identification=header|subdomain
