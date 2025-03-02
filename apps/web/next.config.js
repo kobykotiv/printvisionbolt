@@ -1,4 +1,14 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+  reactStrictMode: true,
+  transpilePackages: [
+    "@printvisionbolt/shared-ui",
+    "@printvisionbolt/utils"
+  ],
+  experimental: {
+    optimizeCss: true,
+    turbo: true,
+  },
+}
 
-export default nextConfig;
+module.exports = nextConfig

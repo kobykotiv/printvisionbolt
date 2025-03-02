@@ -8,12 +8,14 @@
     },
     "dev": {
       "cache": false,
-      "persistent": true
+      "persistent": true,
+      "maxParallelTasks": 15
     },
     "lint": {},
     "test": {
       "dependsOn": ["^build"],
       "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "test/**/*.tsx"]
     }
-  }
+  },
+  "globalEnv": ["NODE_ENV", "NEXT_PUBLIC_*"]
 }

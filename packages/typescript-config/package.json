@@ -1,20 +1,11 @@
 {
-  "name": "@printvisionbolt/typescript-config",
-  "version": "0.0.0",
+  "name": "@printvision/typescript-config",
+  "version": "0.1.0",
   "private": true,
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
   "files": [
-    "base.json",
-    "nextjs.json",
-    "react-library.json"
+    "base.json"
   ],
   "dependencies": {
-    "@types/node": "^20.10.0",
-    "@types/react": "^18.2.42",
-    "@types/react-dom": "^18.2.17",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.3"
   }
 }
