@@ -45,6 +45,7 @@ class ProviderError extends Error {
 ```
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Provider-Specific Integration Guide
 
 ## Printful Integration
@@ -691,3 +692,7 @@ structure:
     - type: Footer
 ```
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+
+[Documentation continues...]
+>>>>>>> 93399e0 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)

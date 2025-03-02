@@ -1,6 +1,7 @@
 import { initTRPC, TRPCError } from '@trpc/server';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import type { Context } from './context';
 
 export const t = initTRPC.context<Context>().create({
@@ -67,10 +68,23 @@ const isAuthed = t.middleware(({ ctx, next }) => {
 =======
       message: 'Not authenticated',
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
+=======
+import { Context } from './context';
+
+const t = initTRPC.context<Context>().create();
+
+// Middleware to check authentication
+const isAuthenticated = t.middleware(async ({ ctx, next }) => {
+  if (!ctx.user) {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'You must be logged in to access this resource',
+>>>>>>> 93399e0 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
     });
   }
   return next({
     ctx: {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       ...ctx,
@@ -79,11 +93,14 @@ const isAuthed = t.middleware(({ ctx, next }) => {
 =======
       ...ctx,
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+>>>>>>> 93399e0 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
       user: ctx.user,
     },
   });
 });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -125,3 +142,9 @@ export const protectedProcedure = t.procedure.use(isAuthed);
 =======
 export const enterpriseProcedure = protectedProcedure.use(withEnterpriseTier);
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+// Base router and procedure helpers
+export const router = t.router;
+export const publicProcedure = t.procedure;
+export const protectedProcedure = t.procedure.use(isAuthenticated);
+>>>>>>> 93399e0 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
