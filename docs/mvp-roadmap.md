@@ -63,9 +63,12 @@
 
 ### API Integration
 - [ ] Product data endpoints
+<<<<<<< HEAD
     - [ ] GET catalogs
     - [ ] GET products
 
+=======
+>>>>>>> 711caee (feat: Update MVP roadmap with completed core components and performance targets)
 - [ ] Cart management
 - [ ] User authentication
 - [ ] Order processing
