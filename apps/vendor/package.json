@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@printvisionbolt/ui": "workspace:*",
+    "@printvisionbolt/ui": "*",
     "@supabase/supabase-js": "^2.39.0",
     "@tanstack/react-query": "^5.12.2",
     "@trpc/client": "^10.44.1",
@@ -22,8 +22,8 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@printvisionbolt/eslint-config": "workspace:*",
-    "@printvisionbolt/typescript-config": "workspace:*",
+    "@printvisionbolt/eslint-config": "*",
+    "@printvisionbolt/typescript-config": "*",
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",

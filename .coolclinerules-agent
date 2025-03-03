@@ -17,6 +17,9 @@ bundler_config={
     lazy_loading: true
 }
 
+SEO_optimization=true
+image_optimization=true
+
 # Performance Settings
 memory_limit=4gb
 cache_strategy=persistent
