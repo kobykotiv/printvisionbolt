@@ -3,6 +3,21 @@ import { createTRPCReact } from '@trpc/react-query';
 import { QueryClient } from '@tanstack/react-query';
 import { vi } from 'vitest';
 
+export type MockRouter = {
+  product: {
+    list: ReturnType<typeof vi.fn>;
+    get: ReturnType<typeof vi.fn>;
+  };
+  order: {
+    list: ReturnType<typeof vi.fn>;
+    get: ReturnType<typeof vi.fn>;
+  };
+  auth: {
+    getSession: ReturnType<typeof vi.fn>;
+    getUser: ReturnType<typeof vi.fn>;
+  };
+};
+
 export const trpc = createTRPCReact<AppRouter>();
 
 export function createTestQueryClient() {
@@ -116,7 +131,7 @@ export const mockSession = {
   expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
 };
 
-export function createMockRouter() {
+export function createMockRouter(): MockRouter {
   return {
     product: {
       list: vi.fn().mockResolvedValue(mockProducts),

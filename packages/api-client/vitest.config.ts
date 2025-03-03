@@ -1,14 +1,15 @@
 import { defineConfig } from 'vitest/config';
-import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  plugins: [react()],
   test: {
-    environment: 'jsdom',
-    setupFiles: ['./test/setup.ts'],
+    environment: 'node',
     globals: true,
-    coverage: {
-      reporter: ['text', 'json', 'html'],
-    },
+    setupFiles: ['./test/setup.ts'],
+    include: ['test/**/*.{test,spec}.{ts,tsx}'],
   },
+  resolve: {
+    alias: {
+      '@printvisionbolt/api-types': '../api-types/src'
+    }
+  }
 });

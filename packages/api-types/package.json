@@ -1,26 +1,15 @@
 {
   "name": "@printvisionbolt/api-types",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "private": true,
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "sideEffects": false,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "scripts": {
-    "build": "tsup src/index.ts --format esm,cjs --dts",
-    "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint src/"
+    "build": "tsc",
+    "clean": "rm -rf .turbo node_modules dist"
   },
   "devDependencies": {
     "@printvisionbolt/typescript-config": "workspace:*",
-    "@printvisionbolt/eslint-config": "workspace:*",
-    "@types/node": "^20.10.0",
-    "tsup": "^8.0.0",
-    "typescript": "^5.3.2"
-  },
-  "dependencies": {
-    "zod": "^3.22.0"
+    "typescript": "^5.3.3"
   }
 }

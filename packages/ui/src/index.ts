@@ -1,4 +1,21 @@
-export * from './components/Card';
-export * from './components/Button';
+// Components
 export * from './components/GlassContainer';
-export * from './styles/glass';
+export * from './components/TierCard';
+
+// Hooks
+export { useTierAccess } from './hooks/useTierAccess';
+
+// Types
+export type { 
+  TierAccessOptions,
+  GlassProps,
+  TierAccessHook 
+} from './hooks/types';
+
+// Re-export types from api-types
+export type {
+  UserTier,
+  TierLimits,
+  TierFeatures,
+  TierConfig
+} from '@printvisionbolt/api-types';

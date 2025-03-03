@@ -1,16 +1,11 @@
 {
-  "extends": "@printvisionbolt/typescript-config/base.json",
+  "extends": "@printvisionbolt/typescript-config/library.json",
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "strict": true,
+    "outDir": "dist",
+    "rootDir": "src",
     "declaration": true,
     "declarationMap": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "sourceMap": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

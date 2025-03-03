@@ -1,7 +1,7 @@
 import { initTRPC, TRPCError } from '@trpc/server';
 import type { Context } from './context';
 
-const t = initTRPC.context<Context>().create({
+export const t = initTRPC.context<Context>().create({
   errorFormatter({ shape, error }) {
     return {
       ...shape,
@@ -35,3 +35,10 @@ const isAuthed = t.middleware(({ ctx, next }) => {
 });
 
 export const protectedProcedure = t.procedure.use(isAuthed);
+
+// Re-export tier-specific procedures
+import { withCreatorTier, withProTier, withEnterpriseTier } from './middleware/withTier';
+
+export const creatorProcedure = protectedProcedure.use(withCreatorTier);
+export const proProcedure = protectedProcedure.use(withProTier);
+export const enterpriseProcedure = protectedProcedure.use(withEnterpriseTier);

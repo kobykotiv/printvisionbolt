@@ -79,7 +79,8 @@ _No tasks currently blocked_
 
 ### Integration Requirements
 - Print provider APIs
-- Payment processors = Stripe
+- Payment processors = Stripe for payments to and from users
 - Shipping services = Handled by the print api
 - Analytics services 
 - Support tools
+
