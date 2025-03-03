@@ -1,60 +1,83 @@
-import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
-import { AlertCircle } from 'lucide-react';
-import { LoadingSpinner } from './ui/LoadingSpinner';
-
-interface AuthWarningProps {
-  message: string;
-}
-
-function AuthWarning({ message }: AuthWarningProps) {
-  return (
-    <div className="fixed top-4 right-4 flex items-center gap-2 bg-red-50 text-red-700 px-4 py-2 rounded-lg shadow-lg">
-      <AlertCircle className="h-5 w-5" />
-      <span>{message}</span>
-    </div>
-  );
-}
+import React, { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useFeatureCheck } from '../hooks/useFeatureCheck';
 
 interface ProtectedRouteProps {
+  feature: string;
   children: React.ReactNode;
+  fallbackPath?: string;
+  loadingComponent?: React.ReactNode;
 }
 
-export function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const { user, loading } = useAuth();
-  const location = useLocation();
-  const [showWarning, setShowWarning] = React.useState(false);
+export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+  feature,
+  children,
+  fallbackPath = '/upgrade',
+  loadingComponent
+}) => {
+  const router = useRouter();
+  const { hasAccess, isLoading } = useFeatureCheck(feature);
 
-  React.useEffect(() => {
-    if (!user && !loading) {
-      setShowWarning(true);
-      const timer = setTimeout(() => {
-        setShowWarning(false);
-      }, 3000);
-      return () => clearTimeout(timer);
+  useEffect(() => {
+    if (!isLoading && !hasAccess) {
+      router.push(fallbackPath);
     }
-  }, [user, loading]);
+  }, [hasAccess, isLoading, router, fallbackPath]);
 
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <LoadingSpinner size="lg" />
+  if (isLoading) {
+    return loadingComponent || (
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-gray-900" />
       </div>
     );
   }
 
-  if (!user) {
-    if (showWarning) {
-      return (
-        <>
-          <Navigate to="/" replace />
-          <AuthWarning message="Please log in to access this content" />
-        </>
-      );
-    }
-    return <Navigate to="/login" state={{ from: location }} replace />;
+  if (!hasAccess) {
+    return null;
   }
 
   return <>{children}</>;
+};
+
+interface ProtectedComponentProps {
+  [key: string]: any;
 }
+
+export const withFeatureProtection = (
+  feature: string,
+  fallbackPath?: string,
+  loadingComponent?: React.ReactNode
+) => {
+  return function FeatureProtectedComponent<P extends ProtectedComponentProps>(
+    WrappedComponent: React.ComponentType<P>
+  ) {
+    return function ProtectedComponent(props: P) {
+      return (
+        <ProtectedRoute 
+          feature={feature} 
+          fallbackPath={fallbackPath}
+          loadingComponent={loadingComponent}
+        >
+          <WrappedComponent {...props} />
+        </ProtectedRoute>
+      );
+    };
+  };
+};
+
+// Example usage:
+/*
+// Protect a component
+const AnalyticsDashboard = withFeatureProtection('analytics')(Dashboard);
+
+// Or protect a route
+function SettingsPage() {
+  return (
+    <ProtectedRoute feature="settings">
+      <Settings />
+    </ProtectedRoute>
+  );
+}
+*/
+
+export default ProtectedRoute;
