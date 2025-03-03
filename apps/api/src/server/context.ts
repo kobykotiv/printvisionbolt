@@ -9,6 +9,7 @@ import { CreateFastifyContextOptions } from '@trpc/server/adapters/fastify';
 import { createClient, User } from '@supabase/supabase-js';
 import { SubscriptionTier } from '../types/subscription';
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -125,9 +126,16 @@ import { CreateNextContextOptions } from '@trpc/server/adapters/next';
 import { CreateFastifyContextOptions } from '@trpc/server/adapters/fastify';
 >>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 import { createClient } from '@supabase/supabase-js';
+=======
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 
 const supabaseUrl = process.env.SUPABASE_URL!;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
+
+interface UserWithTier extends Omit<User, 'email'> {
+  email: string;
+  subscription_tier: SubscriptionTier;
+}
 
 export async function createContext({ req, res }: CreateFastifyContextOptions) {
   const supabase = createClient(supabaseUrl, supabaseServiceKey, {
@@ -139,9 +147,10 @@ export async function createContext({ req, res }: CreateFastifyContextOptions) {
 
   const token = req.headers.authorization?.split(' ')[1];
   
-  let user = null;
+  let user: UserWithTier | null = null;
   if (token) {
     const { data: { user: supabaseUser }, error } = await supabase.auth.getUser(token);
+<<<<<<< HEAD
     if (!error && supabaseUser) {
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -163,6 +172,23 @@ export async function createContext({ req, res }: CreateFastifyContextOptions) {
 =======
       user = supabaseUser;
 >>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+    if (!error && supabaseUser && supabaseUser.email) {
+      // Fetch user data including subscription tier
+      const { data: userData, error: userError } = await supabase
+        .from('users')
+        .select('*')
+        .eq('id', supabaseUser.id)
+        .single();
+
+      if (!userError && userData) {
+        user = {
+          ...supabaseUser,
+          email: supabaseUser.email, // Now we know email is defined
+          subscription_tier: userData.subscription_tier as SubscriptionTier,
+        };
+      }
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
     }
   }
 
@@ -227,6 +253,19 @@ export async function createContext({ req, res }: CreateFastifyContextOptions) {
 >>>>>>> 93399e0 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
 =======
     user,
+    /**
+     * Helper function to check if the current user has required tier access
+     */
+    hasRequiredTier: (requiredTier: SubscriptionTier) => {
+      if (!user) return false;
+      const tierLevels: Record<SubscriptionTier, number> = {
+        free: 0,
+        creator: 1,
+        pro: 2,
+        enterprise: 3,
+      };
+      return tierLevels[user.subscription_tier] >= tierLevels[requiredTier];
+    },
   };
 }
 >>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)

@@ -35,6 +35,9 @@
     "@printvisionbolt/eslint-config": "workspace:*",
     "@testing-library/dom": "^9.3.4",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
     "@testing-library/jest-dom": "^6.1.0",
     "@testing-library/react": "^14.0.0",
     "@testing-library/react-hooks": "^8.0.1",

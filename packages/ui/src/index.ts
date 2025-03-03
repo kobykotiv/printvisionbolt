@@ -3,6 +3,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 // Components
 export * from './components/GlassContainer';
 export * from './components/TierCard';
@@ -37,6 +38,10 @@ export * from './styles/glass';
 =======
 // Components
 export * from './components/GlassContainer';
+=======
+// Components
+export * from './components/GlassContainer';
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 export * from './components/TierCard';
 
 // Hooks
@@ -55,6 +60,7 @@ export type {
   TierLimits,
   TierFeatures,
   TierConfig
+<<<<<<< HEAD
 } from '@printvisionbolt/api-types';
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 =======
@@ -67,3 +73,6 @@ export * from './components/Button';
 export * from './components/GlassContainer';
 export * from './styles/glass';
 >>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+} from '@printvisionbolt/api-types';
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)

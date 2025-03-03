@@ -66,6 +66,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     - [ ] GET catalogs
     - [ ] GET products
 
@@ -78,6 +79,11 @@
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 =======
 >>>>>>> 5d5c9ff (feat: Update MVP roadmap with completed core components and performance targets)
+=======
+    - [ ] GET catalogs
+    - [ ] GET products
+
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 - [ ] Cart management
 - [ ] User authentication
 - [ ] Order processing

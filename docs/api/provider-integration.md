@@ -46,6 +46,7 @@ class ProviderError extends Error {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Provider-Specific Integration Guide
 
 ## Printful Integration
@@ -373,6 +374,10 @@ structure:
 =======
 # Provider-Specific Integration Guide
 
+=======
+# Provider-Specific Integration Guide
+
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 ## Printful Integration
 
 ### Shopify Integration Path
@@ -690,9 +695,13 @@ structure:
                 type: Checkbox
 
     - type: Footer
+<<<<<<< HEAD
 ```
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 =======
 
 [Documentation continues...]
 >>>>>>> 93399e0 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
+=======
+```
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)

@@ -1,8 +1,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 import type { 
   ProductData, 
   InventoryData, 
@@ -16,6 +19,7 @@ import type {
   PaginationOptions,
   ProviderProduct
 } from '../../api-types/src';
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 import { BaseProvider } from './base-provider';
@@ -102,9 +106,27 @@ export {
 export type {
 <<<<<<< HEAD
 =======
+=======
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 
-// Re-export common types from api-types
+import { BaseProvider } from './base-provider';
+import { PrintifyProvider } from './providers/printify';
+import { PrintfulProvider } from './providers/printful';
+import { GootenProvider } from './providers/gooten';
+import { GelatoProvider } from './providers/gelato';
+
+// Export provider implementations
+export {
+  BaseProvider,
+  PrintifyProvider,
+  PrintfulProvider,
+  GootenProvider,
+  GelatoProvider
+};
+
+// Re-export types
 export type {
+<<<<<<< HEAD
 >>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   Product,
   Store,
@@ -116,6 +138,8 @@ export type {
 } from '@printvisionbolt/api-types';
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
+=======
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
   ProductData,
   InventoryData,
   OrderData,
@@ -143,8 +167,12 @@ export function createProvider(type: ProviderType, credentials: ProviderCredenti
     default:
       throw new Error(`Unsupported provider type: ${type}`);
   }
+<<<<<<< HEAD
 }
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 =======
 } from '@printvisionbolt/api-types';
 >>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+}
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)

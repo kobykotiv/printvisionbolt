@@ -84,6 +84,7 @@ _No tasks currently blocked_
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - Payment processors = Stripe for payments to and from users
 - Shipping services = Handled by the print api
 - Analytics services 
@@ -120,3 +121,10 @@ _No tasks currently blocked_
 - Analytics services 
 - Support tools
 >>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)
+=======
+- Payment processors = Stripe for payments to and from users
+- Shipping services = Handled by the print api
+- Analytics services 
+- Support tools
+
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)

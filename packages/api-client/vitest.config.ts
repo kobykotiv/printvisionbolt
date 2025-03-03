@@ -2,6 +2,7 @@ import { defineConfig } from 'vitest/config';
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 export default defineConfig({
   test: {
@@ -38,16 +39,23 @@ export default defineConfig({
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 =======
 import react from '@vitejs/plugin-react';
+=======
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 
 export default defineConfig({
-  plugins: [react()],
   test: {
-    environment: 'jsdom',
-    setupFiles: ['./test/setup.ts'],
+    environment: 'node',
     globals: true,
-    coverage: {
-      reporter: ['text', 'json', 'html'],
-    },
+    setupFiles: ['./test/setup.ts'],
+    include: ['test/**/*.{test,spec}.{ts,tsx}'],
   },
+<<<<<<< HEAD
 >>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+  resolve: {
+    alias: {
+      '@printvisionbolt/api-types': '../api-types/src'
+    }
+  }
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 });

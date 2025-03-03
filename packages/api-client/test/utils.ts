@@ -6,8 +6,11 @@ import { vi } from 'vitest';
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 export type MockRouter = {
   product: {
     list: ReturnType<typeof vi.fn>;
@@ -24,12 +27,15 @@ export type MockRouter = {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 =======
 >>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 export const trpc = createTRPCReact<AppRouter>();
 
 export function createTestQueryClient() {
@@ -146,6 +152,7 @@ export const mockSession = {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 export function createMockRouter(): MockRouter {
 =======
 export function createMockRouter() {
@@ -156,6 +163,9 @@ export function createMockRouter(): MockRouter {
 =======
 export function createMockRouter() {
 >>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+export function createMockRouter(): MockRouter {
+>>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
   return {
     product: {
       list: vi.fn().mockResolvedValue(mockProducts),
