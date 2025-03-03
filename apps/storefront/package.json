@@ -12,6 +12,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@printvisionbolt/ui": "*",
     "@printvisionbolt/api": "*",
 =======
@@ -24,6 +25,10 @@
 =======
     "@printvisionbolt/ui": "workspace:*",
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+    "@printvisionbolt/ui": "*",
+    "@printvisionbolt/api": "*",
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
     "@supabase/supabase-js": "^2.39.0",
     "@tanstack/react-query": "^5.12.2",
     "@trpc/client": "^10.44.1",
@@ -39,6 +44,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "superjson": "^2.2.1",
+<<<<<<< HEAD
 <<<<<<< HEAD
     "zod": "^3.22.4"
   },
@@ -69,6 +75,11 @@
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",

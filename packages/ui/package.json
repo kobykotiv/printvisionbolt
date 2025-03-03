@@ -14,6 +14,7 @@
 >>>>>>> 8d7edcb (reset to Monorepo with turburepo)
   "private": true,
 <<<<<<< HEAD
+<<<<<<< HEAD
   "exports": {
     "./*": "./src/*.tsx"
   },
@@ -119,10 +120,14 @@
   "types": "./src/index.ts",
   "license": "MIT",
 >>>>>>> 52bc04b (day 2 configureing packages)
+=======
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   "scripts": {
     "build": "tsup",
-    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
     "dev": "tsup --watch",
+<<<<<<< HEAD
     "lint": "eslint \"src/**/*.ts*\"",
     "test": "vitest run",
     "test:watch": "vitest"
@@ -138,10 +143,14 @@
     "react": "^18.2.0",
     "tailwind-merge": "^2.1.0",
     "tailwindcss-animate": "^1.0.7"
+=======
+    "lint": "eslint src/",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist"
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   },
   "devDependencies": {
-    "@printvisionbolt/eslint-config": "workspace:*",
     "@printvisionbolt/typescript-config": "workspace:*",
+<<<<<<< HEAD
     "@types/react": "^18.2.42",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.32",
@@ -150,5 +159,17 @@
     "typescript": "^5.3.2",
     "vitest": "^1.0.4"
 >>>>>>> 52bc04b (day 2 configureing packages)
+=======
+    "@printvisionbolt/eslint-config": "workspace:*",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "eslint": "^8.54.0",
+    "react": "^18.2.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.2"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0"
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   }
 }

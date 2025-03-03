@@ -12,6 +12,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@printvisionbolt/ui": "*",
 =======
     "@printvisionbolt/ui": "workspace:*",
@@ -22,6 +23,9 @@
 =======
     "@printvisionbolt/ui": "workspace:*",
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+    "@printvisionbolt/ui": "*",
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
     "@supabase/supabase-js": "^2.39.0",
     "@tanstack/react-query": "^5.12.2",
     "@trpc/client": "^10.44.1",
@@ -37,6 +41,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@printvisionbolt/eslint-config": "*",
     "@printvisionbolt/typescript-config": "*",
 =======
@@ -51,6 +56,10 @@
     "@printvisionbolt/eslint-config": "workspace:*",
     "@printvisionbolt/typescript-config": "workspace:*",
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+    "@printvisionbolt/eslint-config": "*",
+    "@printvisionbolt/typescript-config": "*",
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",

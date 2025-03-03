@@ -2,6 +2,7 @@ import { initTRPC, TRPCError } from '@trpc/server';
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import type { Context } from './context';
 
 export const t = initTRPC.context<Context>().create({
@@ -74,6 +75,9 @@ import { ZodError } from 'zod';
 import { productRouter } from './routers/product';
 import { orderRouter } from './routers/order';
 import { authRouter } from './routers/auth';
+=======
+import type { Context } from './context';
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 
 const t = initTRPC.context<Context>().create({
   errorFormatter({ shape, error }) {
@@ -82,17 +86,17 @@ const t = initTRPC.context<Context>().create({
       data: {
         ...shape.data,
         zodError:
-          error.cause instanceof ZodError ? error.cause.flatten() : null,
+          error.cause instanceof Error
+            ? error.cause.message
+            : null,
       },
     };
   },
 });
 
-// Base router and procedure helpers
 export const router = t.router;
 export const publicProcedure = t.procedure;
 
-// Middleware to check authentication
 const isAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.user) {
     throw new TRPCError({
@@ -110,6 +114,7 @@ const isAuthed = t.middleware(({ ctx, next }) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       ...ctx,
 =======
 >>>>>>> 1100452 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
@@ -118,11 +123,15 @@ const isAuthed = t.middleware(({ ctx, next }) => {
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
 >>>>>>> 93399e0 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
+=======
+      ...ctx,
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
       user: ctx.user,
     },
   });
 });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -178,3 +187,6 @@ export const protectedProcedure = t.procedure.use(isAuthenticated);
 =======
 export type AppRouter = typeof appRouter;
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+export const protectedProcedure = t.procedure.use(isAuthed);
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)

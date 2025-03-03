@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitest/config';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 export default defineConfig({
   test: {
@@ -35,4 +36,18 @@ export default defineConfig({
     }
   }
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+import react from '@vitejs/plugin-react';
+
+export default defineConfig({
+  plugins: [react()],
+  test: {
+    environment: 'jsdom',
+    setupFiles: ['./test/setup.ts'],
+    globals: true,
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+    },
+  },
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 });

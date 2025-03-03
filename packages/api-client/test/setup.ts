@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import '@testing-library/jest-dom';
 import { expect, afterEach, beforeAll, afterAll, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
@@ -14,11 +15,14 @@ declare global {
 
 // Add custom matchers
 =======
+=======
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 import { expect, afterEach } from 'vitest';
 import { cleanup } from '@testing-library/react';
 import * as matchers from '@testing-library/jest-dom/matchers';
 
 // Add custom matchers from RTL
+<<<<<<< HEAD
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
 import '@testing-library/jest-dom';
@@ -35,11 +39,14 @@ declare global {
 
 // Add custom matchers
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 expect.extend(matchers);
 
 // Clean up after each test
 afterEach(() => {
   cleanup();
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
   vi.clearAllMocks();
@@ -129,3 +136,18 @@ export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';
 export { vi };
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+});
+
+// Mock window.fetch
+global.fetch = vi.fn();
+
+// Set up test environment
+beforeAll(() => {
+  // Setup any global test configuration
+});
+
+afterAll(() => {
+  // Cleanup any global test configuration
+});
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)

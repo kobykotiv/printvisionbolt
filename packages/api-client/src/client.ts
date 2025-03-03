@@ -2,6 +2,7 @@ import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import type { AppRouter } from '@printvisionbolt/api/src/server/root';
 import superjson from 'superjson';
 
@@ -24,19 +25,28 @@ export const createApiClient = (baseUrl: string, getToken?: () => string | null)
 import type { AppRouter } from '@printvisionbolt/api/src/server/root';
 import superjson from 'superjson';
 
+=======
+import type { AppRouter } from '@printvisionbolt/api/src/server/root';
+import superjson from 'superjson';
+
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 interface ApiClientConfig {
   url: string;
   headers?: Record<string, string>;
 }
 
 export function createApiClient({ url, headers = {} }: ApiClientConfig) {
+<<<<<<< HEAD
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   return createTRPCProxyClient<AppRouter>({
     transformer: superjson,
     links: [
       httpBatchLink({
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -65,10 +75,18 @@ export function createApiClient({ url, headers = {} }: ApiClientConfig) {
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+        url,
+        headers: async () => {
+          return {
+            ...headers,
+          };
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
         },
       }),
     ],
   });
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -157,3 +175,8 @@ export type { AppRouter };
 =======
 */
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+}
+
+export type { AppRouter };
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)

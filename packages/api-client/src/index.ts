@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 import type { 
@@ -63,6 +64,8 @@ export function createProvider(type: ProviderType, credentials: ProviderCredenti
   }
 }
 =======
+=======
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 export { createApiClient } from './client';
 export type { AppRouter } from './client';
 export { ApiProvider, useApi } from './provider';
@@ -76,6 +79,7 @@ export {
   useSession,
   useUser,
 } from './hooks';
+<<<<<<< HEAD
 =======
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 
@@ -97,12 +101,18 @@ export {
 // Re-export types
 export type {
 <<<<<<< HEAD
+=======
+
+// Re-export common types from api-types
+export type {
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   Product,
   Store,
   Order,
   ProductInput,
   OrderInput,
   StoreInput,
+<<<<<<< HEAD
 } from '@printvisionbolt/api-types';
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
@@ -135,3 +145,6 @@ export function createProvider(type: ProviderType, credentials: ProviderCredenti
   }
 }
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+} from '@printvisionbolt/api-types';
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)

@@ -15,6 +15,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@printvisionbolt/shared-ui": "*"
 =======
     "@printvisionbolt/shared-ui": "workspace:*"
@@ -25,6 +26,9 @@
 =======
     "@printvisionbolt/shared-ui": "workspace:*"
 >>>>>>> 91d08cd (prep)
+=======
+    "@printvisionbolt/shared-ui": "*"
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   },
   "devDependencies": {
     "typescript": "^4.9.0",

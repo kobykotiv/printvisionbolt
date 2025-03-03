@@ -2,6 +2,7 @@ import { z } from 'zod';
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { TRPCError } from '@trpc/server';
 import { router, publicProcedure, protectedProcedure } from '../trpc';
 import type { Product } from '../../types/database';
@@ -104,47 +105,56 @@ export const productRouter = router({
 <<<<<<< HEAD
 =======
 import { router, publicProcedure, protectedProcedure } from '../trpc';
+=======
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 import { TRPCError } from '@trpc/server';
-import type { Database } from '../../types/database';
-import type { Json } from '../../types/database';
+import { router, publicProcedure, protectedProcedure } from '../trpc';
+import type { Product } from '../../types/database';
 
-type Product = Database['public']['Tables']['products']['Row'];
-type ProductInsert = Database['public']['Tables']['products']['Insert'];
-type ProductUpdate = Database['public']['Tables']['products']['Update'];
-
-// Input schema for product creation/updates
-const productInputSchema = z.object({
-  title: z.string().min(1).max(100),
-  description: z.string().min(1),
+const productInput = z.object({
+  title: z.string().min(1),
+  description: z.string(),
   price: z.number().positive(),
-  images: z.array(z.string().url()).min(1),
-  status: z.enum(['draft', 'published', 'archived']),
-  stock: z.number().min(0),
-  metadata: z.record(z.unknown()).nullable().optional(),
-  category_id: z.string().optional()
+  status: z.enum(['draft', 'published', 'archived']).default('draft'),
+  metadata: z.record(z.unknown()).optional(),
+  images: z.array(z.string()).default([]),
+  category_id: z.string().nullable(),
+  store_id: z.string(),
+  print_provider_id: z.string().nullable(),
+  stock: z.number().default(0),
+  vendor_id: z.string(),
+  variants: z.array(z.record(z.unknown())).default([]),
+  shipping_profile_id: z.string().nullable(),
 });
 
 export const productRouter = router({
-  // Get all published products
   list: publicProcedure
-    .input(z.object({
-      limit: z.number().min(1).max(100).default(10),
-      cursor: z.string().nullish(),
-      categoryId: z.string().optional()
-    }))
+    .input(
+      z.object({
+        store_id: z.string(),
+        status: z.enum(['draft', 'published', 'archived']).optional(),
+        limit: z.number().min(1).max(100).default(10),
+        cursor: z.string().nullish(),
+      })
+    )
     .query(async ({ ctx, input }) => {
-      const { supabase } = ctx;
-      let query = supabase
+      const { store_id, status, limit, cursor } = input;
+      const query = ctx.supabase
         .from('products')
         .select('*')
-        .eq('status', 'published')
+        .eq('store_id', store_id)
         .order('created_at', { ascending: false })
-        .limit(input.limit);
+        .limit(limit);
 
-      if (input.cursor) {
-        query = query.lt('created_at', input.cursor);
+      if (status) {
+        query.eq('status', status);
+      }
+      
+      if (cursor) {
+        query.lt('created_at', cursor);
       }
 
+<<<<<<< HEAD
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
       if (input.categoryId) {
         query = query.eq('category_id', input.categoryId);
@@ -158,10 +168,14 @@ export const productRouter = router({
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+      const { data, error } = await query;
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 
       if (error) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -243,66 +257,33 @@ export const productRouter = router({
 =======
           message: 'Failed to fetch products',
           cause: error
+=======
+          message: error.message,
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
         });
       }
 
-      let nextCursor: string | null = null;
-      if (products && products.length === input.limit) {
-        nextCursor = products[products.length - 1].created_at;
+      let nextCursor: string | undefined = undefined;
+      if (data.length === limit) {
+        nextCursor = data[data.length - 1].created_at;
       }
 
       return {
-        items: products as Product[],
-        nextCursor
+        items: data as Product[],
+        nextCursor,
       };
     }),
 
-  // Get a single product by ID
-  byId: publicProcedure
-    .input(z.string())
-    .query(async ({ ctx, input }) => {
-      const { data: product, error } = await ctx.supabase
-        .from('products')
-        .select('*')
-        .eq('id', input)
-        .single();
-
-      if (error || !product) {
-        throw new TRPCError({
-          code: 'NOT_FOUND',
-          message: 'Product not found',
-          cause: error
-        });
-      }
-
-      return product as Product;
-    }),
-
-  // Create a new product (protected route)
   create: protectedProcedure
-    .input(productInputSchema)
+    .input(productInput)
     .mutation(async ({ ctx, input }) => {
-      const { supabase, user } = ctx;
-
-      if (!user) {
-        throw new TRPCError({
-          code: 'UNAUTHORIZED',
-          message: 'Must be logged in to create products'
-        });
-      }
-
-      const productInsert: ProductInsert = {
-        ...input,
-        vendor_id: user.id,
-        metadata: (input.metadata || null) as Json
-      };
-
-      const { data: product, error } = await supabase
+      const { data, error } = await ctx.supabase
         .from('products')
-        .insert(productInsert)
+        .insert([input])
         .select()
         .single();
 
+<<<<<<< HEAD
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
       if (error || !product) {
         throw new TRPCError({
@@ -444,6 +425,11 @@ export const productRouter = router({
       if (error) {
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
+=======
+      if (error) {
+        throw new TRPCError({
+          code: 'INTERNAL_SERVER_ERROR',
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
           message: error.message,
         });
       }
@@ -488,11 +474,14 @@ export const productRouter = router({
         throw new TRPCError({
           code: 'INTERNAL_SERVER_ERROR',
           message: error.message,
+<<<<<<< HEAD
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
           message: 'Failed to delete product',
           cause: error
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
         });
       }
 
@@ -500,8 +489,11 @@ export const productRouter = router({
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
     }),
 
   get: publicProcedure
@@ -523,6 +515,7 @@ export const productRouter = router({
       return data as Product;
     }),
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     })
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
@@ -531,4 +524,6 @@ export const productRouter = router({
 =======
     })
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 });

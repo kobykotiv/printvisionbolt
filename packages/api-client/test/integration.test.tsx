@@ -1,6 +1,7 @@
 import React from 'react';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -35,6 +36,19 @@ describe('API Client Integration', () => {
 =======
     mockRouter = createMockRouter();
 >>>>>>> 5128fa2 (ah)
+=======
+import { describe, it, expect, beforeEach } from 'vitest';
+import { renderHook, waitFor } from '@testing-library/react';
+import { createWrapper } from './wrapper';
+import { useProducts, useOrders, useSession } from '../src/hooks';
+import { mockProducts, mockOrders, mockSession, createMockRouter } from './utils';
+
+describe('API Client Integration', () => {
+  let wrapper: ReturnType<typeof createWrapper>;
+
+  beforeEach(() => {
+    const mockRouter = createMockRouter();
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
     wrapper = createWrapper(mockRouter);
   });
 
@@ -83,6 +97,7 @@ describe('API Client Integration', () => {
     it('should handle query errors', async () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       // Create router with error response for products
       const errorRouter: MockRouter = {
         ...mockRouter,
@@ -107,6 +122,13 @@ describe('API Client Integration', () => {
 =======
           get: mockRouter.product.get,
 >>>>>>> 5128fa2 (ah)
+=======
+      // Create router with error response
+      const errorRouter = {
+        ...createMockRouter(),
+        product: {
+          list: vi.fn().mockRejectedValue(new Error('Failed to fetch products')),
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
         },
       };
 
@@ -121,6 +143,7 @@ describe('API Client Integration', () => {
 
       expect(result.current.error?.message).toBe('Failed to fetch products');
     });
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -153,5 +176,7 @@ describe('API Client Integration', () => {
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
 >>>>>>> 5128fa2 (ah)
+=======
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   });
 });

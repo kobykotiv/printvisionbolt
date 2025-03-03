@@ -2,6 +2,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "name": "@printvisionbolt/api-client",
   "version": "0.0.0",
   "private": true,
@@ -89,19 +90,37 @@
 =======
   "name": "@printvision/api-client",
   "version": "0.1.0",
+=======
+  "name": "@printvisionbolt/api-client",
+  "version": "0.0.0",
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   "private": true,
-  "main": "./src/client.ts",
-  "types": "./src/client.ts",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
   "scripts": {
-    "lint": "eslint . --ext .ts,.tsx",
-    "type-check": "tsc --noEmit"
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "dev": "tsup src/index.ts --format esm,cjs --watch --dts",
+    "clean": "rm -rf .turbo && rm -rf node_modules && rm -rf dist",
+    "typecheck": "tsc --noEmit",
+    "typecheck:test": "tsc -p tsconfig.test.json --noEmit",
+    "lint": "eslint src/",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "@trpc/client": "^10.45.0",
-    "@trpc/server": "^10.45.0",
+    "@printvisionbolt/api": "workspace:*",
+    "@printvisionbolt/api-types": "workspace:*",
+    "@tanstack/react-query": "^5.0.0",
+    "@trpc/client": "^10.38.0",
+    "@trpc/react-query": "^10.38.0",
+    "@trpc/server": "^10.38.0",
     "superjson": "^2.2.1"
   },
   "devDependencies": {
+<<<<<<< HEAD
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
     "@types/node": "^20.11.0",
     "typescript": "^5.3.3",
@@ -121,6 +140,17 @@
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
+=======
+    "@printvisionbolt/typescript-config": "workspace:*",
+    "@printvisionbolt/eslint-config": "workspace:*",
+    "@testing-library/jest-dom": "^6.1.0",
+    "@testing-library/react": "^14.0.0",
+    "@testing-library/react-hooks": "^8.0.1",
+    "@types/node": "^20.10.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/superjson": "^1.0.0",
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
     "@types/testing-library__jest-dom": "^5.14.9",
     "@vitejs/plugin-react": "^4.0.0",
     "@vitest/coverage-v8": "^0.34.0",
@@ -132,8 +162,11 @@
   "peerDependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
+<<<<<<< HEAD
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
 >>>>>>> 318c476 (chore: Stage changes for turborepo migration)
+=======
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   }
 }

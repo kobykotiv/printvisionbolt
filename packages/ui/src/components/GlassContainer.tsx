@@ -1,6 +1,7 @@
 import React from 'react';
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import type { GlassProps } from '../hooks/types';
 =======
 import { createGlassStyle, glassReflection, glassAccent } from '../styles/glass';
@@ -8,6 +9,9 @@ import { createGlassStyle, glassReflection, glassAccent } from '../styles/glass'
 =======
 import type { GlassProps } from '../hooks/types';
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+import { createGlassStyle, glassReflection, glassAccent } from '../styles/glass';
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 
 export interface GlassContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -19,6 +23,7 @@ export interface GlassContainerProps extends React.HTMLAttributes<HTMLDivElement
   className?: string;
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   performance?: 'high' | 'medium' | 'low';
 =======
   style?: React.CSSProperties;
@@ -26,10 +31,14 @@ export interface GlassContainerProps extends React.HTMLAttributes<HTMLDivElement
 =======
   performance?: 'high' | 'medium' | 'low';
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+  style?: React.CSSProperties;
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 }
 
 export const GlassContainer: React.FC<GlassContainerProps> = ({
   children,
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -74,10 +83,13 @@ export const GlassContainer: React.FC<GlassContainerProps> = ({
   } : {};
 
 =======
+=======
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   opacity,
   blur,
   border,
   dark,
+<<<<<<< HEAD
 =======
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
   accentColor,
@@ -118,12 +130,28 @@ export const GlassContainer: React.FC<GlassContainerProps> = ({
   } : {};
 
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+  accentColor,
+  className = '',
+  style = {},
+  ...props
+}) => {
+  const glassStyle = createGlassStyle({ opacity, blur, border, dark });
+  const containerStyle = {
+    ...glassStyle,
+    ...glassReflection,
+    ...(accentColor ? glassAccent(accentColor) : {}),
+    ...style,
+  };
+
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   return (
     <div 
       className={`glass-container ${className}`}
       style={containerStyle}
       {...props}
     >
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -140,6 +168,8 @@ export const GlassContainer: React.FC<GlassContainerProps> = ({
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
 >>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+=======
+>>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
       {children}
     </div>
   );
