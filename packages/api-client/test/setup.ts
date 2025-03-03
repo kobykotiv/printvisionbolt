@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import '@testing-library/jest-dom';
 import { expect, afterEach, beforeAll, afterAll, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
@@ -11,11 +12,19 @@ declare global {
 }
 
 // Add custom matchers
+=======
+import { expect, afterEach } from 'vitest';
+import { cleanup } from '@testing-library/react';
+import * as matchers from '@testing-library/jest-dom/matchers';
+
+// Add custom matchers from RTL
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 expect.extend(matchers);
 
 // Clean up after each test
 afterEach(() => {
   cleanup();
+<<<<<<< HEAD
   vi.clearAllMocks();
 });
 
@@ -55,3 +64,18 @@ vi.mock('@trpc/client', async () => {
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';
 export { vi };
+=======
+});
+
+// Mock window.fetch
+global.fetch = vi.fn();
+
+// Set up test environment
+beforeAll(() => {
+  // Setup any global test configuration
+});
+
+afterAll(() => {
+  // Cleanup any global test configuration
+});
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)

@@ -27,6 +27,7 @@ PrintVision is a comprehensive print-on-demand platform with three main componen
 - [Database Schema](./api/db.sql)
 - [Provider Integration](./api/provider-integration.md)
 - [Provider Pricing Wiki](./api/provider-pricing.md)
+<<<<<<< HEAD
 
 ### 4. Development Guides
 - [Turborepo Guide](./guides/turborepo.md)
@@ -73,11 +74,14 @@ PrintVision is a comprehensive print-on-demand platform with three main componen
 - [API Documentation](./api/README.md)
 - [Database Schema](./api/db.sql)
 - [Provider Integration](./api/provider-integration.md)
+=======
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 
 ### 4. Development Guides
 - [Turborepo Guide](./guides/turborepo.md)
 - [UI/UX Guidelines](./ui_ux_phases.md)
 - [Monorepo Structure](./monorepo-structure.md)
+- [AOP Template Guide](./guides/aop-template-guide.md)
 
 ### 5. Deployment & Operations
 - [Self-Hosting Guide](./deployment/self-hosting.md)

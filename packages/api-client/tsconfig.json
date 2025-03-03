@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "extends": "@printvisionbolt/typescript-config/library.json",
   "compilerOptions": {
     "outDir": "dist",
@@ -15,8 +16,20 @@
   "extends": "@printvision/typescript-config/base.json",
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"],
+=======
+  "extends": "@printvisionbolt/typescript-config/base.json",
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
     "outDir": "./dist",
+<<<<<<< HEAD
     "rootDir": "./src",
     "baseUrl": ".",
     "paths": {
@@ -24,4 +37,10 @@
     }
   }
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
+=======
+    "rootDir": "./src"
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 }

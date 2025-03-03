@@ -8,16 +8,22 @@ The PrintVision storefront is a high-performance e-commerce platform built with 
 ### 1. Shopping Experience
 - Product browsing and search
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 <!-- - Advanced filtering and sorting -->
 <!-- - Real-time inventory status -->
 <!-- - Dynamic pricing -->
 <!-- - Wishlist functionality -->
+<<<<<<< HEAD
 =======
 - Advanced filtering and sorting
 - Real-time inventory status
 - Dynamic pricing
 - Wishlist functionality
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
+=======
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 - Shopping cart management
 
 ### 2. Product Display
@@ -31,10 +37,14 @@ The PrintVision storefront is a high-performance e-commerce platform built with 
 ### 3. Checkout Process
 - Guest checkout
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- - User accounts -->
 =======
 - User accounts
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
+=======
+<!-- - User accounts -->
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 - Multiple payment methods
 - Address management
 - Shipping options

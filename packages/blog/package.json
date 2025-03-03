@@ -13,10 +13,14 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@printvisionbolt/shared-ui": "*"
 =======
     "@printvisionbolt/shared-ui": "workspace:*"
 >>>>>>> ef09bbd (prep)
+=======
+    "@printvisionbolt/shared-ui": "*"
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   },
   "devDependencies": {
     "typescript": "^4.9.0",

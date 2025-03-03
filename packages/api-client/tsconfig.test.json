@@ -3,6 +3,7 @@
   "compilerOptions": {
     "types": [
       "vitest/globals",
+<<<<<<< HEAD
       "@testing-library/jest-dom",
       "@testing-library/react",
       "node"
@@ -12,6 +13,13 @@
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "skipLibCheck": true
+=======
+      "@testing-library/jest-dom"
+    ],
+    "module": "ESNext",
+    "target": "ESNext",
+    "jsx": "react-jsx"
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   },
   "include": [
     "src/**/*",

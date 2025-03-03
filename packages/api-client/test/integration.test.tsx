@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< HEAD
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -12,6 +13,19 @@ describe('API Client Integration', () => {
 
   beforeEach(() => {
     mockRouter = createMockRouter();
+=======
+import { describe, it, expect, beforeEach } from 'vitest';
+import { renderHook, waitFor } from '@testing-library/react';
+import { createWrapper } from './wrapper';
+import { useProducts, useOrders, useSession } from '../src/hooks';
+import { mockProducts, mockOrders, mockSession, createMockRouter } from './utils';
+
+describe('API Client Integration', () => {
+  let wrapper: ReturnType<typeof createWrapper>;
+
+  beforeEach(() => {
+    const mockRouter = createMockRouter();
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
     wrapper = createWrapper(mockRouter);
   });
 
@@ -58,6 +72,7 @@ describe('API Client Integration', () => {
 
   describe('Error Handling', () => {
     it('should handle query errors', async () => {
+<<<<<<< HEAD
       // Create router with error response for products
       const errorRouter: MockRouter = {
         ...mockRouter,
@@ -65,6 +80,13 @@ describe('API Client Integration', () => {
           ...mockRouter.product,
           list: vi.fn().mockRejectedValue(new Error('Failed to fetch products')),
           get: mockRouter.product.get,
+=======
+      // Create router with error response
+      const errorRouter = {
+        ...createMockRouter(),
+        product: {
+          list: vi.fn().mockRejectedValue(new Error('Failed to fetch products')),
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
         },
       };
 
@@ -79,6 +101,7 @@ describe('API Client Integration', () => {
 
       expect(result.current.error?.message).toBe('Failed to fetch products');
     });
+<<<<<<< HEAD
 
     it('should handle network errors', async () => {
       // Create router with network error
@@ -102,5 +125,7 @@ describe('API Client Integration', () => {
 
       expect(result.current.error?.message).toBe('Network Error');
     });
+=======
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   });
 });

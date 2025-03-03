@@ -10,10 +10,14 @@
   },
   "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@printvisionbolt/ui": "*",
 =======
     "@printvisionbolt/ui": "workspace:*",
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
+=======
+    "@printvisionbolt/ui": "*",
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
     "@supabase/supabase-js": "^2.39.0",
     "@tanstack/react-query": "^5.12.2",
     "@trpc/client": "^10.44.1",
@@ -27,12 +31,17 @@
   },
   "devDependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
     "@printvisionbolt/eslint-config": "*",
     "@printvisionbolt/typescript-config": "*",
 =======
     "@printvisionbolt/eslint-config": "workspace:*",
     "@printvisionbolt/typescript-config": "workspace:*",
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
+=======
+    "@printvisionbolt/eslint-config": "*",
+    "@printvisionbolt/typescript-config": "*",
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.42",
     "@types/react-dom": "^18.2.17",

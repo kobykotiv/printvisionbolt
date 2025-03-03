@@ -7,6 +7,7 @@
     "module": "ES2022",
     "lib": ["ES2022"],
     "moduleResolution": "node",
+<<<<<<< HEAD
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
@@ -26,19 +27,26 @@
     "target": "es2020",
     "module": "commonjs",
     "lib": ["es2020"],
+=======
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
     "outDir": "./dist",
     "rootDir": "./src",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "strict": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
+<<<<<<< HEAD
 <<<<<<< HEAD
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 >>>>>>> 1100452 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
 =======
   "include": ["src/**/*.ts"],
+=======
+  "include": ["src/**/*"],
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   "exclude": ["node_modules", "dist"]
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
 }

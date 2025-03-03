@@ -1,5 +1,9 @@
 import React from 'react';
+<<<<<<< HEAD
 import type { GlassProps } from '../hooks/types';
+=======
+import { createGlassStyle, glassReflection, glassAccent } from '../styles/glass';
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 
 export interface GlassContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -9,11 +13,16 @@ export interface GlassContainerProps extends React.HTMLAttributes<HTMLDivElement
   dark?: boolean;
   accentColor?: string;
   className?: string;
+<<<<<<< HEAD
   performance?: 'high' | 'medium' | 'low';
+=======
+  style?: React.CSSProperties;
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 }
 
 export const GlassContainer: React.FC<GlassContainerProps> = ({
   children,
+<<<<<<< HEAD
   opacity = 0.8,
   blur = 8,
   border = true,
@@ -52,12 +61,32 @@ export const GlassContainer: React.FC<GlassContainerProps> = ({
     pointerEvents: 'none'
   } : {};
 
+=======
+  opacity,
+  blur,
+  border,
+  dark,
+  accentColor,
+  className = '',
+  style = {},
+  ...props
+}) => {
+  const glassStyle = createGlassStyle({ opacity, blur, border, dark });
+  const containerStyle = {
+    ...glassStyle,
+    ...glassReflection,
+    ...(accentColor ? glassAccent(accentColor) : {}),
+    ...style,
+  };
+
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   return (
     <div 
       className={`glass-container ${className}`}
       style={containerStyle}
       {...props}
     >
+<<<<<<< HEAD
       {performance === 'high' && (
         <div
           style={reflectionStyle}
@@ -65,6 +94,8 @@ export const GlassContainer: React.FC<GlassContainerProps> = ({
           className="glass-reflection"
         />
       )}
+=======
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
       {children}
     </div>
   );

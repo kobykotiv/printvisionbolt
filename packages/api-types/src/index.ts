@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // Re-export all types from tiers
 export * from './tiers';
 export * from './providers';
@@ -17,3 +18,26 @@ export type {
   ProviderType,
   ProviderCredentials
 } from './providers';
+=======
+export type {
+  Product,
+  Store,
+  Order,
+  Tables,
+  Inserts,
+  Updates,
+  Database,
+} from './database';
+
+export {
+  productInputSchema,
+  orderInputSchema,
+  storeInputSchema,
+} from './routers';
+
+export type {
+  ProductInput,
+  OrderInput,
+  StoreInput,
+} from './routers';
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)

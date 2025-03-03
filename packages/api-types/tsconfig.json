@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "extends": "@printvisionbolt/typescript-config/library.json",
   "compilerOptions": {
     "outDir": "dist",
@@ -6,6 +7,20 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true
+=======
+  "extends": "@printvisionbolt/typescript-config/base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "./dist",
+    "rootDir": "./src"
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]

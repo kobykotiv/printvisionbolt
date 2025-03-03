@@ -1,5 +1,6 @@
 import { createTRPCProxyClient, httpBatchLink } from '@trpc/client';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import type { AppRouter } from '@printvisionbolt/api/src/server/root';
 import superjson from 'superjson';
 
@@ -15,10 +16,22 @@ import superjson from 'superjson';
 
 export const createApiClient = (baseUrl: string, getToken?: () => string | null) => {
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
+=======
+import type { AppRouter } from '@printvisionbolt/api/src/server/root';
+import superjson from 'superjson';
+
+interface ApiClientConfig {
+  url: string;
+  headers?: Record<string, string>;
+}
+
+export function createApiClient({ url, headers = {} }: ApiClientConfig) {
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   return createTRPCProxyClient<AppRouter>({
     transformer: superjson,
     links: [
       httpBatchLink({
+<<<<<<< HEAD
 <<<<<<< HEAD
         url,
         headers: async () => {
@@ -33,10 +46,18 @@ export const createApiClient = (baseUrl: string, getToken?: () => string | null)
             Authorization: `Bearer ${token}`,
           } : {};
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
+=======
+        url,
+        headers: async () => {
+          return {
+            ...headers,
+          };
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
         },
       }),
     ],
   });
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 
@@ -112,3 +133,8 @@ try {
 }
 */
 >>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
+=======
+}
+
+export type { AppRouter };
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)

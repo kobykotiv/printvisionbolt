@@ -3,6 +3,7 @@ import { createTRPCReact } from '@trpc/react-query';
 import { QueryClient } from '@tanstack/react-query';
 import { vi } from 'vitest';
 
+<<<<<<< HEAD
 export type MockRouter = {
   product: {
     list: ReturnType<typeof vi.fn>;
@@ -18,6 +19,8 @@ export type MockRouter = {
   };
 };
 
+=======
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 export const trpc = createTRPCReact<AppRouter>();
 
 export function createTestQueryClient() {
@@ -131,7 +134,11 @@ export const mockSession = {
   expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
 };
 
+<<<<<<< HEAD
 export function createMockRouter(): MockRouter {
+=======
+export function createMockRouter() {
+>>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
   return {
     product: {
       list: vi.fn().mockResolvedValue(mockProducts),
