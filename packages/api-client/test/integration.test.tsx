@@ -2,6 +2,7 @@ import React from 'react';
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -38,17 +39,25 @@ describe('API Client Integration', () => {
 >>>>>>> 5128fa2 (ah)
 =======
 import { describe, it, expect, beforeEach } from 'vitest';
+=======
+import { describe, it, expect, beforeEach, vi } from 'vitest';
+>>>>>>> d985aa3 (ah)
 import { renderHook, waitFor } from '@testing-library/react';
 import { createWrapper } from './wrapper';
 import { useProducts, useOrders, useSession } from '../src/hooks';
-import { mockProducts, mockOrders, mockSession, createMockRouter } from './utils';
+import { mockProducts, mockOrders, mockSession, createMockRouter, type MockRouter } from './utils';
 
 describe('API Client Integration', () => {
   let wrapper: ReturnType<typeof createWrapper>;
+  let mockRouter: MockRouter;
 
   beforeEach(() => {
+<<<<<<< HEAD
     const mockRouter = createMockRouter();
 >>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+    mockRouter = createMockRouter();
+>>>>>>> d985aa3 (ah)
     wrapper = createWrapper(mockRouter);
   });
 
@@ -98,6 +107,7 @@ describe('API Client Integration', () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       // Create router with error response for products
       const errorRouter: MockRouter = {
         ...mockRouter,
@@ -126,9 +136,19 @@ describe('API Client Integration', () => {
       // Create router with error response
       const errorRouter = {
         ...createMockRouter(),
+=======
+      // Create router with error response for products
+      const errorRouter: MockRouter = {
+        ...mockRouter,
+>>>>>>> d985aa3 (ah)
         product: {
+          ...mockRouter.product,
           list: vi.fn().mockRejectedValue(new Error('Failed to fetch products')),
+<<<<<<< HEAD
 >>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+          get: mockRouter.product.get,
+>>>>>>> d985aa3 (ah)
         },
       };
 
@@ -146,8 +166,11 @@ describe('API Client Integration', () => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> 5128fa2 (ah)
+=======
+>>>>>>> d985aa3 (ah)
 
     it('should handle network errors', async () => {
       // Create router with network error
@@ -172,11 +195,14 @@ describe('API Client Integration', () => {
       expect(result.current.error?.message).toBe('Network Error');
     });
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 =======
 >>>>>>> 5128fa2 (ah)
 =======
 >>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+>>>>>>> d985aa3 (ah)
   });
 });
