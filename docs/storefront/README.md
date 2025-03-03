@@ -7,10 +7,10 @@ The PrintVision storefront is a high-performance e-commerce platform built with 
 
 ### 1. Shopping Experience
 - Product browsing and search
-- Advanced filtering and sorting
-- Real-time inventory status
-- Dynamic pricing
-- Wishlist functionality
+<!-- - Advanced filtering and sorting -->
+<!-- - Real-time inventory status -->
+<!-- - Dynamic pricing -->
+<!-- - Wishlist functionality -->
 - Shopping cart management
 
 ### 2. Product Display
@@ -23,7 +23,7 @@ The PrintVision storefront is a high-performance e-commerce platform built with 
 
 ### 3. Checkout Process
 - Guest checkout
-- User accounts
+<!-- - User accounts -->
 - Multiple payment methods
 - Address management
 - Shipping options

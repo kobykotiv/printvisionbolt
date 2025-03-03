@@ -113,6 +113,13 @@ export interface Database {
           shipping_address: Record<string, unknown>
           billing_address: Record<string, unknown>
           metadata: Record<string, unknown>
+          tracking_number?: string
+          provider_order_id?: string
+          notes?: string
+          currency: string
+          tax_amount: number
+          shipping_amount: number
+          discount_amount: number
         }
         Insert: {
           id?: string
@@ -126,6 +133,13 @@ export interface Database {
           shipping_address: Record<string, unknown>
           billing_address: Record<string, unknown>
           metadata?: Record<string, unknown>
+          tracking_number?: string
+          provider_order_id?: string
+          notes?: string
+          currency?: string
+          tax_amount?: number
+          shipping_amount?: number
+          discount_amount?: number
         }
         Update: {
           id?: string
@@ -139,6 +153,13 @@ export interface Database {
           shipping_address?: Record<string, unknown>
           billing_address?: Record<string, unknown>
           metadata?: Record<string, unknown>
+          tracking_number?: string
+          provider_order_id?: string
+          notes?: string
+          currency?: string
+          tax_amount?: number
+          shipping_amount?: number
+          discount_amount?: number
         }
       }
     }
