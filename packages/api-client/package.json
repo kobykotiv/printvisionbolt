@@ -32,6 +32,7 @@
     "@printvisionbolt/typescript-config": "workspace:*",
     "@printvisionbolt/eslint-config": "workspace:*",
     "@testing-library/dom": "^9.3.4",
+<<<<<<< HEAD
     "@testing-library/jest-dom": "^6.1.0",
     "@testing-library/react": "^14.0.0",
     "@testing-library/react-hooks": "^8.0.1",
@@ -92,13 +93,15 @@
 =======
     "@printvisionbolt/typescript-config": "workspace:*",
     "@printvisionbolt/eslint-config": "workspace:*",
+=======
+>>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
     "@testing-library/jest-dom": "^6.1.0",
     "@testing-library/react": "^14.0.0",
     "@testing-library/react-hooks": "^8.0.1",
+    "@testing-library/user-event": "^14.5.0",
     "@types/node": "^20.10.0",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
-    "@types/superjson": "^1.0.0",
     "@types/testing-library__jest-dom": "^5.14.9",
     "@vitejs/plugin-react": "^4.0.0",
     "@vitest/coverage-v8": "^0.34.0",

@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "extends": "@printvisionbolt/typescript-config/library.json",
   "compilerOptions": {
     "outDir": "dist",
@@ -19,17 +20,29 @@
   "extends": "@printvisionbolt/typescript-config/react-library.json",
   "include": ["src", "*.ts", "*.tsx"],
   "exclude": ["node_modules", "dist"],
+=======
+  "extends": "@printvisionbolt/typescript-config/library.json",
+>>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
   "compilerOptions": {
-    "jsx": "react",
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    },
-    "rootDir": "src",
     "outDir": "dist",
+<<<<<<< HEAD
     "declaration": true,
     "declarationMap": true,
     "resolveJsonModule": true
   }
 >>>>>>> 60d53aa (day 2 configureing packages)
+=======
+    "rootDir": "src",
+    "jsx": "react-jsx",
+    "module": "ESNext",
+    "paths": {
+      "@printvisionbolt/*": ["../../packages/*/src"]
+    }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"],
+  "references": [
+    { "path": "../api-types" }
+  ]
+>>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 }

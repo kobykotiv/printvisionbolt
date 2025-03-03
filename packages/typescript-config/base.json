@@ -1,6 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
 <<<<<<< HEAD
+<<<<<<< HEAD
   "display": "Base",
   "compilerOptions": {
     "strict": true,
@@ -15,17 +16,16 @@
     "resolveJsonModule": true
 =======
   "display": "Default",
+=======
+  "display": "Base",
+>>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
   "compilerOptions": {
-    "target": "es2017",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
     "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
     "esModuleInterop": true,
-    "module": "esnext",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
+<<<<<<< HEAD
     "resolveJsonModule": true,
 <<<<<<< HEAD
     "jsx": "preserve"
@@ -40,6 +40,13 @@
     "incremental": true,
     "baseUrl": "."
 >>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
+=======
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "incremental": true,
+    "resolveJsonModule": true
+>>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
   },
   "exclude": ["node_modules"]
 }

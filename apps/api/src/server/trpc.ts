@@ -4,6 +4,7 @@ import { initTRPC, TRPCError } from '@trpc/server';
 import type { Context } from './context';
 
 export const t = initTRPC.context<Context>().create({
+<<<<<<< HEAD
   errorFormatter({ shape, error }) {
     return {
       ...shape,
@@ -37,6 +38,8 @@ import type { Context } from './context';
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
 
 const t = initTRPC.context<Context>().create({
+=======
+>>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
   errorFormatter({ shape, error }) {
     return {
       ...shape,
@@ -84,6 +87,9 @@ const isAuthed = t.middleware(({ ctx, next }) => {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 export const protectedProcedure = t.procedure.use(isAuthed);
 
 // Re-export tier-specific procedures
@@ -91,6 +97,7 @@ import { withCreatorTier, withProTier, withEnterpriseTier } from './middleware/w
 
 export const creatorProcedure = protectedProcedure.use(withCreatorTier);
 export const proProcedure = protectedProcedure.use(withProTier);
+<<<<<<< HEAD
 export const enterpriseProcedure = protectedProcedure.use(withEnterpriseTier);
 =======
 // Base router and procedure helpers
@@ -115,3 +122,6 @@ export type AppRouter = typeof appRouter;
 =======
 export const protectedProcedure = t.procedure.use(isAuthed);
 >>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+=======
+export const enterpriseProcedure = protectedProcedure.use(withEnterpriseTier);
+>>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)

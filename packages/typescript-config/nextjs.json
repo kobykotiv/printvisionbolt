@@ -1,23 +1,31 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Next.js",
 >>>>>>> 60d53aa (day 2 configureing packages)
+=======
+>>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
   "extends": "./base.json",
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
     "allowJs": true,
+<<<<<<< HEAD
 <<<<<<< HEAD
     "noEmit": true,
 =======
     "declaration": false,
     "declarationMap": false,
 >>>>>>> 60d53aa (day 2 configureing packages)
+=======
+    "noEmit": true,
+>>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
     "incremental": true,
     "jsx": "preserve",
     "lib": ["dom", "dom.iterable", "esnext"],
     "module": "esnext",
+<<<<<<< HEAD
 <<<<<<< HEAD
     "target": "es5",
     "moduleResolution": "node",
@@ -30,12 +38,19 @@
     "noEmit": true,
     "resolveJsonModule": true,
     "strict": true,
+=======
+>>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
     "target": "es5",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true
   },
+<<<<<<< HEAD
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
 >>>>>>> 60d53aa (day 2 configureing packages)
+=======
+  "include": ["src", "next-env.d.ts"],
+>>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
   "exclude": ["node_modules"]
 }
