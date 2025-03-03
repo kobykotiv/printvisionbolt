@@ -63,6 +63,9 @@
 
 ### API Integration
 - [ ] Product data endpoints
+    - [ ] GET catalogs
+    - [ ] GET products
+
 - [ ] Cart management
 - [ ] User authentication
 - [ ] Order processing

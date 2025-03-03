@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { initPostHog } from '@/lib/analytics/posthog'
 
 // ...existing code...

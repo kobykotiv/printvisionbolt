@@ -1,5 +1,5 @@
 import React from 'react';
-import { createGlassStyle, glassReflection, glassAccent } from '../styles/glass';
+import type { GlassProps } from '../hooks/types';
 
 export interface GlassContainerProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
@@ -9,27 +9,48 @@ export interface GlassContainerProps extends React.HTMLAttributes<HTMLDivElement
   dark?: boolean;
   accentColor?: string;
   className?: string;
-  style?: React.CSSProperties;
+  performance?: 'high' | 'medium' | 'low';
 }
 
 export const GlassContainer: React.FC<GlassContainerProps> = ({
   children,
-  opacity,
-  blur,
-  border,
-  dark,
+  opacity = 0.8,
+  blur = 8,
+  border = true,
+  dark = false,
   accentColor,
   className = '',
-  style = {},
+  performance = 'high',
+  style,
   ...props
 }) => {
-  const glassStyle = createGlassStyle({ opacity, blur, border, dark });
-  const containerStyle = {
-    ...glassStyle,
-    ...glassReflection,
-    ...(accentColor ? glassAccent(accentColor) : {}),
-    ...style,
+  const containerStyle: React.CSSProperties = {
+    backgroundColor: dark ? 'rgba(15, 23, 42, 0.8)' : `rgba(255, 255, 255, ${opacity})`,
+    backdropFilter: `blur(${blur}px)`,
+    border: border ? '1px solid rgba(255, 255, 255, 0.1)' : 'none',
+    borderRadius: '8px',
+    padding: '16px',
+    position: 'relative',
+    overflow: 'hidden',
+    ...style
   };
+
+  const reflectionStyle: React.CSSProperties = performance === 'high' ? {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: '-50%',
+    width: '200%',
+    height: '100%',
+    background: `linear-gradient(
+      to right,
+      transparent,
+      ${accentColor ? `rgba(${accentColor}, 0.1)` : 'rgba(255, 255, 255, 0.1)'},
+      transparent
+    )`,
+    transform: 'rotate(30deg)',
+    pointerEvents: 'none'
+  } : {};
 
   return (
     <div 
@@ -37,6 +58,13 @@ export const GlassContainer: React.FC<GlassContainerProps> = ({
       style={containerStyle}
       {...props}
     >
+      {performance === 'high' && (
+        <div
+          style={reflectionStyle}
+          aria-hidden="true"
+          className="glass-reflection"
+        />
+      )}
       {children}
     </div>
   );

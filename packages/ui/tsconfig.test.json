@@ -4,17 +4,12 @@
     "types": [
       "vitest/globals",
       "@testing-library/jest-dom",
-      "@testing-library/react",
       "node"
-    ],
-    "module": "ESNext",
-    "target": "ESNext",
-    "jsx": "react-jsx",
-    "esModuleInterop": true,
-    "skipLibCheck": true
+    ]
   },
   "include": [
     "src/**/*",
     "test/**/*"
-  ]
+  ],
+  "exclude": ["node_modules"]
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import { createWrapper } from './wrapper';
 import { useProducts, useOrders, useSession } from '../src/hooks';
 import { mockProducts, mockOrders, mockSession, createMockRouter, type MockRouter } from './utils';
