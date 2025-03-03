@@ -1,9 +1,13 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "name": "@printvisionbolt/dashboard-core",
 =======
   "name": "@printvisionbolt/dashboard",
 >>>>>>> ef09bbd (prep)
+=======
+  "name": "@printvisionbolt/dashboard-core",
+>>>>>>> 974034b (feat: Update Docker configuration, rename dashboard package, and add Supabase setup)
   "private": true,
   "version": "0.0.0",
   "type": "module",
