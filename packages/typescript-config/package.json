@@ -1,14 +1,23 @@
 {
   "name": "@printvisionbolt/typescript-config",
-  "version": "0.0.0",
-  "private": true,
-  "license": "MIT",
-  "publishConfig": {
-    "access": "public"
-  },
+  "version": "0.1.0",
+  "description": "Shared TypeScript configuration for PrintVision projects",
+  "main": "base.json",
   "files": [
     "base.json",
+    "base-schema.json",
+    "library.json",
     "nextjs.json",
     "react-library.json"
-  ]
+  ],
+  "scripts": {
+    "validate": "ajv validate -s base-schema.json -d base.json"
+  },
+  "keywords": ["typescript", "config", "monorepo"],
+  "author": "PrintVision Team",
+  "license": "MIT",
+  "devDependencies": {
+    "ajv-cli": "^5.0.0",
+    "typescript": "^4.9.0"
+  }
 }
