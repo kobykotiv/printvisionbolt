@@ -1,6 +1,6 @@
 import { createClient } from '@supabase/supabase-js';
-import { FeatureLimit, UserTier } from '../types/features';
-import { getTierById } from '../config/features';
+import type { FeatureLimit, UserTier } from '@printvision/shared/types';
+import { getTierById } from '@/lib/config/features';
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,

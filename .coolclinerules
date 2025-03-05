@@ -38,23 +38,10 @@ enforce_eslint=true
 git_branch_naming=feature/*|bugfix/*|release/*
 commit_convention=conventional
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-# Payment network
-payment_provider=stripe
-payment_currency=usd
-<<<<<<< HEAD
-=======
-
->>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
-=======
->>>>>>> 91d08cd (prep)
-=======
 # Payment network
 payment_provider=stripe
 payment_currency=usd
 
->>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)
 # Multi-Tenant Rules
 tenant_isolation=database_schema
 tenant_identification=header|subdomain
@@ -82,9 +69,10 @@ chunk_size_warning=244
 lighthouse_score_threshold=90
 
 # Development Ports
-dev_port=3000
+dev_port=3004
 api_port=3001
-cms_port=3002
+dashboard_port=3003
+blog_port=3002
 
 # Environment Variables Template
 required_env_vars=SUPABASE_URL,SUPABASE_ANON_KEY,PRINT_PROVIDER_KEYS

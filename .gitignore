@@ -1,28 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 8d7edcb (reset to Monorepo with turburepo)
-=======
->>>>>>> 318c476 (chore: Stage changes for turborepo migration)
-node_modules
-=======
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
-=======
->>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
-=======
->>>>>>> 8d7edcb (reset to Monorepo with turburepo)
-=======
-=======
->>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
->>>>>>> 318c476 (chore: Stage changes for turborepo migration)
 # Dependencies
 node_modules
 .pnpm-store
@@ -78,40 +53,3 @@ supabase/.temp
 .mf
 .rollup.cache
 tsconfig.tsbuildinfo
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 8d7edcb (reset to Monorepo with turburepo)
-=======
->>>>>>> 318c476 (chore: Stage changes for turborepo migration)
-# Debug
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Misc
-.DS_Store
-*.pem
->>>>>>> 9be19e8 (reset to Monorepo with turburepo)
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 318c476 (chore: Stage changes for turborepo migration)
-=======
-# Logs
-logs
-*.log
->>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
-<<<<<<< HEAD
-=======
-# Logs
-logs
-*.log
->>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
-=======
->>>>>>> 8d7edcb (reset to Monorepo with turburepo)
-=======
->>>>>>> 318c476 (chore: Stage changes for turborepo migration)

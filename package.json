@@ -1,20 +1,19 @@
 {
   "name": "printvisionbolt",
   "private": true,
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "version": "1.0.0",
-<<<<<<< HEAD
+  "version": "0.1.0",
+  "type": "module",
   "workspaces": [
     "apps/*",
     "packages/*"
   ],
   "scripts": {
-<<<<<<< HEAD
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "test": "turbo test",
+    "dev": "bun run vite",
+    "build": "bun run vite build",
+    "preview": "bun run vite preview",
+    "test": "bun test",
+    "lint": "bun run eslint",
+    "typecheck": "bun run tsc --noEmit",
     "clean": "turbo clean && rm -rf node_modules",
     "supabase:start": "supabase start",
     "supabase:stop": "supabase stop",
@@ -28,110 +27,13 @@
     "prettier": "^3.1.0",
     "supabase": "^1.127.4",
     "turbo": "^1.10.16",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.2",
+    "@types/bun": "latest"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.39.3",
     "@supabase/auth-helpers-nextjs": "^0.9.0",
     "posthog-js": "^1.96.1"
   },
-  "packageManager": "bun@1.0.0"
-=======
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
-  },
-  "devDependencies": {
-    "prettier": "^3.5.0",
-    "turbo": "latest",
-    "typescript": "5.7.3"
-  },
-  "packageManager": "bun@1.0.21",
-  "engines": {
-    "node": ">=18"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
->>>>>>> ef09bbd (prep)
-=======
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-=======
->>>>>>> 8d7edcb (reset to Monorepo with turburepo)
-  "scripts": {
-    "dev": "turbo run dev",
-    "build": "turbo run build",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
-  },
-  "devDependencies": {
-    "prettier": "^3.5.0",
-    "turbo": "latest",
-    "typescript": "5.7.3"
-  },
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "dependencies": {
-    "@supabase/supabase-js": "^2.39.3",
-    "@supabase/auth-helpers-nextjs": "^0.9.0",
-    "posthog-js": "^1.96.1"
-  },
-  "packageManager": "bun@1.0.0"
->>>>>>> 60d53aa (day 2 configureing packages)
-=======
-  "packageManager": "pnpm@9.0.0",
-  "engines": {
-    "node": ">=18"
-  }
->>>>>>> 8d7edcb (reset to Monorepo with turburepo)
-=======
-  "packageManager": "bun@1.0.21",
-  "engines": {
-    "node": ">=18"
-  },
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
->>>>>>> 91d08cd (prep)
-=======
-  "version": "1.0.0",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
-    "lint": "turbo lint",
-    "test": "turbo test",
-    "clean": "turbo clean && rm -rf node_modules",
-    "supabase:start": "supabase start",
-    "supabase:stop": "supabase stop",
-    "supabase:status": "supabase status"
-  },
-  "devDependencies": {
-    "@types/node": "^20.10.0",
-    "@typescript-eslint/eslint-plugin": "^6.13.0",
-    "@typescript-eslint/parser": "^6.13.0",
-    "eslint": "^8.54.0",
-    "prettier": "^3.1.0",
-    "supabase": "^1.127.4",
-    "turbo": "^1.10.16",
-    "typescript": "^5.3.2"
-  },
-  "dependencies": {
-    "@supabase/supabase-js": "^2.39.3",
-    "@supabase/auth-helpers-nextjs": "^0.9.0",
-    "posthog-js": "^1.96.1"
-  },
-  "packageManager": "bun@1.0.0"
->>>>>>> 52bc04b (day 2 configureing packages)
+  "packageManager": "bun@1.0.18"
 }

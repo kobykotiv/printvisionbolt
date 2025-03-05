@@ -1,23 +1,7 @@
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   "name": "@printvisionbolt/dashboard-core",
-=======
-  "name": "@printvisionbolt/dashboard",
->>>>>>> ef09bbd (prep)
-=======
-  "name": "@printvisionbolt/dashboard-core",
->>>>>>> 974034b (feat: Update Docker configuration, rename dashboard package, and add Supabase setup)
-=======
-  "name": "@printvisionbolt/dashboard",
->>>>>>> 91d08cd (prep)
-=======
-  "name": "@printvisionbolt/dashboard-core",
->>>>>>> 08b4584 (feat: Update Docker configuration, rename dashboard package, and add Supabase setup)
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "next dev",
@@ -26,30 +10,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "@printvisionbolt/shared-ui": "*"
-=======
-    "@printvisionbolt/shared-ui": "workspace:*"
->>>>>>> ef09bbd (prep)
-=======
-    "@printvisionbolt/shared-ui": "*"
->>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
-=======
-    "@printvisionbolt/shared-ui": "workspace:*"
->>>>>>> 91d08cd (prep)
-=======
-    "@printvisionbolt/shared-ui": "*"
->>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "@printvisionbolt/ui": "workspace:*"
   },
   "devDependencies": {
-    "typescript": "^4.9.0",
+    "typescript": "^5.3.3",
     "next": "latest",
-    "@types/react": "^18.0.0",
-    "@types/react-dom": "^18.0.0"
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0"
   }
 }

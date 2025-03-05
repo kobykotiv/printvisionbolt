@@ -1,14 +1,13 @@
 import React from 'react';
 import { AlertCircle, CheckCircle2, Palette, FileStack, Calendar, Settings, Bell, RefreshCw, UploadCloud } from 'lucide-react';
-import { useShop } from '../contexts/ShopContext';
-import { useAuth } from '../contexts/auth/AuthContext';
-import { useToast } from '../contexts/ToastContext';
-import { supabase } from '../lib/supabase';
-import { Card } from '../components/ui/Card';
-import { LoadingState } from '../components/ui/LoadingState';
-import { useDesigns } from '../hooks/useDesigns';
-import { RealtimeChannel } from '@supabase/supabase-js';
-import ErrorBoundary from '../components/ErrorBoundary'; // Updated import
+import { useShop } from '@/contexts/ShopContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/contexts/ToastContext';
+import { supabase } from '@/lib/supabase';
+import { Card } from '@printvision/ui/components/Card';
+import { LoadingState } from '@printvision/ui/components/LoadingState';
+import { useDesigns } from '@/hooks/useDesigns';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 interface SyncStatus {
   status: 'pending' | 'success' | 'failed';
@@ -196,7 +195,6 @@ function DashboardContent() {
   // Update total designs count from the useDesigns hook
   const totalDesigns = designs.length;
 
-<<<<<<< HEAD
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -220,9 +218,6 @@ function DashboardContent() {
           )}
         </div>
       </div>
-=======
-
->>>>>>> 5f5f746 (Moved tier usage)
 
       {/* Main Stats */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

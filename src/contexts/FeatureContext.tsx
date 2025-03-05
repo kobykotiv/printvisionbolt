@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { FeatureContextType, UserTier, FeatureLimit } from '../types/features';
-import { featureTiers } from '../config/features';
+import type { FeatureContextType, UserTier, FeatureLimit } from '@printvision/shared/types';
+import { featureTiers } from '@/lib/config/features';
 
 const FeatureContext = createContext<FeatureContextType | undefined>(undefined);
 

@@ -1,6 +1,6 @@
 {
-  "name": "@printvisionbolt/web",
-  "version": "0.1.0",
+  "name": "web",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -9,48 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
-<<<<<<< HEAD
-<<<<<<< HEAD
     "next": "^14.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "@printvisionbolt/shared-ui": "*",
-    "@printvisionbolt/utils": "*",
-=======
     "@printvisionbolt/shared-ui": "workspace:*",
-    "@printvisionbolt/utils": "workspace:*",
->>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
-=======
-    "@printvisionbolt/shared-ui": "*",
-    "@printvisionbolt/utils": "*",
->>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
-=======
-    "next": "^14.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-<<<<<<< HEAD
-    "@printvisionbolt/shared-ui": "workspace:*",
-    "@printvisionbolt/utils": "workspace:*",
->>>>>>> 318c476 (chore: Stage changes for turborepo migration)
-=======
-    "@printvisionbolt/shared-ui": "*",
-    "@printvisionbolt/utils": "*",
->>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
     "clsx": "^2.0.0",
     "tailwindcss": "^3.3.0",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31"
-<<<<<<< HEAD
-=======
-    "@repo/ui": "workspace:*",
-    "next": "^15.1.6",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
->>>>>>> 8d7edcb (reset to Monorepo with turburepo)
-=======
->>>>>>> 318c476 (chore: Stage changes for turborepo migration)
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

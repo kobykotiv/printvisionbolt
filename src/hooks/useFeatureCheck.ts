@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useFeatures } from '../contexts/FeatureContext';
-import { featureService } from '../services/features';
+import { useFeatures } from '@/contexts/FeatureContext';
+import { featureService } from '@/services/features';
+import type { FeatureCheckResult } from '@printvision/shared/types';
 
 interface UseFeatureCheckResult {
   hasAccess: boolean;
