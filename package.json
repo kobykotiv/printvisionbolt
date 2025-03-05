@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "workspaces": [
-    "apps/*",
+    "apps/dashboard",
+    "apps/blog",
+    "apps/stores/*",
     "packages/*"
   ],
   "scripts": {
@@ -11,12 +13,17 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "test": "turbo run test",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "clean": "rimraf .turbo node_modules **/node_modules",
+    "preinstall": "npx only-allow pnpm"
   },
   "devDependencies": {
-    "turbo": "latest",
     "prettier": "^3.1.0",
-    "typescript": "^5.3.0"
+    "turbo": "^2.4.4",
+    "typescript": "^5.3.0",
+    "vitest": "^1.0.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "@types/node": "^20.0.0"
   },
   "engines": {
     "node": ">=18.0.0",

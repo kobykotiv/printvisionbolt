@@ -1,4 +1,4 @@
-FROM node:18-alpine as base
+FROM node:18-alpine AS base
 
 # Install pnpm
 RUN npm install -g pnpm
@@ -9,20 +9,24 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 
 # Development stage
-FROM base as development
+FROM base AS development
 RUN pnpm install
+RUN find . -type f -exec chmod 644 {} \;
+RUN find . -type d -exec chmod 755 {} \;
 COPY . .
 EXPOSE 3000
 CMD ["pnpm", "run", "dev"]
 
 # Builder stage
-FROM base as builder
+FROM base AS builder
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
+RUN find . -type f -exec chmod 644 {} \;
+RUN find . -type d -exec chmod 755 {} \;
 COPY . .
 RUN pnpm run build
 
 # Production stage
-FROM node:18-alpine as production
+FROM node:18-alpine AS production
 RUN npm install -g pnpm
 
 WORKDIR /app

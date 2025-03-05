@@ -1,0 +1,20 @@
+{
+	"name": "PrintVision Bolt Dev Container",
+	"build": {
+		"context": "..",
+		"dockerfile": "../infastructure/Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-vscode.vscode-typescript-tslint-plugin",
+				"dbaeumer.vscode-eslint"
+			]
+		}
+	},
+	"forwardPorts": [],
+	"postCreateCommand": "echo 'Container is ready!'",
+	"remoteUser": "root"
+}

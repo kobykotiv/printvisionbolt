@@ -5,9 +5,9 @@
   ],
   "globalEnv": [
     "NODE_ENV",
-    "NEXT_PUBLIC_\\*"
+    "NEXT_PUBLIC_\\\\*"
   ],
-  "pipeline": {
+  "tasks": {
     "build": {
       "dependsOn": [
         "^build"
@@ -17,10 +17,6 @@
         ".next/**",
         "!.next/cache/**"
       ]
-    },
-    "dev": {
-      "cache": false,
-      "persistent": true
     },
     "lint": {},
     "test": {
@@ -33,6 +29,19 @@
         "test/**/*.ts",
         "test/**/*.tsx"
       ]
+    }
+  },
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "clean": {
+      "cache": false
     }
   }
 }

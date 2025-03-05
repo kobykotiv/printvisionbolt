@@ -18,12 +18,18 @@ export default defineConfig({
   server: {
     watch: {
       usePolling: false // Bun has better file watching
+    },
+    hmr: {
+      protocol: 'ws'
     }
   },
   build: {
     target: 'esnext', // Bun supports modern features
     rollupOptions: {
       external: ['@printvision/shared', '@printvision/ui']
-    }
+    },
+    minify: 'esbuild',
+    sourcemap: true,
+    reportCompressedSize: false
   }
 });
