@@ -1,7 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import type { FeatureContextType, UserTier, FeatureLimit } from '@printvision/shared/types';
-import { featureTiers } from '@/lib/config/features';
-
+6
 const FeatureContext = createContext<FeatureContextType | undefined>(undefined);
 
 export const useFeatures = () => {
@@ -32,7 +30,7 @@ export const FeatureProvider: React.FC<FeatureProviderProps> = ({
   };
 
   const getFeatureLimit = (featureName: string): FeatureLimit | null => {
-    return currentTier.limits.find((limit) => limit.name === featureName) || null;
+    return currentTier.limits.find((limit: { name: string; }) => limit.name === featureName) || null;
   };
 
   const remainingUsage = (featureName: string): number => {

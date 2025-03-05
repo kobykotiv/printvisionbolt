@@ -1,108 +1,22 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   "display": "Base",
-=======
->>>>>>> 8d7edcb (reset to Monorepo with turburepo)
-=======
-  "display": "Default",
->>>>>>> 52bc04b (day 2 configureing packages)
-  "compilerOptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "composite": false,
-    "declaration": true,
-    "declarationMap": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "inlineSources": false,
-    "isolatedModules": true,
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "jsx": "preserve",
-    "baseUrl": ".",
-    "incremental": true,
-    "resolveJsonModule": true
-=======
-  "display": "Default",
-=======
-  "display": "Base",
->>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
   "compilerOptions": {
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-<<<<<<< HEAD
-    "resolveJsonModule": true,
-<<<<<<< HEAD
-    "jsx": "preserve"
->>>>>>> 60d53aa (day 2 configureing packages)
-=======
-    "isolatedModules": true,
-    "jsx": "preserve",
-<<<<<<< HEAD
-    "incremental": true
->>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
-=======
-    "incremental": true,
-    "baseUrl": "."
->>>>>>> b38644b (feat: Enhance product management with Stripe integration and update product attributes)
-=======
     "isolatedModules": true,
     "jsx": "preserve",
     "baseUrl": ".",
     "incremental": true,
-    "resolveJsonModule": true
->>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
-  },
-  "exclude": ["node_modules"]
-=======
+    "resolveJsonModule": true,
     "lib": ["es2022", "DOM", "DOM.Iterable"],
     "module": "NodeNext",
     "moduleDetection": "force",
-    "moduleResolution": "NodeNext",
     "noUncheckedIndexedAccess": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "strict": true,
     "target": "ES2022"
-  }
->>>>>>> 8d7edcb (reset to Monorepo with turburepo)
-=======
-    "moduleResolution": "node",
-    "noUnusedLocals": false,
-    "noUnusedParameters": false,
-    "preserveWatchOutput": true,
-=======
-    "target": "es2020",
-=======
-    "target": "es2017",
->>>>>>> b02bbb1 (feat: Enhance product management with Stripe integration and update product attributes)
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
->>>>>>> 318c476 (chore: Stage changes for turborepo migration)
-    "skipLibCheck": true,
-=======
-  "display": "Base",
-  "compilerOptions": {
->>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "baseUrl": ".",
-    "incremental": true,
-    "resolveJsonModule": true
   },
   "exclude": ["node_modules"]
->>>>>>> 52bc04b (day 2 configureing packages)
 }

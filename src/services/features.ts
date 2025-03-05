@@ -40,7 +40,7 @@ class SupabaseFeatureService implements FeatureService {
     }
 
     // Check feature limits
-    const limit = userTier.limits.find(l => l.name === featureName);
+    const limit = userTier.limits.find((l: { name: string; }) => l.name === featureName);
     if (!limit) {
       return false;
     }
