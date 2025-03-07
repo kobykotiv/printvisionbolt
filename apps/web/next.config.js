@@ -7,8 +7,14 @@ const nextConfig = {
   ],
   experimental: {
     optimizeCss: true,
-    turbo: true,
-  },
+    turbo: {
+      loaders: {
+        '.js': ['@swc/loader'],
+        '.ts': ['@swc/loader'],
+        '.tsx': ['@swc/loader']
+      }
+    }
+  }
 }
 
 module.exports = nextConfig

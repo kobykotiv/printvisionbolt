@@ -1,27 +1,26 @@
 {
-  "name": "api",
-  "version": "0.0.0",
-  "private": true,
+  "name": "printvisionbolt-api",
+  "version": "1.0.0",
+  "description": "PrintVisionBolt API",
+  "packageManager": "bun@1.0.25",
   "scripts": {
     "dev": "bun run --watch src/index.ts",
-    "start": "bun run src/index.ts",
-    "lint": "eslint ."
+    "build": "bun build ./src/index.ts --target node --outfile dist/index.js",
+    "start": "bun run dist/index.js",
+    "lint": "eslint . --fix",
+    "clean": "rm -rf dist && rm -rf node_modules"
   },
   "dependencies": {
-    "@fastify/cors": "^8.4.1",
-    "@printvisionbolt/api-types": "workspace:*",
-    "@supabase/supabase-js": "^2.38.0",
-    "@trpc/server": "^10.38.0",
-    "fastify": "^4.24.3",
-    "zod": "^3.22.0"
+    "@fastify/cors": "^9.0.1",
+    "@fastify/swagger": "^8.14.0",
+    "@types/node": "^20.11.19",
+    "fastify": "^4.26.1",
+    "zod": "^3.22.4",
+    "@printvisionbolt/api-types": "workspace:*"
   },
   "devDependencies": {
-    "@printvisionbolt/typescript-config": "workspace:*",
-    "@printvisionbolt/eslint-config": "workspace:*",
-    "@types/node": "^20.10.0",
-    "@fastify/type-provider-json-schema-to-ts": "^2.2.2",
-    "@types/cors": "^2.8.17",
-    "tsx": "^3.12.0",
-    "typescript": "^5.3.2"
+    "@types/bun": "^1.0.5",
+    "typescript": "^5.3.3",
+    "eslint": "^8.57.0"
   }
 }

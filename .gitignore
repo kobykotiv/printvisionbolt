@@ -1,7 +1,10 @@
 # Dependencies
-node_modules
+node_modules/
 .pnpm-store
 .bun
+
+# Artifacts
+imported_artifacts/
 
 # Build
 dist

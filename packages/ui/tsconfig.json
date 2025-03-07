@@ -1,72 +1,18 @@
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "extends": "@printvisionbolt/typescript-config/library.json",
-=======
-  "extends": "@repo/typescript-config/react-library.json",
->>>>>>> 8d7edcb (reset to Monorepo with turburepo)
-  "compilerOptions": {
-    "outDir": "dist"
-  },
-<<<<<<< HEAD
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"],
-  "references": [
-    { "path": "../api-types" }
-  ]
-=======
+  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@printvisionbolt/typescript-config/react-library.json",
-  "include": ["src", "*.ts", "*.tsx"],
-  "exclude": ["node_modules", "dist"],
-=======
-  "extends": "@printvisionbolt/typescript-config/library.json",
->>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
   "compilerOptions": {
-    "outDir": "dist",
-<<<<<<< HEAD
-=======
-  "extends": "@printvisionbolt/typescript-config/react-library.json",
-  "include": ["src", "*.ts", "*.tsx"],
-  "exclude": ["node_modules", "dist"],
-=======
-  "extends": "@printvisionbolt/typescript-config/library.json",
->>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
-  "compilerOptions": {
-    "outDir": "dist",
-<<<<<<< HEAD
->>>>>>> 52bc04b (day 2 configureing packages)
-    "declaration": true,
-    "declarationMap": true,
-    "resolveJsonModule": true
-  }
-<<<<<<< HEAD
->>>>>>> 60d53aa (day 2 configureing packages)
-=======
-=======
->>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
-    "rootDir": "src",
-    "jsx": "react-jsx",
-    "module": "ESNext",
+    "baseUrl": ".",
     "paths": {
-      "@printvisionbolt/*": ["../../packages/*/src"]
+      "@/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"],
-  "references": [
-    { "path": "../api-types" }
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
   ]
-<<<<<<< HEAD
->>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
-=======
-  "include": ["src"],
-  "exclude": ["node_modules", "dist"]
->>>>>>> 8d7edcb (reset to Monorepo with turburepo)
-=======
->>>>>>> 52bc04b (day 2 configureing packages)
-=======
->>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
 }

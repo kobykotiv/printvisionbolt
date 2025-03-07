@@ -1,93 +1,22 @@
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
   "$schema": "https://json.schemastore.org/tsconfig",
   "display": "Next.js",
-<<<<<<< HEAD
->>>>>>> 60d53aa (day 2 configureing packages)
-=======
->>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
-=======
-  "$schema": "https://json.schemastore.org/tsconfig",
->>>>>>> 8d7edcb (reset to Monorepo with turburepo)
-=======
->>>>>>> 52bc04b (day 2 configureing packages)
-=======
->>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
   "extends": "./base.json",
   "compilerOptions": {
     "plugins": [{ "name": "next" }],
     "allowJs": true,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     "noEmit": true,
-=======
     "declaration": false,
     "declarationMap": false,
->>>>>>> 60d53aa (day 2 configureing packages)
-=======
-    "noEmit": true,
->>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
     "incremental": true,
     "jsx": "preserve",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "target": "es5",
     "module": "esnext",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "target": "es5",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true
   },
-  "include": ["src", "next-env.d.ts"],
-=======
-    "noEmit": true,
-    "resolveJsonModule": true,
-    "strict": true,
-=======
->>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
-    "target": "es5",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true
-  },
-<<<<<<< HEAD
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
->>>>>>> 60d53aa (day 2 configureing packages)
-=======
-  "include": ["src", "next-env.d.ts"],
->>>>>>> c34d7d5 (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src"],
   "exclude": ["node_modules"]
-=======
-    "jsx": "preserve",
-    "noEmit": true
-  }
->>>>>>> 8d7edcb (reset to Monorepo with turburepo)
-=======
-    "declaration": false,
-    "declarationMap": false,
-=======
-    "noEmit": true,
->>>>>>> 25869aa (feat: Add TypeScript configuration files, enhance testing setup, and update documentation for API integration)
-    "incremental": true,
-    "jsx": "preserve",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "module": "esnext",
-    "target": "es5",
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "esModuleInterop": true
-  },
-  "include": ["src", "next-env.d.ts"],
-  "exclude": ["node_modules"]
->>>>>>> 52bc04b (day 2 configureing packages)
 }

@@ -1,5 +1,5 @@
 # CoolCline Project Configuration
-project_name=printvisionbolt
+; project_name=printvisionbolt
 version=1.0.0
 
 # Development Environment
@@ -46,10 +46,7 @@ payment_currency=usd
 tenant_isolation=database_schema
 tenant_identification=header|subdomain
 
-# Print Provider Rules
-allowed_providers=printify,printful,gooten,gelato
-fallback_strategy=sequential
-webhook_security=required
+
 
 # Deployment Rules
 container_registry=ghcr.io
