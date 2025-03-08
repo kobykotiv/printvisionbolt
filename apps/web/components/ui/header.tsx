@@ -43,7 +43,7 @@ export function Header() {
                   Features
                 </Link>
                 <Link 
-                  href="#pricing"
+                  href="/pricing"
                   className="flex items-center text-lg font-medium text-muted-foreground transition-colors hover:text-foreground"
                 >
                   Pricing
