@@ -1,23 +1,40 @@
-declare module 'fastify' {
-  import { FastifyInstance as BaseFastifyInstance } from 'fastify';
-  export interface FastifyInstance extends BaseFastifyInstance {}
-  export default function fastify(opts?: any): FastifyInstance;
+import { FastifyInstance as CoreFastifyInstance, FastifyLoggerInstance, FastifyBaseLogger } from 'fastify';
+import { Server, IncomingMessage, ServerResponse } from 'http';
+import { RouteGenericInterface } from 'fastify/types/route';
+
+export interface ServerInstance extends CoreFastifyInstance {
+  // HTTP server
+  server: Server;
+  
+  // Logging
+  log: FastifyBaseLogger;
+  
+  // Configuration
+  config: {
+    PORT: number;
+    HOST: string;
+    NODE_ENV: string;
+  };
 }
 
-declare module '@fastify/cors' {
-  import { FastifyPluginCallback } from 'fastify';
-  interface FastifyCorsOptions {
-    origin?: boolean | string | RegExp | (string | RegExp)[] | ((origin: string, cb: (err: Error | null, allow: boolean) => void) => void);
-    methods?: string | string[];
-    allowedHeaders?: string | string[];
-    exposedHeaders?: string | string[];
-    credentials?: boolean;
-    maxAge?: number;
-    preflightContinue?: boolean;
-    optionsSuccessStatus?: number;
-    preflight?: boolean;
-  }
+// Request/Response types
+export interface FastifyRequest<T extends RouteGenericInterface = RouteGenericInterface> {
+  query: T extends { Querystring: any } ? T['Querystring'] : unknown;
+  body: T extends { Body: any } ? T['Body'] : unknown;
+  params: T extends { Params: any } ? T['Params'] : unknown;
+  headers: T extends { Headers: any } ? T['Headers'] : unknown;
+  log: FastifyLoggerInstance;
+}
 
-  const cors: FastifyPluginCallback<FastifyCorsOptions>;
-  export default cors;
+export interface FastifyReply {
+  code(statusCode: number): FastifyReply;
+  send(payload?: unknown): FastifyReply;
+  status(statusCode: number): FastifyReply;
+  header(name: string, value: string): FastifyReply;
+  type(contentType: string): FastifyReply;
+}
+
+// Plugin options types
+export interface PluginOptions {
+  prefix?: string;
 }
