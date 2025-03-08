@@ -10,13 +10,22 @@
   ],
   "scripts": {
     "dev": "bun run --cwd apps/web dev",
+    "dev:blog": "bun run --cwd apps/blog dev",
+    "dev:api": "bun run --cwd apps/api dev",
+    "dev:admin": "bun run --cwd apps/admin dev",
+    "dev:shared": "turbo dev",
+    "build:blog": "bun run --cwd apps/blog build",
+    "build:api": "bun run --cwd apps/api build",
+    "build:admin": "bun run --cwd apps/admin build",
     "build": "bun run --cwd apps/web build",
     "start": "bun run --cwd apps/web start",
     "lint": "eslint .",
-    "clean": "rm -rf node_modules && rm -rf apps/*/node_modules && rm -rf packages/*/node_modules"
+    "clean": "rm -rf node_modules && rm -rf apps/*/node_modules && rm -rf packages/*/node_modules",
+    "clean:win": "powershell -Command \"Remove-Item -Recurse -Force node_modules; Remove-Item -Recurse -Force apps/*/node_modules; Remove-Item -Recurse -Force packages/*/node_modules\""
   },
   "dependencies": {
-    "turbo": "^1.13.4"
+    "turbo": "^1.13.4",
+    "twin.macro": "^3.4.1"
   },
   "devDependencies": {
     "@types/node": "^20.17.23",

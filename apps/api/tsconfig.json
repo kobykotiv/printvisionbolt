@@ -1,86 +1,16 @@
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   "extends": "@printvisionbolt/typescript-config/base.json",
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "ES2022",
-    "lib": ["ES2022"],
-    "moduleResolution": "node",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "allowJs": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
-=======
-  "extends": "@printvisionbolt/typescript-config/nextjs.json",
-=======
-  "extends": "@printvisionbolt/typescript-config/base.json",
->>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
-  "compilerOptions": {
-    "target": "es2020",
+    "target": "ES2020",
     "module": "commonjs",
-    "lib": ["es2020"],
-=======
->>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "lib": ["ES2020"],
     "strict": true,
-    "allowJs": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
+    "rootDir": "src"
   },
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
->>>>>>> 1100452 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
-=======
-  "include": ["src/**/*.ts"],
-=======
   "include": ["src/**/*"],
->>>>>>> f0eefa9 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
-  "exclude": ["node_modules", "dist"]
->>>>>>> 3bc1751 (chore: Stage changes for turborepo migration)
-=======
-  "extends": "@printvisionbolt/typescript-config/nextjs.json",
-=======
-  "extends": "@printvisionbolt/typescript-config/base.json",
->>>>>>> 318c476 (chore: Stage changes for turborepo migration)
-  "compilerOptions": {
-    "target": "es2020",
-    "module": "commonjs",
-    "lib": ["es2020"],
-=======
->>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "strict": true,
-    "allowJs": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
-<<<<<<< HEAD
-<<<<<<< HEAD
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
->>>>>>> 93399e0 (feat: add dashboard and product pages, integrate shared UI components, and enhance API configuration)
-=======
-  "include": ["src/**/*.ts"],
-=======
-  "include": ["src/**/*"],
->>>>>>> dc00547 (feat: Refactor project structure by removing pnpm workspace file, updating dependencies, and adding API types)
-  "exclude": ["node_modules", "dist"]
->>>>>>> 318c476 (chore: Stage changes for turborepo migration)
 }

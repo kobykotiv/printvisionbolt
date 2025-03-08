@@ -1,12 +1,11 @@
 {
   "name": "web",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "echo \"Web dev script placeholder\"",
+    "build": "echo \"Web build script placeholder\"",
+    "start": "echo \"Web start script placeholder\""
   },
   "dependencies": {
     "next": "^14.0.0",
