@@ -1,0 +1,50 @@
+services:
+  nginx:
+    image: nginx:1.25-alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
+
+  web:
+    build:
+      context: .
+      target: development
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_SUPABASE_URL=http://localhost
+      - VITE_SUPABASE_ANON_KEY=your-anon-key
+    command: sh -c "pnpm install && pnpm run dev"
+
+  supabase-db:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: dev-password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  rest:
+    image: postgrest/postgrest:v10.1.1
+    depends_on:
+      - supabase-db
+    ports:
+      - "3000:3000"
+    environment:
+      PGRST_DB_URI: postgres://postgres:dev-password@supabase-db:5432/postgres
+      PGRST_DB_SCHEMA: public
+      PGRST_DB_ANON_ROLE: postgres
+      PGRST_JWT_SECRET: your-super-secret-jwt-token-with-at-least-32-characters
+      PGRST_DB_POOL: 10
+      PGRST_SERVER_PROXY_URI: http://localhost:3000
+    command: postgrest
+
+volumes:
+  db-data:
+    name: printvisionbolt_db_data

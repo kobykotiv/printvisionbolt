@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "display": {
+      "type": "string",
+      "description": "Human-readable description of the configuration"
+    },
+    "compilerOptions": {
+      "type": "object",
+      "properties": {
+        "strict": {
+          "type": "boolean",
+          "description": "Enable all strict type checking options"
+        },
+        "esModuleInterop": {
+          "type": "boolean",
+          "description": "Emit additional JavaScript to ease support for importing CommonJS modules"
+        },
+        "skipLibCheck": {
+          "type": "boolean",
+          "description": "Skip type checking of declaration files"
+        },
+        "forceConsistentCasingInFileNames": {
+          "type": "boolean",
+          "description": "Disallow inconsistently-cased references to the same file"
+        },
+        "moduleResolution": {
+          "type": "string",
+          "enum": ["node", "NodeNext"],
+          "description": "Specify module resolution strategy"
+        },
+        "isolatedModules": {
+          "type": "boolean",
+          "description": "Ensure that each file can be safely transpiled without relying on other imports"
+        },
+        "jsx": {
+          "type": "string",
+          "enum": ["preserve", "react", "react-jsx"],
+          "description": "Specify JSX code generation"
+        },
+        "baseUrl": {
+          "type": "string",
+          "description": "Base directory to resolve non-relative module names"
+        },
+        "incremental": {
+          "type": "boolean",
+          "description": "Enable incremental compilation"
+        },
+        "resolveJsonModule": {
+          "type": "boolean",
+          "description": "Include modules imported with '.json' extension"
+        },
+        "lib": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of library files to be included in the compilation"
+        },
+        "module": {
+          "type": "string",
+          "enum": ["NodeNext", "ESNext", "CommonJS"],
+          "description": "Specify module code generation"
+        },
+        "moduleDetection": {
+          "type": "string",
+          "enum": ["force", "legacy", "auto"],
+          "description": "Determine how modules are detected"
+        },
+        "noUncheckedIndexedAccess": {
+          "type": "boolean",
+          "description": "Add undefined to types from index signatures"
+        },
+        "target": {
+          "type": "string",
+          "description": "Specify ECMAScript target version"
+        }
+      },
+      "required": ["strict", "esModuleInterop", "skipLibCheck"]
+    },
+    "exclude": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Files and folders to exclude from compilation"
+    }
+  },
+  "required": ["compilerOptions"]
+}

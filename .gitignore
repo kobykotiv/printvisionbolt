@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+.pnpm-store
+.bun
+
+# Artifacts
+imported_artifacts/
+
+# Build
+dist
+build
+.next
+out
+*.tsbuildinfo
+
+# Testing
+coverage
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.idea
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# OS
+.DS_Store
+*.pem
+
+# Turbo
+.turbo
+
+# Vercel
+.vercel
+
+# Supabase
+supabase/.temp
+**/supabase/.branches
+**/supabase/.temp
+.supabase
+
+# Cache
+.cache
+.mf
+.rollup.cache
+tsconfig.tsbuildinfo

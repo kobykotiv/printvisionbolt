@@ -1,0 +1,59 @@
+
+services:
+  nginx:
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+    volumes:
+      - ./nginx.enterprise.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+
+  web:
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+
+  supabase-db:
+    deploy:
+      replicas: 2
+      placement:
+        constraints:
+          - node.role == manager
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD_FILE=/run/secrets/db_password
+      - POSTGRES_USER_FILE=/run/secrets/db_user
+
+  rest:
+    deploy:
+      replicas: 2
+    environment:
+      - PGRST_DB_URI_FILE=/run/secrets/db_uri
+      - PGRST_JWT_SECRET_FILE=/run/secrets/jwt_secret
+
+volumes:
+  postgres_data:
+    driver: local
+    driver_opts:
+      type: nfs
+      device: :/path/to/nfs/share
+      o: addr=nfs-server,nolock,soft,rw
+
+secrets:
+  db_password:
+    external: true
+  db_user:
+    external: true
+  db_uri:
+    external: true
+  jwt_secret:
+    external: true

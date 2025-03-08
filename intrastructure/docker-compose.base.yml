@@ -1,0 +1,58 @@
+services:
+  nginx:
+    image: nginx:alpine
+    expose:
+      - "80"
+      - "443"
+    depends_on:
+      rest:
+        condition: service_healthy
+      web:
+        condition: service_started
+
+  web:
+    build: 
+      context: .
+      target: development
+      dockerfile: Dockerfile
+    expose:
+      - "3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - DOCKER_BUILDKIT=1
+      - COMPOSE_DOCKER_CLI_BUILD=1
+
+  supabase-db:
+    image: supabase/postgres:14.1.0
+    expose:
+      - "5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_PASSWORD: dev-password
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  rest:
+    image: postgrest/postgrest:v9.0.0
+    expose:
+      - "3000"
+    depends_on:
+      supabase-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-h", "supabase-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  db-data:

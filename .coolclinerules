@@ -1,10 +1,10 @@
 # CoolCline Project Configuration
-project_name=printvisionbolt
+; project_name=printvisionbolt
 version=1.0.0
 
 # Development Environment
 node_version=18.x
-package_manager=pnpm
+package_manager=bun
 typescript_strict=true
 
 # Monorepo Configuration
@@ -38,14 +38,15 @@ enforce_eslint=true
 git_branch_naming=feature/*|bugfix/*|release/*
 commit_convention=conventional
 
+# Payment network
+payment_provider=stripe
+payment_currency=usd
+
 # Multi-Tenant Rules
 tenant_isolation=database_schema
 tenant_identification=header|subdomain
 
-# Print Provider Rules
-allowed_providers=printify,printful,gooten,gelato
-fallback_strategy=sequential
-webhook_security=required
+
 
 # Deployment Rules
 container_registry=ghcr.io
@@ -65,9 +66,10 @@ chunk_size_warning=244
 lighthouse_score_threshold=90
 
 # Development Ports
-dev_port=3000
+dev_port=3004
 api_port=3001
-cms_port=3002
+dashboard_port=3003
+blog_port=3002
 
 # Environment Variables Template
 required_env_vars=SUPABASE_URL,SUPABASE_ANON_KEY,PRINT_PROVIDER_KEYS

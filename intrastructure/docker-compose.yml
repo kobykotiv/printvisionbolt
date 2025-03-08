@@ -1,0 +1,24 @@
+services:
+  nginx:
+    extends:
+      file: docker-compose.base.yml
+      service: nginx
+
+  web:
+    extends:
+      file: docker-compose.base.yml
+      service: web
+
+  supabase-db:
+    extends:
+      file: docker-compose.base.yml
+      service: supabase-db
+
+  rest:
+    extends:
+      file: docker-compose.base.yml
+      service: rest
+
+volumes:
+  db-data:
+    name: printvisionbolt_db_data
